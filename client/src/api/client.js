@@ -1,9 +1,15 @@
 import axios from "axios";
 import { FALLBACK_PRODUCTS } from "../data/products.js";
 
-const baseURL = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : "/api";
+const rawApiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://sonicprints-festivel.onrender.com" : "");
 
-const api = axios.create({ baseURL, timeout: 3000 });
+let baseURL = "/api";
+if (rawApiUrl) {
+  const cleanUrl = rawApiUrl.replace(/\/$/, "");
+  baseURL = cleanUrl.endsWith("/api") ? cleanUrl : `${cleanUrl}/api`;
+}
+
+const api = axios.create({ baseURL, timeout: 10000 });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("sonic_admin_token");
