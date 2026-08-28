@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------- 5. crescent moon
+def moon():
+    p = MOON
+    b = [base_plate(480, 450)]
+    b.append(ring_line(464, "url(#goldHi)", 6))
+    # celestial band: alternating stars and crescents
+    b.append(annulus(398, 448, "url(#accent)"))
+    b.append(ring_line(398, p["g3"], 3))
+    b.append(ring_line(448, p["g3"], 3))
+    for i in range(24):
+        a = i * 15.0
+        x, y = P(423, a)
+        if i % 2 == 0:
+            b.append(star(x, y, 15, "url(#goldHi)", points=6, inner=0.4, rot=a))
+        else:
+            b.append('<circle cx="%s" cy="%s" r="12" fill="%s"/>' % (f(x), f(y), p["g2"]))
+            b.append('<circle cx="%s" cy="%s" r="10" fill="url(#accent)"/>'
+                     % (f(x + 5.2), f(y - 3.4)))
+    b.append(ring_line(390, p["g4"], 2.4))
+    # long moonlight rays
+    b.append(ray_ring(24, 214, 384, 26, 5, "url(#gold)"))
+    b.append(ray_ring(24, 232, 372, 12, 2.6, "url(#goldHi)"))
+    b.append(ray_ring(24, 236, 340, 14, 4, "url(#goldHi)", phase=7.5))
+    b.append(bead_ring(24, 348, 6, p["g1"], phase=7.5))
+    b.append(ring_line(208, p["g2"], 4.4))
+    b.append('<circle cx="500" cy="500" r="204" fill="url(#lamp)" opacity=".3"/>')
+    b.append(petal_ring(16, 78, 200, 44, "url(#gold)", stroke=p["g4"], sw=1.4,
+                        phase=11.25, sharp=0.58, belly=0.42))
+    b.append(petal_ring(16, 100, 180, 22, "url(#accent)", phase=11.25, sharp=0.58, belly=0.42))
+    b.append('<circle cx="500" cy="500" r="82" fill="url(#accent)"/>')
+    b.append(bead_ring(16, 68, 5, p["g2"]))
+    b.append(petal_ring(8, 18, 60, 18, "url(#goldHi)", phase=22.5))
+    b.append('<circle cx="500" cy="500" r="19" fill="url(#gold)"/>')
+    b.append('<circle cx="500" cy="500" r="7.5" fill="#FFFDF0"/>')
+    write("crescent-moon", "".join(b), p)
+
+

@@ -1,0 +1,154 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSite, imgUrl, money } from "../../context/SiteContext.jsx";
+import { Reveal } from "../../components/fx/Reveal.jsx";
+import SplitText from "../../components/fx/SplitText.jsx";
+import Magnetic from "../../components/fx/Magnetic.jsx";
+import Parallax from "../../components/fx/Parallax.jsx";
+import { SectionAura } from "../../components/fx/Decor.jsx";
+import { EASE_SILK } from "../../anim/tokens.js";
+import useMotionProfile from "../../anim/useMotionProfile.js";
+
+export default function ChakraSection() {
+  const { productById } = useSite();
+  const chakra = productById("chakra");
+  const designs = chakra?.designs || [];
+  const [activeId, setActiveId] = useState(designs[0]?.id);
+  const [spinSpeed, setSpinSpeed] = useState("normal"); // 'slow' | 'normal' | 'fast'
+  const { reduced } = useMotionProfile();
+
+  if (!chakra) return null;
+  const active = designs.find((d) => d.id === activeId) || designs[0];
+
+  return (
+    <section className="sec sec-dark on-dark" id="chakra">
+      <SectionAura tone="dark" mandala={false} />
+      <div className="wrap chk">
+        <div>
+          <Reveal variant="fadeUp" duration={0.6}>
+            <div className="eyebrow light">Sonic signature innovation</div>
+          </Reveal>
+          <div className="sec-head" style={{ marginBottom: 20 }}>
+            <SplitText as="h2" text={"Devotion\nin motion."} mode="char" stagger={0.035} shimmer={["motion."]} />
+            <Reveal variant="fadeUp" delay={0.16} as="p" duration={0.75}>
+              The outer frame stays perfectly still. The centre chakra turns — slowly, silently, endlessly —
+              and the whole mandap comes alive behind Bappa.
+            </Reveal>
+          </div>
+
+          <Reveal variant="fadeUp" delay={0.06}>
+            <label
+              style={{
+                fontSize: 11.5,
+                letterSpacing: ".15em",
+                textTransform: "uppercase",
+                color: "var(--gold-400)",
+                fontWeight: 700
+              }}
+            >
+              Choose a design
+            </label>
+            <div className="designs">
+              {designs.map((d) => (
+                <motion.button
+                  key={d.id}
+                  className={`dbtn${d.id === activeId ? " on" : ""}`}
+                  onClick={() => setActiveId(d.id)}
+                  whileHover={reduced ? undefined : { y: -3 }}
+                  whileTap={reduced ? undefined : { scale: 0.95 }}
+                >
+                  {d.name}
+                </motion.button>
+              ))}
+            </div>
+            <div className="dnote">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={active?.id}
+                  initial={reduced ? false : { opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.3, ease: EASE_SILK }}
+                  style={{ margin: 0 }}
+                >
+                  {active?.note}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+
+            <div className="spin-speed-controls">
+              <span style={{ fontSize: 12, color: "#94a3b8", fontWeight: 600 }}>Rotation Speed:</span>
+              {[
+                { id: "slow", label: "🐢 Slow" },
+                { id: "normal", label: "🔄 Devotional" },
+                { id: "fast", label: "⚡ Fast" }
+              ].map((s) => (
+                <motion.button
+                  key={s.id}
+                  className={`spin-btn ${spinSpeed === s.id ? "active" : ""}`}
+                  onClick={() => setSpinSpeed(s.id)}
+                  whileTap={reduced ? undefined : { scale: 0.94 }}
+                >
+                  {s.label}
+                </motion.button>
+              ))}
+            </div>
+
+            <div className="pills" style={{ marginTop: 16 }}>
+              {["360° rotating centre", "Concealed silent motor", "Warm LED glow", "Plug & play", "Mini · Family · Premium"].map((p, i) => (
+                <motion.span
+                  className="pill"
+                  key={p}
+                  initial={reduced ? false : { opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: EASE_SILK }}
+                >
+                  {p}
+                </motion.span>
+              ))}
+            </div>
+
+            <div className="btnrow" style={{ margin: "20px 0 0" }}>
+              <Magnetic>
+                <Link to={`/kit/${chakra.slug}?design=${active?.id}`} className="btn btn-gold btn-lg">
+                  Explore the backdrop · from {money(chakra.price)}
+                </Link>
+              </Magnetic>
+              <Magnetic>
+                <Link to="/bulk" className="btn btn-ghost btn-lg">Order for a pandal</Link>
+              </Magnetic>
+            </div>
+          </Reveal>
+        </div>
+
+        <Parallax speed={0.09} className="chk-stage-frame">
+          <Reveal variant="zoomIn" duration={1} className="chk-stage">
+            <div className="chk-halo" />
+            <div className="chk-rim" />
+            <div className={`chk-photo chk-spin-${spinSpeed}`}>
+              <motion.img
+                key={active?.id}
+                src={imgUrl(active?.img, "circ")}
+                alt={`${active?.name} rotating chakra backdrop`}
+                loading="eager"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.4 }}
+              />
+            </div>
+            <div className="chk-vinayaka">
+              <img
+                src="/assets/img/vinayaka-transparent.png"
+                alt="Vinayaka seated on throne"
+                loading="eager"
+              />
+            </div>
+          </Reveal>
+        </Parallax>
+      </div>
+    </section>
+  );
+}

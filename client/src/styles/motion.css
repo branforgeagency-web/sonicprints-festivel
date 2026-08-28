@@ -1,0 +1,592 @@
+/* ============================================================
+   SONIC PRINTS — motion layer
+   Everything here is presentation only: the site works, reads
+   and converts identically with this file removed. Uses the
+   existing design tokens from site.css.
+   ============================================================ */
+
+/* ---------- 1. particle field ---------- */
+.fx-particles{
+  position:fixed; inset:0; width:100%; height:100%;
+  pointer-events:none; z-index:3;
+  mix-blend-mode:normal;
+}
+
+/* ---------- 2. custom cursor ---------- */
+.sp-cursor-on,
+.sp-cursor-on a,
+.sp-cursor-on button,
+.sp-cursor-on [role=button],
+.sp-cursor-on label,
+.sp-cursor-on input,
+.sp-cursor-on select,
+.sp-cursor-on textarea{cursor:none}
+.fx-cursor-ring,.fx-cursor-dot{
+  position:fixed; top:0; left:0; z-index:9999; pointer-events:none;
+  border-radius:50%; translate:-50% -50%;
+  will-change:transform;
+}
+.fx-cursor-ring{
+  width:28px; height:28px;
+  border:1.5px solid rgba(201,151,63,.75);
+  background:radial-gradient(circle,rgba(239,209,153,.16),rgba(239,209,153,0) 70%);
+  display:grid; place-items:center;
+  transition:background .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+.fx-cursor-link{
+  border-color:rgba(239,209,153,.95);
+  background:radial-gradient(circle,rgba(239,209,153,.24),rgba(239,209,153,0) 72%);
+  box-shadow:0 0 26px rgba(201,151,63,.35);
+}
+.fx-cursor-view{
+  border-color:transparent;
+  background:radial-gradient(circle at 32% 28%,#F3DCA8,#C9973F 62%,#8E6318);
+  box-shadow:0 12px 34px rgba(201,151,63,.45);
+}
+.fx-cursor-label{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--sans); font-size:9.5px; font-weight:800;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--teal-900);
+  white-space:nowrap;
+}
+.fx-cursor-label svg{width:12px;height:12px}
+.fx-cursor-dot{
+  width:6px; height:6px; background:var(--gold-300);
+  box-shadow:0 0 12px rgba(239,209,153,.9);
+}
+
+/* ---------- 3. opening curtain ---------- */
+.fx-intro{
+  position:fixed; inset:0; z-index:9998;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px;
+  background:radial-gradient(circle at 50% 42%,#123f3a,#0A2E2B 62%,#061c1a);
+}
+.fx-intro-stage{position:relative;display:grid;place-items:center;width:150px;height:150px}
+.fx-intro-glow{
+  position:absolute; width:150px; height:150px; border-radius:50%;
+  background:radial-gradient(circle,rgba(242,215,154,.55),rgba(201,151,63,.16) 46%,transparent 70%);
+  filter:blur(6px);
+}
+.fx-intro-ring{
+  position:absolute; width:110px; height:110px; border-radius:50%;
+  border:1px solid rgba(239,209,153,.55);
+}
+.fx-intro-mark{
+  position:relative; width:66px; height:66px; border-radius:50%;
+  display:grid; place-items:center;
+  background:radial-gradient(circle at 34% 30%,#F3DCA8,#C9973F 58%,#8E6318);
+  box-shadow:0 10px 34px rgba(201,151,63,.5);
+}
+.fx-intro-mark span{font-family:var(--serif);font-size:36px;font-weight:700;color:var(--teal-900);line-height:1}
+.fx-intro-mote{
+  position:absolute; bottom:16px; width:4px; height:4px; border-radius:50%;
+  background:var(--gold-300); box-shadow:0 0 10px rgba(239,209,153,.9);
+}
+.fx-intro-word{text-align:center;color:#fff}
+.fx-intro-word b{font-family:var(--serif);font-size:26px;letter-spacing:.01em;display:block;line-height:1.1}
+.fx-intro-word i{display:block;font-style:normal;font-size:9px;letter-spacing:.34em;color:var(--gold-400);text-transform:uppercase;margin-top:5px}
+
+/* ---------- 4. magnetic buttons + ripple ---------- */
+.fx-magnetic{
+  position:relative; display:inline-flex; isolation:isolate;
+  border-radius:999px; overflow:hidden;
+}
+.fx-magnetic.fx-block{display:flex;width:100%}
+.fx-magnetic>*{position:relative;z-index:1}
+.fx-ripple{
+  position:absolute; z-index:2; width:14px; height:14px; border-radius:50%;
+  translate:-50% -50%; pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,.55),rgba(255,255,255,0) 70%);
+  animation:fxRipple .62s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes fxRipple{from{opacity:.85;scale:.2}to{opacity:0;scale:11}}
+
+/* ---------- 5. tilt + sheen ---------- */
+.fx-tilt{perspective:900px}
+.fx-tilt-inner{
+  position:relative; transform-style:preserve-3d; will-change:transform;
+  height:100%;
+}
+.fx-tilt-glare{
+  position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+  mix-blend-mode:screen;
+}
+
+/* light sweep — a slow reflection crossing the surface on hover */
+.fx-sweep{position:relative;overflow:hidden}
+.fx-sweep::after{
+  content:""; position:absolute; top:-30%; bottom:-30%; left:-70%; width:45%;
+  background:linear-gradient(100deg,transparent,rgba(255,246,225,.42) 46%,rgba(255,246,225,.06) 62%,transparent);
+  transform:translateX(-40%) rotate(8deg); opacity:0; pointer-events:none; z-index:2;
+}
+.fx-sweep:hover::after,.fx-sweep-run::after{
+  animation:fxSweep 1.15s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes fxSweep{
+  0%{opacity:0;transform:translateX(-40%) rotate(8deg)}
+  12%{opacity:1}
+  100%{opacity:0;transform:translateX(420%) rotate(8deg)}
+}
+
+/* ---------- 6. product detail flight ---------- */
+.fx-flight{position:fixed;inset:0;z-index:9990;pointer-events:none}
+.fx-flight-scrim{position:absolute;inset:0;background:#061c1a;backdrop-filter:blur(2px)}
+.fx-flight-img{
+  position:absolute; object-fit:cover; will-change:transform;
+  box-shadow:0 40px 110px rgba(6,26,24,.6),0 0 0 1px rgba(239,209,153,.35),0 0 60px rgba(201,151,63,.28);
+}
+
+/* ---------- 7. split heading reveal ---------- */
+.sp-split{display:block}
+.sp-split-line{display:block}
+.sp-split-word{display:inline-block;white-space:nowrap}
+.sp-split-mask{
+  display:inline-block; overflow:hidden; vertical-align:top;
+  padding:.08em 0 .18em; margin:-.08em 0 -.18em;
+}
+.sp-split-inner{display:inline-block;will-change:transform}
+.sp-shimmer{
+  background:linear-gradient(100deg,#B9852E,#F6E1B0 42%,#C9973F 62%,#EFD199);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:fxShimmer 6.5s ease-in-out infinite;
+}
+@keyframes fxShimmer{0%,100%{background-position:120% 0}50%{background-position:-20% 0}}
+
+/* underline that grows from the centre outwards */
+.sp-underline{position:relative;display:inline-block}
+.sp-underline::after{
+  content:""; position:absolute; left:50%; right:50%; bottom:-.12em; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-400),transparent);
+  transition:left .42s cubic-bezier(.16,1,.3,1),right .42s cubic-bezier(.16,1,.3,1);
+}
+.sp-underline:hover::after,.sp-underline.on::after{left:0;right:0}
+
+/* ---------- 8. section aura / decoration ---------- */
+.fx-aura{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.fx-aura-blob{position:absolute;border-radius:50%;filter:blur(60px)}
+.fx-aura-blob-a{
+  width:min(620px,68vw); aspect-ratio:1; top:-14%; right:-10%;
+  background:radial-gradient(circle,rgba(221,176,94,.28),rgba(221,176,94,0) 70%);
+}
+.fx-aura-blob-b{
+  width:min(520px,62vw); aspect-ratio:1; bottom:-18%; left:-12%;
+  background:radial-gradient(circle,rgba(218,89,24,.16),rgba(218,89,24,0) 70%);
+}
+.fx-aura-dark .fx-aura-blob-a{background:radial-gradient(circle,rgba(239,209,153,.2),rgba(239,209,153,0) 70%)}
+.fx-aura-dark .fx-aura-blob-b{background:radial-gradient(circle,rgba(31,110,103,.35),rgba(31,110,103,0) 70%)}
+.fx-aura-kids .fx-aura-blob-a{background:radial-gradient(circle,rgba(247,217,190,.24),rgba(247,217,190,0) 70%)}
+.fx-aura-kids .fx-aura-blob-b{background:radial-gradient(circle,rgba(224,118,42,.24),rgba(224,118,42,0) 70%)}
+.fx-aura-mandala{
+  position:absolute; width:min(760px,92vw); aspect-ratio:1;
+  top:50%; left:50%; translate:-50% -50%;
+  color:rgba(201,151,63,.16); opacity:.55;
+}
+.fx-aura-dark .fx-aura-mandala{color:rgba(239,209,153,.14)}
+.sec>.wrap,.sec>.narrow{position:relative;z-index:1}
+
+/* ---------- 9. petals ---------- */
+.fx-petals{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.fx-petal{
+  position:absolute; top:-6%; border-radius:60% 40% 55% 45%/60% 55% 45% 40%;
+  background:linear-gradient(140deg,#F7CDAE,#EFB68C 55%,#E9D6A4);
+  opacity:0; animation:fxPetalFall linear infinite; will-change:transform;
+  box-shadow:0 2px 8px rgba(140,80,30,.14);
+}
+@keyframes fxPetalFall{
+  0%{opacity:0;transform:translate3d(0,0,0) rotate(0deg)}
+  8%{opacity:.75}
+  50%{transform:translate3d(var(--fx-drift,24px),52vh,0) rotate(180deg)}
+  92%{opacity:.5}
+  100%{opacity:0;transform:translate3d(0,108vh,0) rotate(360deg)}
+}
+
+/* ---------- 10. diya ---------- */
+.fx-diya{position:relative;display:grid;place-items:center;line-height:0}
+.fx-diya-halo{
+  position:absolute; inset:-45%; border-radius:50%;
+  background:radial-gradient(circle,rgba(249,194,90,.42),rgba(249,194,90,0) 68%);
+  filter:blur(4px); pointer-events:none;
+}
+
+/* ---------- 11. scroll cue ---------- */
+.fx-scrollcue{
+  display:inline-flex; align-items:center; gap:11px;
+  background:rgba(10,46,43,.06); border:1px solid rgba(201,151,63,.32);
+  color:var(--teal-700); border-radius:999px; padding:9px 18px;
+  font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  cursor:pointer; transition:background .25s ease,border-color .25s ease,transform .25s ease;
+}
+.fx-scrollcue:hover{background:rgba(10,46,43,.1);border-color:var(--gold-500);transform:translateY(-2px)}
+.fx-scrollcue-arrow{display:grid;place-items:center;color:var(--gold-600)}
+.fx-scrollcue-arrow svg{width:15px;height:15px}
+
+/* ---------- 12. navbar behaviour ---------- */
+.nav{transition:background .35s ease,box-shadow .35s ease,backdrop-filter .35s ease}
+.nav .wrap{transition:height .35s cubic-bezier(.16,1,.3,1)}
+.nav.is-stuck{
+  background:rgba(8,38,35,.78);
+  backdrop-filter:blur(22px) saturate(160%);
+  box-shadow:0 10px 34px rgba(6,26,24,.32);
+  border-bottom-color:rgba(239,209,153,.26);
+}
+.nav.is-stuck .wrap{height:60px}
+.nav.is-stuck .logo .mark{width:34px;height:34px;transition:width .35s ease,height .35s ease}
+.nav.is-stuck .logo b{font-size:19px}
+.logo .mark{transition:width .35s ease,height .35s ease,box-shadow .35s ease}
+.logo:hover .mark{box-shadow:0 6px 22px rgba(201,151,63,.6)}
+.logo b{transition:font-size .35s ease}
+
+.navlinks a{position:relative;transition:color .25s ease,transform .3s cubic-bezier(.16,1,.3,1),background .25s ease}
+.navlinks a::after{
+  content:""; position:absolute; left:50%; right:50%; bottom:4px; height:1.5px; border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-400),transparent);
+  transition:left .38s cubic-bezier(.16,1,.3,1),right .38s cubic-bezier(.16,1,.3,1),opacity .25s ease;
+  opacity:0;
+}
+.navlinks a:hover{transform:translateY(-3px);background:transparent}
+.navlinks a:hover::after{left:11px;right:11px;opacity:1}
+
+/* ---------- 13. product cards ---------- */
+.kit{will-change:transform}
+.kit::after{
+  content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
+  box-shadow:0 0 0 1px rgba(201,151,63,0),0 0 40px rgba(201,151,63,0);
+  transition:box-shadow .45s ease; z-index:3;
+}
+.kit:hover::after{box-shadow:0 0 0 1px rgba(201,151,63,.42),0 0 44px rgba(201,151,63,.26)}
+.kit-body h3 a{transition:color .3s ease}
+.kit:hover .kit-body h3 a{color:var(--teal-600)}
+.kit.kids:hover .kit-body h3 a{color:var(--kids-600)}
+.kit-img{transform-style:preserve-3d}
+.kit-badge{transition:transform .4s cubic-bezier(.16,1,.3,1),background .3s ease}
+.kit:hover .kit-badge{transform:translateY(-3px)}
+.kit-go{
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--gold-600); margin-top:2px;
+}
+.kit-go svg{width:14px;height:14px;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.kit:hover .kit-go svg{transform:translateX(6px)}
+.kit.kids .kit-go{color:var(--kids-600)}
+.iconbtn{transition:transform .28s cubic-bezier(.16,1,.3,1),background .25s ease,border-color .25s ease,color .25s ease,box-shadow .25s ease}
+.iconbtn:hover{box-shadow:0 10px 26px rgba(23,87,82,.26)}
+
+.kit-img-tilt{display:block;position:relative}
+.kit-img-tilt .fx-tilt-inner{border-radius:var(--r-lg) var(--r-lg) 0 0;overflow:hidden}
+.kit-hint{
+  position:absolute; left:50%; bottom:16px; translate:-50% 0; z-index:3;
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(10,46,43,.86); color:var(--gold-300);
+  border:1px solid rgba(239,209,153,.3); backdrop-filter:blur(8px);
+  font-size:10.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase;
+  padding:8px 14px; border-radius:999px; white-space:nowrap;
+  opacity:0; transform:translateY(10px);
+  transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1);
+  pointer-events:none;
+}
+.kit-hint svg{width:13px;height:13px;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.kit:hover .kit-hint{opacity:1;transform:translateY(0)}
+.kit:hover .kit-hint svg{transform:translateX(4px)}
+.kit.kids .kit-hint{background:rgba(148,64,15,.88);color:#F8DCC4;border-color:rgba(247,217,190,.35)}
+.fx-magnetic-round{border-radius:50%}
+
+/* ---------- 14. hero ---------- */
+.hero{position:relative;isolation:isolate}
+.hero-banner{position:relative;z-index:1;will-change:transform}
+.hero-vignette{
+  position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:radial-gradient(closest-side at 50% 50%,transparent 64%,rgba(120,70,20,.10));
+}
+/* ---------- hero centre chakra: attractive, divine, vibrant ---------- */
+.hero-chakra{
+  position:absolute; top:50%; left:50%; z-index:1;
+  width:var(--hc-size,clamp(90px,13.5vw,220px));
+  aspect-ratio:1/1;
+  transform:translate3d(-50%,-50%,0);
+  pointer-events:none;
+  display:grid; place-items:center;
+  contain:layout style;
+}
+.hero-chakra-glow{
+  position:absolute; inset:-40%;
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,
+    rgba(255,225,140,.65) 0%,
+    rgba(255,175,60,.35) 35%,
+    rgba(232,130,30,.12) 60%,
+    rgba(232,130,30,0) 78%);
+  mix-blend-mode:screen;
+  filter:blur(12px);
+  animation:hcBreathe 6s ease-in-out infinite;
+  will-change:opacity,transform;
+}
+.hero-chakra-wheel{
+  position:relative;
+  width:100%; height:100%;
+  display:block;
+  -webkit-mask-image:radial-gradient(closest-side,#000 88%,transparent 100%);
+  mask-image:radial-gradient(closest-side,#000 88%,transparent 100%);
+}
+.hero-chakra-img{
+  display:block;
+  width:100%; height:100%;
+  opacity:.78;
+  filter:drop-shadow(0 0 14px rgba(255,195,60,.8)) drop-shadow(0 0 28px rgba(245,158,11,.45));
+  transform-origin:50% 50%;
+  animation:hcSpin 42s linear infinite;
+  will-change:transform;
+  backface-visibility:hidden;
+  user-select:none;
+}
+@keyframes hcSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes hcBreathe{
+  0%,100%{opacity:.85;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.05)}
+}
+@media (max-width:700px){
+  .hero-chakra{--hc-size:clamp(70px,17vw,135px)}
+  .hero-chakra-img{opacity:.75;filter:drop-shadow(0 0 10px rgba(255,190,96,.7))}
+  .hero-chakra-glow{filter:blur(5px)}
+}
+.hero-diya{position:absolute;z-index:3;pointer-events:none}
+.hero-diya-l{left:2.4vw;top:24%}
+.hero-diya-r{right:2.8vw;top:16%}
+.hero-cue{
+  position:relative; z-index:4; display:flex; justify-content:center;
+  background:#FBE2C4; padding:14px 0 16px;
+}
+
+/* ---------- 15. final CTA ---------- */
+.cta{position:relative;isolation:isolate}
+.cta-glow{
+  position:absolute; inset:-40% -10%; z-index:0; pointer-events:none;
+  background:radial-gradient(closest-side at 62% 50%,rgba(239,209,153,.22),rgba(239,209,153,0) 70%);
+}
+.cta .fx-petals{z-index:0;opacity:.55}
+.cta>div:not(.fx-petals){position:relative;z-index:1}
+.cta-primary{position:relative;display:inline-flex}
+.cta-burst{position:absolute;inset:0;pointer-events:none;z-index:0}
+.cta-burst span{
+  position:absolute; top:50%; left:50%; width:5px; height:5px; border-radius:50%;
+  background:var(--gold-300); opacity:0;
+  box-shadow:0 0 10px rgba(239,209,153,.8);
+}
+.cta-primary:hover .cta-burst span{animation:fxBurst 1s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes fxBurst{
+  0%{opacity:.85;transform:translate(-50%,-50%) scale(.35)}
+  100%{opacity:0;transform:translate(calc(-50% + var(--bx,0px)),calc(-50% + var(--by,0px))) scale(1)}
+}
+
+.dcard-tilt{display:block}
+.dcard-media{line-height:0;overflow:hidden}
+.kids-tilt{display:block}
+.chk-stage-frame{position:relative}
+
+/* ---------- 16. footer ---------- */
+footer{position:relative;overflow:hidden}
+footer .wrap{position:relative;z-index:1}
+.footer-aura{
+  position:absolute; inset:auto -10% -60% -10%; height:320px; pointer-events:none; z-index:0;
+  background:radial-gradient(closest-side at 50% 100%,rgba(201,151,63,.2),rgba(201,151,63,0) 70%);
+}
+footer a{position:relative;transition:color .22s ease,transform .3s cubic-bezier(.16,1,.3,1)}
+footer a:hover{transform:translateX(4px)}
+
+/* ---------- 17. buttons everywhere ---------- */
+.btn{position:relative;overflow:hidden}
+.btn::before{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.22),transparent 70%);
+  transform:translateX(-120%); transition:transform .7s cubic-bezier(.16,1,.3,1);
+}
+.btn:hover::before{transform:translateX(120%)}
+.btn:active{transform:translateY(0) scale(.97)}
+.btn svg{transition:transform .32s cubic-bezier(.16,1,.3,1)}
+.btn:hover svg:last-child{transform:translateX(4px)}
+
+/* ---------- 18. gallery / product page ---------- */
+.gal-main{will-change:transform}
+.thumbs button{transition:transform .28s cubic-bezier(.16,1,.3,1),border-color .22s ease,box-shadow .22s ease}
+.thumbs button:hover{transform:translateY(-3px)}
+.optbtn,.seg,.pay,.dbtn,.spin-btn,.q{transition:transform .28s cubic-bezier(.16,1,.3,1),border-color .22s ease,box-shadow .22s ease,background .22s ease}
+.optbtn:hover,.dbtn:hover{transform:translateY(-2px)}
+
+/* ---------- 19. reveal curve (upgrades the legacy .rv system) ---------- */
+.js .rv{transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+
+/* ---------- 20. responsive + accessibility ---------- */
+@media (max-width:900px){
+  .fx-aura-mandala{opacity:.35}
+  .hero-rays,.hero-diya{display:none}
+}
+@media (hover:none),(pointer:coarse){
+  .fx-cursor-ring,.fx-cursor-dot{display:none}
+  .fx-sweep::after{display:none}
+  .kit:hover::after{box-shadow:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .fx-particles,.fx-petals,.fx-cursor-ring,.fx-cursor-dot,.hero-rays{display:none!important}
+  .hero-chakra-glow{animation:none!important}
+  .fx-sweep::after,.btn::before{display:none}
+  .sp-shimmer{animation:none;background-position:0 0}
+  .navlinks a:hover{transform:none}
+  footer a:hover{transform:none}
+  .fx-scrollcue:hover{transform:none}
+}
+
+/* nothing in this layer may create sideways scroll */
+.fx-aura,.fx-petals,.hero-aura,.hero-rays,.cta-glow,.footer-aura{max-width:100vw}
+
+/* ============================================================
+   21. HERO BANNER — richer, more luminous festive treatment
+   Layered on top of the existing artwork (image file untouched):
+   warm colour grade, god-rays, sheen sweep, deeper vignette and
+   a soft halo so the headline reads instead of glowing flatly.
+   ============================================================ */
+
+/* the bed the banner sits on — no longer a flat cream slab */
+.hero{
+  background:
+    radial-gradient(130% 100% at 50% 0%,
+      #FFF7E6 0%, #FDEACB 40%, #F8D9AC 72%, #EEC287 100%);
+}
+
+.hero-banner{overflow:hidden}
+
+/* artwork: warmer, deeper, breathing slowly */
+.hero-banner img{
+  filter:saturate(1.18) contrast(1.08) brightness(1.02);
+  transform:scale(1);
+  animation:heroBreath 28s ease-in-out infinite alternate;
+  will-change:transform;
+  transition:filter .45s ease;
+}
+@keyframes heroBreath{
+  from{transform:scale(1)}
+  to{transform:scale(1.05)}
+}
+.hero-banner:hover{filter:none}
+.hero-banner:hover img{filter:saturate(1.26) contrast(1.11) brightness(1.04)}
+
+/* divine god-rays fanning down from above the centre */
+.hero-banner::before{
+  content:"";
+  position:absolute; top:-72%; left:50%;
+  width:170vw; aspect-ratio:1/1;
+  transform:translateX(-50%);
+  transform-origin:50% 50%;
+  z-index:2; pointer-events:none;
+  background:repeating-conic-gradient(from 0deg at 50% 50%,
+    rgba(255,231,176,.34) 0deg 2.6deg,
+    rgba(255,231,176,0) 2.6deg 12deg);
+  -webkit-mask-image:radial-gradient(closest-side,rgba(0,0,0,.95) 12%,rgba(0,0,0,.45) 46%,transparent 74%);
+  mask-image:radial-gradient(closest-side,rgba(0,0,0,.95) 12%,rgba(0,0,0,.45) 46%,transparent 74%);
+  mix-blend-mode:screen;
+  opacity:.75;
+  animation:heroRays 120s linear infinite, heroRayPulse 7s ease-in-out infinite;
+  will-change:transform,opacity;
+}
+@keyframes heroRays{to{transform:translateX(-50%) rotate(360deg)}}
+@keyframes heroRayPulse{0%,100%{opacity:.55}50%{opacity:.9}}
+
+/* warm colour grade + real vignette for depth */
+.hero-banner::after{
+  content:"";
+  position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:
+    radial-gradient(56% 76% at 50% 42%, rgba(255,193,84,.22), rgba(255,193,84,0) 66%),
+    linear-gradient(180deg, rgba(255,244,220,.34) 0%, rgba(255,244,220,0) 24%),
+    linear-gradient(0deg, rgba(103,44,8,.22) 0%, rgba(103,44,8,0) 16%),
+    radial-gradient(125% 115% at 50% 46%, rgba(0,0,0,0) 54%, rgba(84,36,6,.28) 100%);
+}
+
+/* the old flat vignette gets more warmth and reach */
+.hero-vignette{
+  background:
+    radial-gradient(closest-side at 50% 50%, transparent 52%, rgba(112,58,14,.20) 92%, rgba(90,44,10,.30) 100%),
+    linear-gradient(90deg, rgba(120,62,16,.18), rgba(0,0,0,0) 16%, rgba(0,0,0,0) 84%, rgba(120,62,16,.18));
+}
+
+/* a slow light sheen crossing the banner */
+.hero-stage{overflow:hidden}
+.hero-stage::after{
+  content:"";
+  position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:linear-gradient(104deg,
+    rgba(255,255,255,0) 42%,
+    rgba(255,255,255,.40) 48%,
+    rgba(255,236,190,.26) 52%,
+    rgba(255,255,255,0) 59%);
+  background-size:260% 100%;
+  background-repeat:no-repeat;
+  mix-blend-mode:screen;
+  animation:heroSheen 11s ease-in-out infinite;
+  will-change:background-position;
+}
+@keyframes heroSheen{
+  0%{background-position:160% 0}
+  55%,100%{background-position:-60% 0}
+}
+
+/* soft halo behind the headline so it sits on light, not on haze */
+.hero-head::before{
+  content:"";
+  position:absolute; left:50%; top:-8%;
+  transform:translateX(-50%);
+  width:min(1180px,92%); height:165%;
+  z-index:-1; pointer-events:none;
+  background:radial-gradient(50% 48% at 50% 36%,
+    rgba(255,253,246,.90) 0%,
+    rgba(255,246,226,.58) 40%,
+    rgba(255,238,206,0) 74%);
+}
+
+/* headline: molten gold-to-ember instead of flat orange */
+.hh-flame{
+  background:linear-gradient(178deg,#FFA23A 0%,#F4701F 42%,#DC4C12 72%,#B33A0B 100%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  text-shadow:none;
+  filter:drop-shadow(0 2px 10px rgba(255,255,255,.95))
+         drop-shadow(0 0 18px rgba(255,214,150,.85))
+         drop-shadow(0 3px 6px rgba(150,52,8,.28));
+}
+.hh-ink{text-shadow:0 2px 20px #FFFFFF, 0 0 12px rgba(255,255,255,.95), 0 2px 6px rgba(10,46,43,.22)}
+.hh-script{color:#AB3F0C}
+
+/* the strip below now meets a lit edge, not a cream one */
+.hero-cue{
+  background:linear-gradient(180deg,#F6D3A2 0%,#FBE2C4 60%,#FDEBD2 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55), inset 0 6px 18px rgba(140,78,22,.10);
+}
+.hero-cue::before{
+  content:"";
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:min(760px,86%); height:2px;
+  background:linear-gradient(90deg,
+    rgba(201,151,63,0), rgba(201,151,63,.55) 22%,
+    rgba(255,222,150,.95) 50%, rgba(201,151,63,.55) 78%, rgba(201,151,63,0));
+  border-radius:2px;
+}
+
+@media (max-width:760px){
+  /* the stacked mobile headline block gets the same festive light */
+  .hero-head{
+    background:
+      radial-gradient(90% 120% at 50% 6%, rgba(255,224,160,.55), rgba(255,224,160,0) 70%),
+      linear-gradient(180deg,#FFF6E4 0%,#FDE7C6 55%,#F7D5A6 100%) !important;
+    box-shadow:inset 0 -1px 0 rgba(201,151,63,.30);
+  }
+  .hero-head::before{display:none}
+  .hh-flame{filter:drop-shadow(0 2px 6px rgba(150,52,8,.20))}
+  .hh-ink{text-shadow:none}
+  .hero-banner::before{opacity:.5}
+  .hero-stage::after{animation-duration:14s}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-banner img{animation:none;transform:none}
+  .hero-banner::before{animation:none}
+  .hero-stage::after{display:none}
+}

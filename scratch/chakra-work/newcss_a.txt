@@ -1,0 +1,96 @@
+.chk-stage{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:100%;
+}
+
+/* The whole mandap: still frame + rotating centre + a fixed idol in front.
+   Everything is sized off this box so the idol always lands on the chakra hub. */
+.chk-mandap{
+  position:relative;
+  width:min(560px,96%);
+  aspect-ratio:1/.92;
+  margin-inline:auto;
+  isolation:isolate;
+}
+
+/* soft warm wall-wash behind the backdrop */
+.chk-glow{
+  position:absolute; left:2%; top:-6%; width:96%; aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(closest-side,rgba(251,191,36,.34),rgba(245,158,11,.14) 58%,transparent 76%);
+  filter:blur(6px); z-index:0; pointer-events:none;
+}
+
+/* the outer frame — deliberately motionless */
+.chk-halo{
+  position:absolute; left:5%; top:-3.5%; width:90%; aspect-ratio:1; border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,rgba(242,215,154,.9) 0 .8deg,rgba(201,151,63,.22) .8deg 2.4deg,transparent 2.4deg 6.6deg);
+  -webkit-mask-image:radial-gradient(closest-side,transparent 86%,#000 92%,#000 99%,transparent 100%);
+  mask-image:radial-gradient(closest-side,transparent 86%,#000 92%,#000 99%,transparent 100%);
+  opacity:.5; z-index:0; pointer-events:none;
+}
+.chk-rim{
+  position:absolute; left:4%; top:-4.5%; width:92%; aspect-ratio:1; border-radius:50%;
+  border:1px solid rgba(239,209,153,.42); pointer-events:none; z-index:0;
+}
+.chk-rim::after{
+  content:""; position:absolute; inset:3.4%; border-radius:50%;
+  border:1px dashed rgba(239,209,153,.26);
+}
+
+/* The rotating centre chakra. The wrapper spins forever and never remounts,
+   so swapping designs crossfades inside a rotation that never resets. */
+.chk-disc{
+  position:absolute; top:0; left:10%;
+  width:80%; aspect-ratio:1;
+  z-index:1;
+  transform-origin:50% 50%;
+  animation:spin 40s linear infinite;
+  will-change:transform;
+  backface-visibility:hidden;
+}
+.chk-disc-img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 0 26px rgba(251,191,36,.42)) drop-shadow(0 18px 44px rgba(0,0,0,.55));
+  pointer-events:none;
+}
+.chk-spin-slow{animation-duration:78s}
+.chk-spin-normal{animation-duration:40s}
+.chk-spin-fast{animation-duration:17s}
+.chk-disc.is-still{animation:none}
+
+/* Foreground Vinayaka — one idol, always still, always in front */
+.chk-vinayaka{
+  position:absolute; bottom:1.5%; left:50%;
+  width:100%;
+  transform:translateX(-50%);
+  z-index:2;
+  pointer-events:none;
+  filter:drop-shadow(0 18px 32px rgba(0,0,0,.62));
+}
+.chk-vinayaka img{
+  display:block; width:100%; height:auto; object-fit:contain;
+}
+.chk-floor{
+  position:absolute; bottom:0; left:14%; width:72%; height:5%;
+  border-radius:50%;
+  background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent 78%);
+  z-index:1; pointer-events:none;
+}
+
+/* which design is on screen right now */
+.chk-dots{display:flex;gap:9px;justify-content:center;margin-top:18px}
+.chk-dot{
+  width:9px;height:9px;padding:0;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(239,209,153,.5); background:transparent; transition:.3s;
+}
+.chk-dot:hover{background:rgba(239,209,153,.45)}
+.chk-dot.on{background:var(--gold-400,#EFD199);box-shadow:0 0 10px rgba(251,191,36,.75);transform:scale(1.25)}
+
+@media (prefers-reduced-motion:reduce){
+  .chk-disc{animation:none}
+}

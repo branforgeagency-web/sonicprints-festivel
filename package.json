@@ -1,0 +1,18 @@
+{
+  "name": "sonic-prints-mern",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sonic Prints — Ganesh Festival Collection 2026. MERN storefront (MongoDB, Express, React, Node).",
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "seed": "npm run seed --prefix server",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently -n SERVER,CLIENT -c green,cyan \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix client",
+    "start": "npm start --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
