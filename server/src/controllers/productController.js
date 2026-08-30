@@ -1,8 +1,12 @@
 import Product from "../models/Product.js";
+import productsData from "../../seed/productsData.js";
 
 export async function listProducts(req, res, next) {
   try {
-    const products = await Product.find({ active: true }).sort({ order: 1 }).lean();
+    let products = await Product.find({ active: true }).sort({ order: 1 }).lean();
+    if (!products.length) {
+      products = productsData;
+    }
     res.json(products);
   } catch (err) {
     next(err);
@@ -11,17 +15,18 @@ export async function listProducts(req, res, next) {
 
 export async function getProductBySlug(req, res, next) {
   try {
-    const product = await Product.findOne({ slug: req.params.slug, active: true }).lean();
+    let product = await Product.findOne({ slug: req.params.slug, active: true }).lean();
+    if (!product) {
+      product = productsData.find((p) => p.slug === req.params.slug);
+    }
     if (!product) return res.status(404).json({ message: "Product not found" });
 
     let crossSell = [];
     if (product.crossSell?.length) {
       crossSell = await Product.find({ id: { $in: product.crossSell }, active: true }).lean();
-    } else {
-      crossSell = await Product.find({ id: { $ne: product.id }, active: true })
-        .sort({ order: 1 })
-        .limit(3)
-        .lean();
+    }
+    if (!crossSell.length) {
+      crossSell = productsData.filter((p) => p.id !== product.id).slice(0, 3);
     }
     res.json({ ...product, crossSellProducts: crossSell });
   } catch (err) {

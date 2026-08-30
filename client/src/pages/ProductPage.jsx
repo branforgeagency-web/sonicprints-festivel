@@ -129,41 +129,49 @@ export default function ProductPage() {
 
       <div className="wrap pd">
         <div className="gal">
-          <motion.div
-            className="gal-main"
-            ref={galRef}
-            initial={reduced ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: EASE_SILK }}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.img
-                key={mainImg}
-                src={mainImg}
-                alt={`${product.name} — ${product.subtitle}`}
-                width="900"
-                height="900"
-                initial={reduced ? false : { opacity: 0, scale: 1.04 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.45, ease: EASE_SILK }}
-                onLoad={() => registerTarget(galRef.current)}
-              />
-            </AnimatePresence>
-            {product.badge && <span className="zoomtag">{product.badge}</span>}
-          </motion.div>
-          <motion.div
-            className="thumbs"
-            initial={reduced ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.18, ease: EASE_SILK }}
-          >
-            {thumbs.map((t, i) => (
-              <button key={t.key} className={i === activeThumb ? "on" : ""} aria-label={t.label} onClick={() => setActiveThumb(i)}>
-                <img src={t.src} alt={t.label} />
-              </button>
-            ))}
-          </motion.div>
+          <div className="gal-viewport-wrapper">
+            <motion.div
+              className="thumbs-v"
+              initial={reduced ? false : { opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.18, ease: EASE_SILK }}
+            >
+              {thumbs.map((t, i) => (
+                <button
+                  key={t.key}
+                  className={i === activeThumb ? "on" : ""}
+                  aria-label={t.label}
+                  onClick={() => setActiveThumb(i)}
+                >
+                  <img src={t.src} alt={t.label} />
+                </button>
+              ))}
+            </motion.div>
+
+            <motion.div
+              className="gal-main"
+              ref={galRef}
+              initial={reduced ? false : { opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: EASE_SILK }}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.img
+                  key={mainImg}
+                  src={mainImg}
+                  alt={`${product.name} — ${product.subtitle}`}
+                  width="900"
+                  height="900"
+                  initial={reduced ? false : { opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.45, ease: EASE_SILK }}
+                  onLoad={() => registerTarget(galRef.current)}
+                />
+              </AnimatePresence>
+              {product.badge && <span className="zoomtag">{product.badge}</span>}
+            </motion.div>
+          </div>
         </div>
 
         <motion.div
@@ -352,7 +360,7 @@ export default function ProductPage() {
             <div className="sec-head-row">
               <div className="sec-head rv"><div className="eyebrow">Complete the celebration</div><h2>Goes well with</h2></div>
             </div>
-            <RevealGroup className="kits" stagger={0.12} amount={0.1}>
+            <RevealGroup className="store-grid-showcase" stagger={0.12} amount={0.1}>
               {crossSell.map((p, i) => <KitCard key={p.id} product={p} index={i} />)}
             </RevealGroup>
           </div>

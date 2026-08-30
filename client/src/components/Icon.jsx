@@ -55,7 +55,21 @@ const PATHS = {
       <circle cx="12" cy="12" r="2.6" />
     </>
   ),
-  plus: <path d="M12 5v14M5 12h14" />,
+  sparkle: <path d="m12 3 1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3z" />,
+  light: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+    </>
+  ),
+  zap: <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />,
+  layers: (
+    <>
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </>
+  ),
   whatsapp: (
     <>
       <path

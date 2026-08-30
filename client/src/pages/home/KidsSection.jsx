@@ -1,112 +1,220 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { imgUrl, money } from "../../context/SiteContext.jsx";
+import { motion, AnimatePresence } from "framer-motion";
 import { KIDS_JOURNEY } from "../../data/content.js";
-import { Reveal, RevealGroup, RevealItem } from "../../components/fx/Reveal.jsx";
+import { money, useSite, imgUrl } from "../../context/SiteContext.jsx";
+import { Reveal, RevealGroup } from "../../components/fx/Reveal.jsx";
 import SplitText from "../../components/fx/SplitText.jsx";
-import Magnetic from "../../components/fx/Magnetic.jsx";
-import Tilt from "../../components/fx/Tilt.jsx";
-import { SectionAura, Petals } from "../../components/fx/Decor.jsx";
+import Icon from "../../components/Icon.jsx";
 import { EASE_SILK } from "../../anim/tokens.js";
 import useMotionProfile from "../../anim/useMotionProfile.js";
 
-const STEP_ICONS = ["📖", "🎨", "✂️", "🪔", "📜"];
-const STEP_COLORS = ["#f59e0b", "#ec4899", "#3b82f6", "#10b981", "#8b5cf6"];
+const STEP_ICONS = ["📖", "🎁", "🎨", "✨", "🪔"];
 
-/* Alternating entrance: the picture comes in from the left, the story
-   from the right, and the journey steps count themselves in. */
 export default function KidsSection() {
-  const [activeStep, setActiveStep] = useState(0);
   const { reduced } = useMotionProfile();
+  const { addToCart } = useSite();
+  const [activeStep, setActiveStep] = useState(0);
+
+  const currentStep = KIDS_JOURNEY[activeStep] || KIDS_JOURNEY[0];
 
   return (
-    <section className="sec sec-kids" id="kids">
-      <SectionAura tone="kids" />
-      <Petals count={5} />
-      <div className="wrap split">
-        <Reveal variant="fromLeft" duration={0.9}>
-          <Tilt max={4} className="kids-tilt">
-            <div className="frame kids-frame-animated fx-sweep">
-              <div className="kids-img-glow" />
-              <img
-                src={imgUrl("display-kids")}
-                alt="Bal Ganesh and Make Your Own Ganesha kits on a retail display"
-                loading="lazy"
-                className="kids-img-zoom"
-              />
-              <motion.div
-                className="kids-badge-overlay"
-                animate={reduced ? undefined : { y: [0, -6, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <span>✨ Kid Approved 🎨</span>
-              </motion.div>
-            </div>
-          </Tilt>
-        </Reveal>
-
-        <div>
-          <Reveal variant="fromRight" duration={0.8}>
-            <div className="eyebrow light">For little hands. Big memories.</div>
+    <section className="sec sec-kids-modern" id="kids">
+      <div className="wrap">
+        {/* Section Header */}
+        <div className="sec-head center" style={{ marginBottom: 36 }}>
+          <Reveal variant="fadeUp" duration={0.6}>
+            <div className="eyebrow center">🎨 For little hands. Big memories.</div>
           </Reveal>
-          <div className="sec-head" style={{ marginBottom: 22 }}>
-            <SplitText
-              as="h2"
-              text={"They won't just watch\nthe festival. They'll live it."}
-              shimmer={["live"]}
-            />
-            <Reveal variant="fromRight" delay={0.16} as="p" duration={0.8}>
-              Two kits built around a child&apos;s whole day — a story to read, a Ganesha to make and colour,
-              a mini pandal to build, a puja simple enough for them to lead, and a certificate with their name on it.
-            </Reveal>
-          </div>
-
-          {/* Interactive Journey Steps for Kids */}
-          <RevealGroup className="journey journey-interactive" stagger={0.09} amount={0.2}>
-            {KIDS_JOURNEY.map((step, i) => (
-              <RevealItem
-                key={step.title}
-                variant="fromRight"
-                className={`jstep jstep-card ${activeStep === i ? "jstep-active" : ""}`}
-                onClick={() => setActiveStep(i)}
-                whileHover={reduced ? undefined : { x: 8 }}
-                transition={{ duration: 0.6, ease: EASE_SILK }}
-                style={{ borderColor: activeStep === i ? STEP_COLORS[i] : "transparent" }}
-              >
-                <motion.div
-                  className="n jstep-icon"
-                  animate={{
-                    background: activeStep === i ? STEP_COLORS[i] : "rgba(255, 255, 255, 0.15)",
-                    scale: activeStep === i ? 1.08 : 1
-                  }}
-                  transition={{ duration: 0.35, ease: EASE_SILK }}
-                >
-                  <span>{STEP_ICONS[i]}</span>
-                </motion.div>
-                <div>
-                  <h4 style={{ color: activeStep === i ? "#fbbf24" : "#fff" }}>{step.title}</h4>
-                  <p>{step.text}</p>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-
-          <Reveal variant="fadeUp" delay={0.1}>
-            <div className="btnrow" style={{ margin: "26px 0 0" }}>
-              <Magnetic>
-                <Link to="/kit/bal-ganesh-kids-kit" className="btn btn-kids">
-                  Bal Ganesh · {money(349)}
-                </Link>
-              </Magnetic>
-              <Magnetic>
-                <Link to="/kit/make-your-own-ganesha" className="btn btn-ghost">
-                  Make Your Own · {money(499)}
-                </Link>
-              </Magnetic>
-            </div>
+          <SplitText
+            as="h2"
+            text={"A festival experience\nthey will remember forever."}
+            shimmer={["experience"]}
+          />
+          <Reveal variant="fadeUp" delay={0.16} as="p" duration={0.75}>
+            Designed to bring children closer to tradition through hands-on clay sculpting, story books, 
+            and interactive festival activities.
           </Reveal>
         </div>
+
+        {/* 5-Stage Interactive Journey Stepper Bar */}
+        <Reveal variant="fadeUp" delay={0.22}>
+          <div className="kids-journey-track" role="tablist" aria-label="Kids Festival Journey Steps">
+            {KIDS_JOURNEY.map((step, i) => (
+              <button
+                key={step.title}
+                className={`kids-journey-tab${activeStep === i ? " active" : ""}`}
+                onClick={() => setActiveStep(i)}
+                role="tab"
+                aria-selected={activeStep === i}
+              >
+                <span className="kjt-icon">{STEP_ICONS[i]}</span>
+                <span className="kjt-num">0{i + 1}</span>
+                <span className="kjt-title">{step.title}</span>
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Active Stage Feature Stage Box */}
+        <div className="kids-stage-showcase">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep.title}
+              className="kids-stage-grid"
+              initial={reduced ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduced ? false : { opacity: 0, y: -12 }}
+              transition={{ duration: 0.45, ease: EASE_SILK }}
+            >
+              {/* Left Column: Visual Showcase Frame */}
+              <div className="kids-stage-visual">
+                <div className="kids-stage-frame">
+                  <img
+                    src={imgUrl(currentStep.img)}
+                    alt={currentStep.title}
+                    className="kids-stage-img"
+                  />
+                  <div className="kids-stage-badge">
+                    <span>{currentStep.badge}</span>
+                  </div>
+                  <div className="kids-stage-counter">
+                    Stage {activeStep + 1} of 5
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Storybook Experience Card */}
+              <div className="kids-stage-card">
+                <div className="ksc-header">
+                  <div className="ksc-icon-circle">
+                    {STEP_ICONS[activeStep]}
+                  </div>
+                  <div>
+                    <span className="ksc-step-tag">STORYBOOK STAGE 0{activeStep + 1}</span>
+                    <h3 className="ksc-title">{currentStep.title}</h3>
+                  </div>
+                </div>
+
+                <p className="ksc-text">{currentStep.text}</p>
+
+                <div className="ksc-perks-head">What your child experiences in this stage:</div>
+                <div className="ksc-perks-grid">
+                  <div className="ksc-perk-pill">
+                    <span>🎨 Hands-on Crafting</span>
+                  </div>
+                  <div className="ksc-perk-pill">
+                    <span>📖 Festival Story Book</span>
+                  </div>
+                  <div className="ksc-perk-pill">
+                    <span>🌱 100% Eco Safe Clay</span>
+                  </div>
+                </div>
+
+                {/* Stage Navigation Footer */}
+                <div className="ksc-nav-row">
+                  <button
+                    className="ksc-nav-btn"
+                    disabled={activeStep === 0}
+                    onClick={() => setActiveStep((prev) => Math.max(0, prev - 1))}
+                  >
+                    ← Previous Step
+                  </button>
+                  <button
+                    className="ksc-nav-btn ksc-nav-btn-next"
+                    disabled={activeStep === KIDS_JOURNEY.length - 1}
+                    onClick={() => setActiveStep((prev) => Math.min(KIDS_JOURNEY.length - 1, prev + 1))}
+                  >
+                    Next Step →
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Featured Kids Kits Showcase (No Boxed Cards) */}
+        <Reveal variant="fadeUp" delay={0.2} style={{ marginTop: 48 }}>
+          <div className="kids-showcase-stream">
+            <div className="kids-showcase-heading">
+              <span>🎁 Featured Kids &amp; DIY Activity Kits</span>
+            </div>
+
+            {/* Product 1: Bal Ganesh */}
+            <div className="kids-feature-row">
+              <div className="kfr-info">
+                <div className="kfr-meta">
+                  <span className="kfr-tag">✨ Best for Ages 5–12</span>
+                  <span className="kfr-sub">My First Ganesh Chaturthi Kit</span>
+                </div>
+                <h3 className="kfr-title">Bal Ganesh Kit</h3>
+                <p className="kfr-text">
+                  Story book, activity book, colouring pencils, stickers, school labels &amp; Little Ganesha certificate.
+                </p>
+                <div className="kpc-highlights">
+                  <span className="kpc-pill">✦ Story Book</span>
+                  <span className="kpc-pill">✦ Pencils &amp; Stickers</span>
+                  <span className="kpc-pill">✦ Certificate</span>
+                </div>
+              </div>
+
+              <div className="kfr-action-block">
+                <div className="kfr-price-wrap">
+                  <b className="kfr-price">{money(349)}</b>
+                  <span className="kfr-price-sub">All inclusive</span>
+                </div>
+                <div className="kpc-btn-group">
+                  <Link to="/kit/bal-ganesh-kids-kit" className="btn btn-line btn-sm">
+                    <Icon name="eye" size={15} /> View Details
+                  </Link>
+                  <button
+                    onClick={() => addToCart("kids", { qty: 1 })}
+                    className="btn btn-gold btn-sm"
+                  >
+                    <Icon name="cart" size={15} /> Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Product 2: Make Your Own Ganesha (DIY) */}
+            <div className="kids-feature-row">
+              <div className="kfr-info">
+                <div className="kfr-meta">
+                  <span className="kfr-tag kfr-tag-diy">🎨 DIY Hands-on Craft</span>
+                  <span className="kfr-sub">DIY Festival Activity Kit</span>
+                </div>
+                <h3 className="kfr-title">Make Your Own Ganesha</h3>
+                <p className="kfr-text">
+                  Natural clay, reusable food-grade mould, paints, toran, rangoli stencil &amp; guided eco visarjan.
+                </p>
+                <div className="kpc-highlights">
+                  <span className="kpc-pill">✦ Eco Clay</span>
+                  <span className="kpc-pill">✦ Reusable Mould</span>
+                  <span className="kpc-pill">✦ Paints &amp; Stencil</span>
+                </div>
+              </div>
+
+              <div className="kfr-action-block">
+                <div className="kfr-price-wrap">
+                  <b className="kfr-price">{money(499)}</b>
+                  <span className="kfr-price-sub">All inclusive</span>
+                </div>
+                <div className="kpc-btn-group">
+                  <Link to="/kit/make-your-own-ganesha" className="btn btn-line btn-sm">
+                    <Icon name="eye" size={15} /> View Details
+                  </Link>
+                  <button
+                    onClick={() => addToCart("diy", { qty: 1 })}
+                    className="btn btn-gold btn-sm"
+                  >
+                    <Icon name="cart" size={15} /> Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

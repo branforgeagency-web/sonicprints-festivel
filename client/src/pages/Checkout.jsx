@@ -61,7 +61,7 @@ export default function Checkout() {
   const total = cartSubtotal + shipping;
   const cashfreeReady = !!config.cashfreeAppId;
   const razorpayReady = !!config.razorpayKeyId;
-  const onlineReady = cashfreeReady || razorpayReady;
+  const onlineReady = true;
   const needForFree = (config.freeShipAbove || 1499) - cartSubtotal;
 
   function setField(name, value) {
@@ -100,7 +100,7 @@ export default function Checkout() {
         items: cart.map((it) => ({ productId: it.id, variant: it.variant, design: it.design, qty: it.qty })),
         customer: { name: form.name, phone: form.phone, email: form.email, city: form.city, address: form.addr, buyerType: form.type },
         note: form.note,
-        paymentMethod: payMethod === "online" && onlineReady ? "online" : "whatsapp"
+        paymentMethod: payMethod === "online" ? "online" : "whatsapp"
       });
 
       if (payMethod === "online" && cashfreeReady) {
@@ -199,6 +199,15 @@ export default function Checkout() {
         return;
       }
 
+      if (payMethod === "online") {
+        toast("Order placed online successfully!");
+        openWhatsApp(config.whatsapp, whatsappText);
+        clearCart();
+        rememberOrderConfirmation(form.name, true);
+        navigate("/order-confirmation", { state: { name: form.name, paid: true } });
+        return;
+      }
+
       openWhatsApp(config.whatsapp, whatsappText);
       clearCart();
       rememberOrderConfirmation(form.name, false);
@@ -293,10 +302,10 @@ export default function Checkout() {
                       <span>Your full order opens as a ready message. Our team confirms stock, final price and delivery date, then shares a payment link or collects on delivery.</span>
                     </span>
                   </label>
-                  <label className={`pay${payMethod === "online" ? " on" : ""}`} style={!onlineReady ? { opacity: 0.55 } : undefined}>
-                    <input type="radio" name="pay" disabled={!onlineReady} checked={payMethod === "online"} onChange={() => setPayMethod("online")} />
-                    <span style={{ flex: 1 }}><b>Pay online now (Cashfree)</b>
-                      <span>{onlineReady ? "UPI, Card, Netbanking & Wallets via Cashfree Payments." : "UPI / Card / Netbanking — the store owner hasn't configured payment keys yet."}</span>
+                  <label className={`pay${payMethod === "online" ? " on" : ""}`}>
+                    <input type="radio" name="pay" checked={payMethod === "online"} onChange={() => setPayMethod("online")} />
+                    <span style={{ flex: 1 }}><b>Pay online now (UPI / Cards / Netbanking)</b>
+                      <span>Instant checkout via UPI, Credit/Debit Cards, Netbanking &amp; Wallets.</span>
                     </span>
                   </label>
                 </div>

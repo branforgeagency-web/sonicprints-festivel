@@ -1,6 +1,7 @@
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import SiteConfig from "../models/SiteConfig.js";
+import productsData from "../../seed/productsData.js";
 import { getRazorpayInstance } from "../utils/razorpay.js";
 import { createCashfreeOrderSession, fetchCashfreeOrderStatus } from "../utils/cashfree.js";
 import crypto from "crypto";
@@ -33,7 +34,10 @@ async function priceCart(rawItems) {
   const byId = Object.fromEntries(products.map((p) => [p.id, p]));
 
   const items = rawItems.map((raw) => {
-    const product = byId[raw.productId];
+    let product = byId[raw.productId];
+    if (!product) {
+      product = productsData.find((p) => p.id === raw.productId);
+    }
     if (!product) {
       const err = new Error(`Product "${raw.productId}" is not available`);
       err.status = 400;

@@ -84,11 +84,36 @@ export const AUDIENCES = [
 ];
 
 export const KIDS_JOURNEY = [
-  { title: "Meet Bappa", text: "A story book and a child-friendly introduction to Ganesh Chaturthi." },
-  { title: "Create", text: "Colour, sticker, mould and make their own eco-friendly Ganesha." },
-  { title: "Decorate", text: "Build a mini pandal, place the rangoli and prepare Bappa's little space." },
-  { title: "Pray Together", text: "An illustrated puja guide turns the activity into a family moment." },
-  { title: "Celebrate & Remember", text: "Eco-visarjan guidance and a Little Ganesha certificate with their name." }
+  {
+    title: "Meet Bappa",
+    text: "Walk through the festive street and discover Bal Ganesh & his story book.",
+    img: "kids-step-1",
+    badge: "✨ 1. Discover Bappa & Festival Story"
+  },
+  {
+    title: "Unbox & Welcome",
+    text: "Bring the festival activity kit home to a warm, decorated living room.",
+    img: "kids-step-2",
+    badge: "🎁 2. Welcome Bappa & Kit Home"
+  },
+  {
+    title: "Colour & Craft",
+    text: "Colour the story book, place stickers, mould clay and craft with friends.",
+    img: "kids-step-3",
+    badge: "🎨 3. Colour, Sticker & Craft Together"
+  },
+  {
+    title: "Divine Blessing",
+    text: "Experience the magic as Bal Ganesh fills your clay creation with divine light.",
+    img: "kids-step-4",
+    badge: "✨ 4. Divine Blessing & Clay Idol"
+  },
+  {
+    title: "Pray & Celebrate",
+    text: "Fold hands together, lead the family puja, and complete eco-visarjan.",
+    img: "kids-step-5",
+    badge: "🪔 5. Family Puja & Eco Visarjan"
+  }
 ];
 
 export const DEALER_CARDS = [
