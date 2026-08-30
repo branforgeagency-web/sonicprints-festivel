@@ -5,7 +5,10 @@ const isLocalhost =
   typeof window !== "undefined" &&
   (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
 
-const rawApiUrl = import.meta.env.VITE_API_URL || (isLocalhost ? "http://localhost:5000" : "");
+// When running on localhost (dev or preview build), force local backend http://localhost:5000
+const rawApiUrl = isLocalhost
+  ? "http://localhost:5000"
+  : (import.meta.env.VITE_API_URL || "");
 
 let baseURL = "/api";
 if (rawApiUrl) {
