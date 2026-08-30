@@ -16,6 +16,7 @@ const SiteConfigSchema = new mongoose.Schema(
     shipFlat: { type: Number, default: 79 },
     bulkThreshold: { type: Number, default: 25 },
     cashfreeAppId: { type: String, default: "" },
+    cashfreeSecretKey: { type: String, default: "" },
     cashfreeMode: { type: String, default: "sandbox" },
     razorpayKeyId: { type: String, default: "" },
     festivalDateISO: { type: String, default: "2026-09-14T06:00:00+05:30" },

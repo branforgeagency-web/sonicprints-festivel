@@ -14,6 +14,7 @@ const FIELDS = [
   ["shipFlat", "Flat Shipping Rate Below Threshold (₹)", "79", "number"],
   ["bulkThreshold", "Bulk Slab Pricing Threshold (Qty)", "25", "number"],
   ["cashfreeAppId", "Cashfree App ID (Client ID)", "CF123456..."],
+  ["cashfreeSecretKey", "Cashfree Secret Key", "cfsk_ma_test_..."],
   ["cashfreeMode", "Cashfree Environment (sandbox / production)", "sandbox"],
   ["razorpayKeyId", "Razorpay Key ID (Fallback)", "rzp_live_..."],
   ["festivalDateISO", "Ganesh Chaturthi Date (ISO String)", "2026-09-14T06:00:00+05:30"],

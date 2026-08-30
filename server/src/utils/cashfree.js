@@ -4,7 +4,7 @@ import SiteConfig from "../models/SiteConfig.js";
 export async function getCashfreeCredentials() {
   const cfg = await SiteConfig.findById("site-config").lean();
   const appId = process.env.CASHFREE_APP_ID || cfg?.cashfreeAppId || "";
-  const secretKey = process.env.CASHFREE_SECRET_KEY || "";
+  const secretKey = process.env.CASHFREE_SECRET_KEY || cfg?.cashfreeSecretKey || "";
   const envMode = (process.env.CASHFREE_MODE || cfg?.cashfreeMode || "sandbox").toLowerCase();
   const isProduction = envMode === "production" || envMode === "prod";
 

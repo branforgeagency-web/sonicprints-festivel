@@ -54,7 +54,7 @@ export default function Checkout() {
   useReveal();
 
   const [form, setForm] = useState(EMPTY_FORM);
-  const [payMethod, setPayMethod] = useState("whatsapp");
+  const [payMethod, setPayMethod] = useState("online");
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -103,133 +103,72 @@ export default function Checkout() {
         paymentMethod: payMethod === "online" ? "online" : "whatsapp"
       });
 
-      if (payMethod === "online" && cashfreeReady) {
-        try {
-          const scriptOk = await loadCashfreeScript();
-          if (!scriptOk) {
-            toast("Payment gateway library blocked — please order on WhatsApp");
-            openWhatsApp(config.whatsapp, whatsappText);
-            clearCart();
-            rememberOrderConfirmation(form.name, false);
-            navigate("/order-confirmation", { state: { name: form.name, paid: false } });
-            return;
-          }
+      if (payMethod === "online") {
+        if (!cashfreeReady && !razorpayReady) {
+          toast("Cashfree API keys not configured yet. Please enter your Cashfree App ID & Secret Key in server/.env or Admin Settings.");
+          setSubmitting(false);
+          return;
+        }
 
-          const { paymentSessionId, cashfreeOrderId } = await createCashfreeOrder(order._id);
-          const mode = (config.cashfreeMode || "sandbox").toLowerCase() === "production" ? "production" : "sandbox";
-          const cashfree = window.Cashfree({ mode });
-
-          const result = await cashfree.checkout({
-            paymentSessionId,
-            redirectTarget: "_modal"
-          });
-
-          if (result?.error) {
-            toast("Payment cancelled — you can try again or order on WhatsApp");
-            cancelAbandonedPayment(order._id);
-            setSubmitting(false);
-            return;
-          }
-
+        if (cashfreeReady) {
           try {
-            const verifyRes = await verifyCashfreePayment({ orderId: order._id, cashfreeOrderId });
-            if (verifyRes?.paid) {
-              clearCart();
-              rememberOrderConfirmation(form.name, true);
-              navigate("/order-confirmation", { state: { name: form.name, paid: true } });
+            const scriptOk = await loadCashfreeScript();
+            if (!scriptOk) {
+              toast("Could not load Cashfree SDK — please check internet connection or disable adblocker.");
+              setSubmitting(false);
               return;
-            } else {
-              toast("Payment status pending — we will confirm via WhatsApp");
+            }
+
+            const { paymentSessionId, cashfreeOrderId } = await createCashfreeOrder(order._id);
+            const mode = (config.cashfreeMode || "sandbox").toLowerCase() === "production" ? "production" : "sandbox";
+            const cashfree = window.Cashfree({ mode });
+
+            const result = await cashfree.checkout({
+              paymentSessionId,
+              redirectTarget: "_modal"
+            });
+
+            if (result?.error) {
+              toast("Payment cancelled — you can try again or select WhatsApp.");
+              cancelAbandonedPayment(order._id);
+              setSubmitting(false);
+              return;
+            }
+
+            try {
+              const verifyRes = await verifyCashfreePayment({ orderId: order._id, cashfreeOrderId });
+              if (verifyRes?.paid) {
+                clearCart();
+                rememberOrderConfirmation(form.name, true);
+                navigate("/order-confirmation", { state: { name: form.name, paid: true } });
+                return;
+              } else {
+                toast("Payment status pending — we will verify your payment.");
+                clearCart();
+                rememberOrderConfirmation(form.name, false);
+                navigate("/order-confirmation", { state: { name: form.name, paid: false } });
+                return;
+              }
+            } catch (vErr) {
+              toast("Payment verification error — order recorded.");
               clearCart();
               rememberOrderConfirmation(form.name, false);
               navigate("/order-confirmation", { state: { name: form.name, paid: false } });
               return;
             }
-          } catch {
-            toast("Payment verification error — order recorded. We will contact you on WhatsApp.");
-            clearCart();
-            rememberOrderConfirmation(form.name, false);
-            navigate("/order-confirmation", { state: { name: form.name, paid: false } });
+          } catch (cfErr) {
+            console.error("Cashfree Order Error:", cfErr);
+            toast(cfErr?.response?.data?.message || cfErr?.message || "Cashfree payment failed to initialize.");
+            setSubmitting(false);
             return;
           }
-        } catch (err) {
-          toast("Online payment error — redirecting to WhatsApp confirmation");
-          openWhatsApp(config.whatsapp, whatsappText);
-          clearCart();
-          rememberOrderConfirmation(form.name, false);
-          navigate("/order-confirmation", { state: { name: form.name, paid: false } });
-          return;
         }
-      }
-
-      if (payMethod === "online" && razorpayReady) {
-        try {
-          const scriptOk = await loadRazorpayScript();
-          if (!scriptOk) {
-            toast("Payment library blocked — please order on WhatsApp");
-            openWhatsApp(config.whatsapp, whatsappText);
-            clearCart();
-            rememberOrderConfirmation(form.name, false);
-            navigate("/order-confirmation", { state: { name: form.name, paid: false } });
-            return;
-          }
-          const { razorpayOrderId, amount, currency } = await createRazorpayOrder(order._id);
-          const rzp = new window.Razorpay({
-            key: config.razorpayKeyId,
-            amount, currency, order_id: razorpayOrderId,
-            name: "Sonic Prints",
-            description: "Ganesh Festival Collection 2026",
-            prefill: { name: form.name, contact: form.phone, email: form.email },
-            notes: { city: form.city || "", items: String(cart.length) + " items" },
-            theme: { color: "#175752" },
-            handler: async (res) => {
-              try {
-                await verifyRazorpayPayment({
-                  orderId: order._id,
-                  razorpay_order_id: res.razorpay_order_id,
-                  razorpay_payment_id: res.razorpay_payment_id,
-                  razorpay_signature: res.razorpay_signature
-                });
-                clearCart();
-                rememberOrderConfirmation(form.name, true);
-                navigate("/order-confirmation", { state: { name: form.name, paid: true } });
-              } catch {
-                toast("Payment verification failed — please contact us on WhatsApp");
-              }
-            },
-            modal: {
-              ondismiss: () => {
-                setSubmitting(false);
-                cancelAbandonedPayment(order._id);
-                toast("Payment cancelled — you can try again or order on WhatsApp instead");
-              }
-            }
-          });
-          rzp.open();
-          return;
-        } catch (err) {
-          toast("Online payment error — redirecting to WhatsApp confirmation");
-          openWhatsApp(config.whatsapp, whatsappText);
-          clearCart();
-          rememberOrderConfirmation(form.name, false);
-          navigate("/order-confirmation", { state: { name: form.name, paid: false } });
-          return;
-        }
-      }
-
-      if (payMethod === "online") {
-        toast("Online gateway not active — placing order via WhatsApp");
+      } else {
         openWhatsApp(config.whatsapp, whatsappText);
         clearCart();
         rememberOrderConfirmation(form.name, false);
         navigate("/order-confirmation", { state: { name: form.name, paid: false } });
-        return;
       }
-
-      openWhatsApp(config.whatsapp, whatsappText);
-      clearCart();
-      rememberOrderConfirmation(form.name, false);
-      navigate("/order-confirmation", { state: { name: form.name, paid: false } });
     } catch (err) {
       toast(err?.response?.data?.message || "Could not place the order — please try again");
     } finally {
@@ -312,18 +251,20 @@ export default function Checkout() {
                   <textarea id="ck-note" name="note" value={form.note} onChange={(e) => setField("note", e.target.value)} placeholder="Gift message, branding requirement, preferred delivery date…" />
                 </div>
 
-                <h3 style={{ fontSize: 22, margin: "14px 0 4px" }}>Payment</h3>
+                <h3 style={{ fontSize: 22, margin: "14px 0 4px" }}>Payment Method</h3>
                 <div className="paybox">
-                  <label className={`pay${payMethod === "whatsapp" ? " on" : ""}`}>
-                    <input type="radio" name="pay" checked={payMethod === "whatsapp"} onChange={() => setPayMethod("whatsapp")} />
-                    <span style={{ flex: 1 }}><b>Confirm on WhatsApp</b>
-                      <span>Your full order opens as a ready message. Our team confirms stock, final price and delivery date, then shares a payment link or collects on delivery.</span>
-                    </span>
-                  </label>
                   <label className={`pay${payMethod === "online" ? " on" : ""}`}>
                     <input type="radio" name="pay" checked={payMethod === "online"} onChange={() => setPayMethod("online")} />
-                    <span style={{ flex: 1 }}><b>Pay online now (UPI / Cards / Netbanking)</b>
-                      <span>Instant checkout via UPI, Credit/Debit Cards, Netbanking &amp; Wallets.</span>
+                    <span style={{ flex: 1 }}>
+                      <b>Pay Online via Cashfree Payments</b>
+                      <span>Fast &amp; 100% secure instant checkout via UPI (GPay / PhonePe / Paytm), Credit &amp; Debit Cards, NetBanking &amp; Wallets.</span>
+                    </span>
+                  </label>
+                  <label className={`pay${payMethod === "whatsapp" ? " on" : ""}`}>
+                    <input type="radio" name="pay" checked={payMethod === "whatsapp"} onChange={() => setPayMethod("whatsapp")} />
+                    <span style={{ flex: 1 }}>
+                      <b>Order &amp; Confirm on WhatsApp</b>
+                      <span>Your full order opens in WhatsApp. Our team confirms details and provides custom payment links or assistance.</span>
                     </span>
                   </label>
                 </div>
