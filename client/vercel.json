@@ -1,4 +1,21 @@
 {
+  "redirects": [
+    { "source": "/products/:slug*", "destination": "/kit/:slug*", "permanent": true },
+    { "source": "/kits/:slug*", "destination": "/kit/:slug*", "permanent": true },
+    { "source": "/product/:slug*", "destination": "/kit/:slug*", "permanent": true },
+    { "source": "/shop", "destination": "/", "permanent": true },
+    { "source": "/store", "destination": "/", "permanent": true },
+    { "source": "/collection", "destination": "/", "permanent": true },
+    { "source": "/corporate", "destination": "/bulk", "permanent": true },
+    { "source": "/corporate-gifting", "destination": "/bulk", "permanent": true },
+    { "source": "/b2b", "destination": "/bulk", "permanent": true },
+    { "source": "/kids", "destination": "/kit/bal-ganesh-kids-kit", "permanent": true },
+    { "source": "/mini", "destination": "/kit/shubharambh-mini", "permanent": true },
+    { "source": "/employee", "destination": "/kit/employee-puja-box", "permanent": true },
+    { "source": "/diy", "destination": "/kit/make-your-own-ganesha", "permanent": true },
+    { "source": "/mandap", "destination": "/kit/gruha-ganapathi-mandap", "permanent": true },
+    { "source": "/chakra", "destination": "/kit/rotating-chakra-backdrop", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",

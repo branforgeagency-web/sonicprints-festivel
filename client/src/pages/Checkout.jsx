@@ -338,7 +338,7 @@ export default function Checkout() {
                     const lbl = lineLabel(it);
                     return (
                       <div className="sumrow" key={i}>
-                        <img src={imgUrl(p.img, "sm")} alt="" />
+                        <img src={imgUrl(p.img, "sm")} alt={p.name || ""} loading="lazy" decoding="async" />
                         <div><b>{p.name}</b><span>{lbl ? `${lbl} · ` : ""}Qty {it.qty}</span></div>
                         <strong style={{ fontFamily: "var(--serif)", fontSize: 17, color: "var(--teal-700)" }}>
                           {money(unitPrice(it.id, it.variant) * it.qty)}

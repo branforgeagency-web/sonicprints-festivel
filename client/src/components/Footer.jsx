@@ -91,7 +91,10 @@ export default function Footer() {
           transition={{ duration: 0.6, delay: 0.15, ease: EASE_SILK }}
         >
           <span>© 2026 Sonic Prints. All rights reserved.</span>
-          <span>Natural clay idols · Sealed prasadam from FSSAI-licensed suppliers · Prices inclusive of GST unless stated</span>
+          <span>Natural clay idols · Sealed prasadam · GST inclusive</span>
+          <Link to="/admin" style={{ color: "rgba(239, 209, 153, 0.75)", textDecoration: "none", fontSize: "12px" }} title="Shortcut: Ctrl+Shift+A or Alt+A">
+            ✦ Admin Suite <kbd style={{ background: "rgba(255,255,255,0.1)", padding: "1px 5px", borderRadius: 4, fontFamily: "sans-serif" }}>Ctrl+Shift+A</kbd>
+          </Link>
         </motion.div>
       </div>
     </footer>

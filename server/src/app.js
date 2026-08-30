@@ -9,6 +9,8 @@ import orderRoutes from "./routes/orders.js";
 import enquiryRoutes from "./routes/enquiries.js";
 import authRoutes from "./routes/auth.js";
 import configRoutes from "./routes/config.js";
+import sitemapRoutes from "./routes/sitemap.js";
+import { customRedirects } from "./middleware/redirects.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
@@ -22,6 +24,12 @@ app.use(
 );
 app.use(express.json({ limit: "1mb" }));
 if (process.env.NODE_ENV !== "test") app.use(morgan("dev"));
+
+// 301 Custom Redirects middleware for legacy URLs
+app.use(customRedirects);
+
+// Dynamic XML Sitemap
+app.use(sitemapRoutes);
 
 // Basic abuse protection on the routes that write to the DB / send WhatsApp intents.
 const writeLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });

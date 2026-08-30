@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { SiteProvider } from "./context/SiteContext.jsx";
 import { ToastProvider } from "./context/ToastContext.jsx";
 import { AdminAuthProvider } from "./context/AdminAuthContext.jsx";
@@ -32,6 +32,11 @@ function AdminFallback() {
   );
 }
 
+function LegacyProductRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/kit/${slug}`} replace />;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -44,6 +49,24 @@ export default function App() {
               <Route path="/bulk" element={<Bulk />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
+
+              {/* Legacy URL Custom 301 Client-Side Redirects */}
+              <Route path="/products/:slug" element={<LegacyProductRedirect />} />
+              <Route path="/kits/:slug" element={<LegacyProductRedirect />} />
+              <Route path="/product/:slug" element={<LegacyProductRedirect />} />
+              <Route path="/shop" element={<Navigate to="/" replace />} />
+              <Route path="/store" element={<Navigate to="/" replace />} />
+              <Route path="/collection" element={<Navigate to="/" replace />} />
+              <Route path="/corporate" element={<Navigate to="/bulk" replace />} />
+              <Route path="/corporate-gifting" element={<Navigate to="/bulk" replace />} />
+              <Route path="/b2b" element={<Navigate to="/bulk" replace />} />
+              <Route path="/kids" element={<Navigate to="/kit/bal-ganesh-kids-kit" replace />} />
+              <Route path="/mini" element={<Navigate to="/kit/shubharambh-mini" replace />} />
+              <Route path="/employee" element={<Navigate to="/kit/employee-puja-box" replace />} />
+              <Route path="/diy" element={<Navigate to="/kit/make-your-own-ganesha" replace />} />
+              <Route path="/mandap" element={<Navigate to="/kit/gruha-ganapathi-mandap" replace />} />
+              <Route path="/chakra" element={<Navigate to="/kit/rotating-chakra-backdrop" replace />} />
+
               <Route path="*" element={<NotFound />} />
             </Route>
 

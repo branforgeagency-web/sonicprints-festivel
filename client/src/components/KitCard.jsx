@@ -45,6 +45,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
             src={imgUrl(product.img)}
             alt={product.name}
             loading="lazy"
+            decoding="async"
             className="kri-img"
           />
         </Link>
@@ -100,6 +101,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
             src={imgUrl(product.img)}
             alt={`${product.name} — ${product.subtitle}`}
             loading="lazy"
+            decoding="async"
             className="kbh-img"
           />
           <div className="kcm-badges">
@@ -176,6 +178,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
           src={imgUrl(product.img)}
           alt={`${product.name} — ${product.subtitle}`}
           loading="lazy"
+          decoding="async"
           width="900"
           height="765"
           className="kcm-img"

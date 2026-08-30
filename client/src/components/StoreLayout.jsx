@@ -3,6 +3,7 @@ import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import CartDrawer from "./CartDrawer.jsx";
 import WhatsAppFab from "./WhatsAppFab.jsx";
+import AdminShortcutListener from "./AdminShortcutListener.jsx";
 import { CartProvider } from "../context/CartContext.jsx";
 
 import { IntroProvider } from "./fx/Intro.jsx";
@@ -16,6 +17,7 @@ export default function StoreLayout() {
       <IntroProvider>
         <ProductTransitionProvider>
           <a className="skip-link" href="#main-content">Skip to main content</a>
+          <AdminShortcutListener />
           <CursorFx />
           <Header />
           <main id="main-content">

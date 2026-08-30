@@ -62,7 +62,7 @@ export default function CartDrawer() {
               const up = unitPrice(it.id, it.variant);
               return (
                 <div className="crow" key={i}>
-                  <img src={lineImage(it)} alt={p.name} />
+                  <img src={lineImage(it)} alt={p.name} loading="lazy" decoding="async" />
                   <div>
                     <b>{p.name}</b>
                     {lbl && <span className="v">{lbl}</span>}

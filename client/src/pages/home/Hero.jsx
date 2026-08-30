@@ -34,6 +34,7 @@ export default function Hero() {
                 alt="Bring Home Little Bappa's Big Joy — Bal Ganesh Kids Activity Kit by Sonic Prints"
                 width="1600"
                 height="639"
+                loading="eager"
                 fetchpriority="high"
                 decoding="async"
               />

@@ -1,0 +1,9 @@
+# www.robotstxt.org/
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://sonicprints.in/sitemap.xml
+Sitemap: https://sonicprints-festivel.onrender.com/sitemap.xml

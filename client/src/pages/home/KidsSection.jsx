@@ -73,6 +73,8 @@ export default function KidsSection() {
                   <img
                     src={imgUrl(currentStep.img)}
                     alt={currentStep.title}
+                    loading="lazy"
+                    decoding="async"
                     className="kids-stage-img"
                   />
                   <div className="kids-stage-badge">

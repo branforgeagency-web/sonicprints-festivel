@@ -143,7 +143,7 @@ export default function ProductPage() {
                   aria-label={t.label}
                   onClick={() => setActiveThumb(i)}
                 >
-                  <img src={t.src} alt={t.label} />
+                  <img src={t.src} alt={t.label} loading="lazy" decoding="async" />
                 </button>
               ))}
             </motion.div>
@@ -162,6 +162,9 @@ export default function ProductPage() {
                   alt={`${product.name} — ${product.subtitle}`}
                   width="900"
                   height="900"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
                   initial={reduced ? false : { opacity: 0, scale: 1.04 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
@@ -276,7 +279,7 @@ export default function ProductPage() {
               </div>
               <div className="rv rv-d1">
                 <div className="sheetimg">
-                  <img src={design ? imgUrl(design.sheet) : imgUrl(`${product.img}-sheet`)} alt={`${product.name} full specification sheet`} loading="lazy" />
+                  <img src={design ? imgUrl(design.sheet) : imgUrl(`${product.img}-sheet`)} alt={`${product.name} full specification sheet`} loading="lazy" decoding="async" />
                 </div>
               </div>
             </div>

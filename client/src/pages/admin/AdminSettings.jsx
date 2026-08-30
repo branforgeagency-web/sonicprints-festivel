@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { getSiteConfig, adminUpdateConfig } from "../../api/client.js";
+import Icon from "../../components/Icon.jsx";
 
 const FIELDS = [
-  ["whatsapp", "WhatsApp number (digits only, country code, no +)", "+91 63827 18655"],
-  ["phone", "Phone number shown on site (display format)", "+91 63827 18655"],
-  ["phoneHref", "Phone number for tel: links", "+91 63827 18655"],
-  ["email", "Contact email", "branforgeagency@gmail.com"],
-  ["city", "City / region shown in footer", "Coimbatore, Tamil Nadu"],
-  ["address", "Full address", "Sonic Prints, Coimbatore, Tamil Nadu, India"],
-  ["instagram", "Instagram URL", "https://instagram.com/sonicprints"],
-  ["freeShipAbove", "Free delivery above (₹)", "1499", "number"],
-  ["shipFlat", "Flat delivery charge below that (₹)", "79", "number"],
-  ["bulkThreshold", "Bulk pricing kicks in at (qty)", "25", "number"],
+  ["whatsapp", "WhatsApp Number (digits with country code, no +)", "+91 63827 18655"],
+  ["phone", "Storefront Display Phone Number", "+91 63827 18655"],
+  ["phoneHref", "Tel: Link Dial String", "+91 63827 18655"],
+  ["email", "Official Contact Email", "branforgeagency@gmail.com"],
+  ["city", "City & Region (Footer)", "Coimbatore, Tamil Nadu"],
+  ["address", "Full Headquarters Address", "Sonic Prints, Coimbatore, Tamil Nadu, India"],
+  ["instagram", "Instagram Profile URL", "https://instagram.com/sonicprints"],
+  ["freeShipAbove", "Free Delivery Threshold (₹)", "1499", "number"],
+  ["shipFlat", "Flat Shipping Rate Below Threshold (₹)", "79", "number"],
+  ["bulkThreshold", "Bulk Slab Pricing Threshold (Qty)", "25", "number"],
   ["cashfreeAppId", "Cashfree App ID (Client ID)", "CF123456..."],
-  ["cashfreeMode", "Cashfree Mode (sandbox or production)", "sandbox"],
-  ["razorpayKeyId", "Razorpay Key ID (legacy / fallback)", "rzp_live_..."],
-  ["festivalDateISO", "Festival date/time (ISO, drives the countdown)", "2026-09-14T06:00:00+05:30"],
-  ["orderCutoffLabel", "Cutoff message shown in the top bar", "Order by 6 Sept for guaranteed pre-festival delivery"]
+  ["cashfreeMode", "Cashfree Environment (sandbox / production)", "sandbox"],
+  ["razorpayKeyId", "Razorpay Key ID (Fallback)", "rzp_live_..."],
+  ["festivalDateISO", "Ganesh Chaturthi Date (ISO String)", "2026-09-14T06:00:00+05:30"],
+  ["orderCutoffLabel", "Top Banner Cutoff Notice", "Order by 6 Sept for guaranteed pre-festival delivery"]
 ];
 
 export default function AdminSettings() {
@@ -24,7 +25,9 @@ export default function AdminSettings() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  useEffect(() => { getSiteConfig().then(setConfig); }, []);
+  useEffect(() => {
+    getSiteConfig().then(setConfig).catch(console.error);
+  }, []);
 
   function setField(name, value) {
     setConfig((c) => ({ ...c, [name]: value }));
@@ -43,17 +46,38 @@ export default function AdminSettings() {
       });
       setConfig(updated);
       setSaved(true);
+    } catch (err) {
+      console.error("Config save error:", err);
     } finally {
       setSaving(false);
     }
   }
 
-  if (!config) return <p>Loading…</p>;
+  if (!config) {
+    return (
+      <div className="admin-page">
+        <div className="admin-card admin-loading-state" style={{ padding: 36, textAlign: "center" }}>
+          <span className="pageLoader-ring" style={{ width: 32, height: 32, margin: "0 auto 12px" }} />
+          <p>Loading site configuration…</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h2>Site settings</h2>
-      <p className="sub">Contact details, WhatsApp number and commerce rules used across the storefront.</p>
+    <div className="admin-page">
+      <div className="admin-header-row">
+        <div>
+          <span className="admin-eyebrow">⚙️ Store Configuration</span>
+          <h2 className="admin-title">Site &amp; Business Settings</h2>
+          <p className="admin-subtitle">
+            Configure contact handles, shipping thresholds, payment gateway credentials, and festival countdown timers.
+          </p>
+        </div>
+        <div className="admin-header-actions">
+          {saved && <span style={{ color: "#6EE7B7", fontSize: 13.5, fontWeight: 600 }}>✓ Settings Saved</span>}
+        </div>
+      </div>
 
       <form className="admin-form admin-card" onSubmit={handleSubmit}>
         <div className="admin-grid2">
@@ -69,8 +93,12 @@ export default function AdminSettings() {
             </div>
           ))}
         </div>
-        <button className="admin-btn" type="submit" disabled={saving}>{saving ? "Saving…" : "Save settings"}</button>
-        {saved && <span style={{ marginLeft: 12, color: "#1c7a35", fontSize: 13.5 }}>Saved ✓</span>}
+        <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 14 }}>
+          <button className="admin-btn btn-icon" type="submit" disabled={saving}>
+            <Icon name="check" size={16} /> {saving ? "Saving Changes…" : "Save Site Settings"}
+          </button>
+          {saved && <span style={{ color: "#6EE7B7", fontSize: 13.5, fontWeight: 600 }}>Changes applied live to storefront ✓</span>}
+        </div>
       </form>
     </div>
   );

@@ -25,12 +25,14 @@ export default function Bulk() {
   function setField(name, value) {
     setForm((f) => ({ ...f, [name]: value }));
   }
+
   function toggleKit(kit) {
     setForm((f) => ({
       ...f,
       kits: f.kits.includes(kit) ? f.kits.filter((k) => k !== kit) : [...f.kits, kit]
     }));
   }
+
   function pickSegment(seg) {
     setField("segment", seg.name);
     document.getElementById("bulkForm")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -39,7 +41,7 @@ export default function Bulk() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (!form.name.trim() || !form.phone.trim()) {
-      toast("Please add your name and mobile number");
+      toast("Please enter your contact name and mobile number");
       return;
     }
     setSubmitting(true);
@@ -50,18 +52,19 @@ export default function Bulk() {
     };
     try {
       const { whatsappText } = await submitEnquiry(payload);
-      toast("Opening WhatsApp with your enquiry…");
+      toast("Opening WhatsApp with your corporate enquiry…");
       openWhatsApp(config.whatsapp, whatsappText);
       setForm(EMPTY_FORM);
     } catch (err) {
-      toast("Could not send just now — opening WhatsApp directly instead");
+      toast("Opening WhatsApp directly with your enquiry details…");
       const lines = [
-        "*SONIC PRINTS — BULK ENQUIRY*", "Ganesh Festival Collection 2026", "",
+        "*SONIC PRINTS — EXECUTIVE BULK ENQUIRY*",
+        "Ganesh Festival Collection 2026", "",
         `Segment: ${form.segment}`, form.org && `Organisation: ${form.org}`,
-        `Contact: ${form.name}`, `Mobile: ${form.phone}`, form.email && `Email: ${form.email}`,
+        `Contact Name: ${form.name}`, `Mobile / WA: ${form.phone}`, form.email && `Email: ${form.email}`,
         form.city && `City: ${form.city}`, form.kits.length && `Kits of interest: ${form.kits.join(", ")}`,
-        `Approx. quantity: ${form.qty}`, form.date && `Needed by: ${form.date}`,
-        `Branding required: ${form.brand}`, form.note && `Note: ${form.note}`
+        `Approx. Quantity: ${form.qty}`, form.date && `Needed By: ${form.date}`,
+        `Branding Required: ${form.brand}`, form.note && `Special Requirements: ${form.note}`
       ].filter(Boolean);
       openWhatsApp(config.whatsapp, lines.join("\n"));
     } finally {
@@ -70,175 +73,353 @@ export default function Bulk() {
   }
 
   return (
-    <div className="page">
-      <header className="phead">
+    <div className="page luxury-bulk-page light-gold-theme">
+      {/* Light Gold Hero Header with Divine Ganesha Background */}
+      <header className="phead luxury-phead phead-light-gold">
+        <div className="phead-bg" aria-hidden="true">
+          <img
+            src="/assets/img/cartoon-ganesha-mouse-bg.jpg"
+            alt="Cartoon Lord Ganesha playing with mouse companion Mooshika"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <span className="phead-overlay phead-overlay-gold" />
+        </div>
+
         <div className="wrap">
-          <div className="eyebrow light">Bulk orders · Corporate · Schools · Retail · Dealers</div>
-          <h1>Buy the festival<br />in volume.</h1>
-          <p>
-            Six kits, six kinds of buyer, one supply chain. Tell us who you are and roughly how many you need —
-            we send a rate card the same working day and a physical sample before you commit.
+          <div className="phead-badge-row">
+            <span className="phead-gold-badge light-badge">👑 Sonic Corporate &amp; Volume Suite</span>
+            <span className="phead-subtitle-tag" style={{ color: "#7A5E26" }}>Direct Factory Rates · Custom Branding</span>
+          </div>
+
+          <h1 className="phead-title" style={{ color: "#0A2E2B" }}>
+            Buy the Festival<br />
+            <span className="phead-title-gold" style={{ background: "linear-gradient(135deg, #B88E44 0%, #8C651F 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              in Volume.
+            </span>
+          </h1>
+
+          <p className="phead-desc" style={{ color: "#4A615D" }}>
+            Six signature kits, direct factory pricing, and one seamless supply chain.
+            Whether gifting 500 corporate boxes, stocking a retail counter, or organising a school activity —
+            we provide same-day rate cards and physical samples before you commit.
           </p>
-          <div className="btnrow" style={{ margin: "26px 0 0" }}>
+
+          <div className="btnrow" style={{ margin: "28px 0 36px" }}>
             <Magnetic>
-              <a className="btn btn-gold btn-lg" href="#bulkForm" onClick={(e) => { e.preventDefault(); document.getElementById("bulkForm")?.scrollIntoView({ behavior: "smooth" }); }}>
-                Get a rate card
+              <a
+                className="btn btn-gold btn-lg"
+                href="#bulkForm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("bulkForm")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                ✦ Request Executive Rate Card
               </a>
             </Magnetic>
             <Magnetic>
-              <a className="btn btn-ghost btn-lg" href={waLink(config.whatsapp, "Namaste Sonic Prints, I'd like to raise a bulk enquiry.")} target="_blank" rel="noopener noreferrer">
-                WhatsApp our team
+              <a
+                className="btn btn-ghost btn-lg"
+                style={{ borderColor: "rgba(184, 142, 68, 0.4)", color: "#8C651F" }}
+                href={waLink(config.whatsapp, "Namaste Sonic Prints, I would like to request a corporate rate card and sample box.")}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name="mail" size={16} /> WhatsApp Corporate Desk
               </a>
             </Magnetic>
+          </div>
+
+          {/* Light Gold Executive Metrics Bar */}
+          <div className="phead-metrics-bar light-metrics-bar">
+            <div className="pm-item pm-item-light">
+              <span className="pm-icon">🚚</span>
+              <div>
+                <strong style={{ color: "#0A2E2B" }}>48-Hour Dispatch</strong>
+                <span style={{ color: "#5C7370" }}>Pan-South India delivery slots</span>
+              </div>
+            </div>
+            <div className="pm-item pm-item-light">
+              <span className="pm-icon">🎨</span>
+              <div>
+                <strong style={{ color: "#0A2E2B" }}>Custom Branding</strong>
+                <span style={{ color: "#5C7370" }}>Printed sleeves &amp; MD video QR card</span>
+              </div>
+            </div>
+            <div className="pm-item pm-item-light">
+              <span className="pm-icon">📜</span>
+              <div>
+                <strong style={{ color: "#0A2E2B" }}>GST &amp; FSSAI Certified</strong>
+                <span style={{ color: "#5C7370" }}>Official B2B invoice &amp; sealed prasadam</span>
+              </div>
+            </div>
+            <div className="pm-item pm-item-light">
+              <span className="pm-icon">🎁</span>
+              <div>
+                <strong style={{ color: "#0A2E2B" }}>Sample Before Order</strong>
+                <span style={{ color: "#5C7370" }}>Physical sample delivered to your desk</span>
+              </div>
+            </div>
           </div>
         </div>
       </header>
 
-      <section className="sec">
+      {/* Step 1: Light Gold Buyer Segment Selection */}
+      <section className="sec sec-light-gold" id="segments">
         <div className="wrap">
           <div className="sec-head center rv">
-            <div className="eyebrow center">Step one</div>
-            <h2>Which one are you?</h2>
-            <p>Pick a segment — the enquiry form below fills itself in and our team replies with pricing built for that use case.</p>
+            <div className="eyebrow center" style={{ color: "#946C24" }}>Step One · Select Your Segment</div>
+            <h2 style={{ fontSize: "clamp(28px,4vw,44px)", color: "#0A2E2B" }}>Which buyer segment are you?</h2>
+            <p style={{ color: "#5C7370", maxWidth: 640, margin: "0 auto" }}>
+              Choose your profile below. The enquiry form automatically configures itself with tailored pricing and delivery slabs.
+            </p>
           </div>
-          <div className="segs">
-            {BULK_SEGMENTS.map((seg, i) => (
-              <button
-                type="button"
-                key={seg.id}
-                className={`seg rv rv-d${i % 3}${form.segment === seg.name ? " on" : ""}`}
-                onClick={() => pickSegment(seg)}
-              >
-                <div className="aud-ic"><Icon name={seg.icon} /></div>
-                <h3>{seg.name}</h3>
-                <div className="line">{seg.line}</div>
-                <p>{seg.text}</p>
-                <p style={{ marginTop: 12, fontSize: 12.5, color: "var(--gold-600)", fontWeight: 700 }}>
-                  Recommended: {seg.recommended}
-                </p>
-              </button>
-            ))}
+
+          <div className="segs segs-luxury">
+            {BULK_SEGMENTS.map((seg, i) => {
+              const isSelected = form.segment === seg.name;
+              return (
+                <button
+                  type="button"
+                  key={seg.id}
+                  className={`seg seg-lux seg-lux-light rv rv-d${i % 3}${isSelected ? " on" : ""}`}
+                  onClick={() => pickSegment(seg)}
+                >
+                  <div className="seg-top-row">
+                    <div className="aud-ic-lux aud-ic-lux-gold"><Icon name={seg.icon} /></div>
+                    {isSelected && <span className="seg-selected-tag light-tag">✓ Selected</span>}
+                  </div>
+                  <h3 style={{ color: "#0A2E2B" }}>{seg.name}</h3>
+                  <div className="line" style={{ color: "#946C24" }}>{seg.line}</div>
+                  <p style={{ color: "#5C7370" }}>{seg.text}</p>
+                  <div className="seg-rec-pill" style={{ color: "#8C651F" }}>
+                    <strong>Recommended:</strong> {seg.recommended}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section className="sec sec-cream">
+      {/* Step 2: Form & Rate Table Split Section */}
+      <section className="sec sec-cream-lux" id="bulkForm">
         <div className="wrap">
-          <div className="two" style={{ gap: 44, alignItems: "start" }}>
+          <div className="two" style={{ gap: 48, alignItems: "start" }}>
+            {/* Form Column */}
             <div className="rv">
-              <div className="eyebrow">Step two</div>
-              <h2 style={{ marginBottom: 10 }}>Tell us what you need</h2>
-              <p style={{ color: "var(--muted)", marginBottom: 22 }}>
-                Enquiring for <strong style={{ color: "var(--teal-700)" }}>{form.segment}</strong>.
-                Nothing is committed at this stage — you will receive pricing, a sample plan and a delivery date first.
+              <div className="eyebrow" style={{ color: "#946C24" }}>Step Two · Raised Enquiry</div>
+              <h2 style={{ fontSize: "clamp(26px,3.6vw,38px)", marginBottom: 10, color: "#0A2E2B" }}>
+                Tell us your requirement
+              </h2>
+              <p style={{ color: "#5C7370", marginBottom: 24, fontSize: 15 }}>
+                Enquiring as <strong style={{ color: "#0A2E2B" }}>{form.segment}</strong>.
+                Zero obligation — receive pricing, artwork layout mockup, and a physical sample box first.
               </p>
-              <div className="panel">
-                <form id="bulkForm" className="form" noValidate onSubmit={handleSubmit}>
+
+              <div className="panel panel-luxury">
+                <form className="form" noValidate onSubmit={handleSubmit}>
                   <div className="f2">
-                    <div className="fld"><label>Your name *</label>
-                      <input value={form.name} onChange={(e) => setField("name", e.target.value)} required placeholder="Full name" />
+                    <div className="fld">
+                      <label style={{ color: "#8C651F" }}>Contact Name *</label>
+                      <input
+                        value={form.name}
+                        onChange={(e) => setField("name", e.target.value)}
+                        required
+                        placeholder="e.g. Rajesh Kumar"
+                      />
                     </div>
-                    <div className="fld"><label>Mobile / WhatsApp *</label>
-                      <input value={form.phone} onChange={(e) => setField("phone", e.target.value)} required inputMode="tel" placeholder="10-digit number" />
+                    <div className="fld">
+                      <label style={{ color: "#8C651F" }}>Mobile / WhatsApp Number *</label>
+                      <input
+                        value={form.phone}
+                        onChange={(e) => setField("phone", e.target.value)}
+                        required
+                        inputMode="tel"
+                        placeholder="10-digit mobile number"
+                      />
                     </div>
                   </div>
+
                   <div className="f2">
-                    <div className="fld"><label>Organisation</label>
-                      <input value={form.org} onChange={(e) => setField("org", e.target.value)} placeholder="Company / school / shop name" />
+                    <div className="fld">
+                      <label style={{ color: "#8C651F" }}>Organisation / Company Name</label>
+                      <input
+                        value={form.org}
+                        onChange={(e) => setField("org", e.target.value)}
+                        placeholder="e.g. Infosys / DPS / Retail Store"
+                      />
                     </div>
-                    <div className="fld"><label>City</label>
-                      <input value={form.city} onChange={(e) => setField("city", e.target.value)} placeholder="City & state" />
+                    <div className="fld">
+                      <label style={{ color: "#8C651F" }}>City &amp; State</label>
+                      <input
+                        value={form.city}
+                        onChange={(e) => setField("city", e.target.value)}
+                        placeholder="e.g. Chennai, Tamil Nadu"
+                      />
                     </div>
                   </div>
+
                   <div className="f2">
-                    <div className="fld"><label>Email</label>
-                      <input type="email" value={form.email} onChange={(e) => setField("email", e.target.value)} placeholder="name@company.com" />
+                    <div className="fld">
+                      <label style={{ color: "#8C651F" }}>Official Email</label>
+                      <input
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => setField("email", e.target.value)}
+                        placeholder="name@organisation.com"
+                      />
                     </div>
-                    <div className="fld"><label>Buyer segment</label>
+                    <div className="fld">
+                      <label style={{ color: "#8C651F" }}>Buyer Category</label>
                       <select value={form.segment} onChange={(e) => setField("segment", e.target.value)}>
-                        {BULK_SEGMENTS.map((s) => <option key={s.id} value={s.name}>{s.name}</option>)}
+                        {BULK_SEGMENTS.map((s) => (
+                          <option key={s.id} value={s.name}>
+                            {s.name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
+
                   <div className="fld">
-                    <label>Kits you are interested in</label>
-                    <div className="qtygrid">
-                      {BULK_KIT_OPTIONS.map((k) => (
-                        <label key={k}>
-                          <input type="checkbox" checked={form.kits.includes(k)} onChange={() => toggleKit(k)} />{k}
-                        </label>
-                      ))}
+                    <label style={{ color: "#8C651F" }}>Select Kits of Interest</label>
+                    <div className="qtygrid qtygrid-lux">
+                      {BULK_KIT_OPTIONS.map((k) => {
+                        const checked = form.kits.includes(k);
+                        return (
+                          <label key={k} className={checked ? "checked-pill" : ""}>
+                            <input type="checkbox" checked={checked} onChange={() => toggleKit(k)} />
+                            <span>{checked ? "✓ " : ""}{k}</span>
+                          </label>
+                        );
+                      })}
                     </div>
                   </div>
+
                   <div className="f2">
-                    <div className="fld"><label>Approximate quantity</label>
+                    <div className="fld">
+                      <label style={{ color: "#8C651F" }}>Approximate Quantity Slabs</label>
                       <select value={form.qty} onChange={(e) => setField("qty", e.target.value)}>
-                        {BULK_QTY_OPTIONS.map((q) => <option key={q}>{q}</option>)}
+                        {BULK_QTY_OPTIONS.map((q) => (
+                          <option key={q}>{q}</option>
+                        ))}
                       </select>
                     </div>
-                    <div className="fld"><label>Needed by</label>
+                    <div className="fld">
+                      <label style={{ color: "#8C651F" }}>Target Delivery Date</label>
                       <input type="date" value={form.date} onChange={(e) => setField("date", e.target.value)} />
                     </div>
                   </div>
+
                   <div className="fld">
-                    <label>Branding required</label>
+                    <label style={{ color: "#8C651F" }}>Custom Branding Options</label>
                     <select value={form.brand} onChange={(e) => setField("brand", e.target.value)}>
-                      {BULK_BRANDING_OPTIONS.map((b) => <option key={b}>{b}</option>)}
+                      {BULK_BRANDING_OPTIONS.map((b) => (
+                        <option key={b}>{b}</option>
+                      ))}
                     </select>
                   </div>
+
                   <div className="fld">
-                    <label>Anything else we should know</label>
-                    <textarea value={form.note} onChange={(e) => setField("note", e.target.value)} placeholder="Delivery locations, budget per kit, number of sites, special requirements…" />
+                    <label style={{ color: "#8C651F" }}>Special Instructions / Multi-Location Delivery Notes</label>
+                    <textarea
+                      value={form.note}
+                      onChange={(e) => setField("note", e.target.value)}
+                      placeholder="Multiple delivery locations, specific budget limits, sample requests, custom message for QR card..."
+                    />
                   </div>
+
                   <Magnetic className="fx-block" strength={0.22} cap={5}>
                     <button className="btn btn-gold btn-lg btn-wide" type="submit" disabled={submitting}>
-                      {submitting ? "Sending…" : "Send enquiry on WhatsApp"}
+                      {submitting ? "Processing Enquiry…" : "✦ Send Executive Enquiry on WhatsApp"}
                     </button>
                   </Magnetic>
-                  <p className="note-s">Your enquiry opens as a ready message in WhatsApp — just press send. We reply within one working day.</p>
+                  
+                  <p className="note-s" style={{ textAlign: "center", marginTop: 10 }}>
+                    🔒 Direct connection to our corporate desk · Instant rate card dispatch within 1 working hour.
+                  </p>
                 </form>
               </div>
             </div>
 
+            {/* Slab Pricing Table & Light Gold Dealer Card Column */}
             <div className="rv rv-d1">
-              <div className="eyebrow">Indicative slab pricing</div>
-              <h2 style={{ marginBottom: 16 }}>Volume rates</h2>
-              <div style={{ overflowX: "auto" }}>
-                <table className="tbl">
-                  <thead><tr><th>Kit</th><th className="num">MRP</th><th className="num">25 – 99</th><th className="num">100 – 499</th><th className="num">500 – 1,999</th><th className="num">2,000 +</th></tr></thead>
+              <div className="eyebrow" style={{ color: "#946C24" }}>Indicative Rate Slabs</div>
+              <h2 style={{ marginBottom: 16, fontSize: "clamp(24px,3.2vw,34px)", color: "#0A2E2B" }}>
+                Volume Pricing Matrix
+              </h2>
+
+              <div className="admin-table-responsive" style={{ background: "#FFF", borderRadius: 14, border: "1px solid rgba(196,151,70,0.25)", overflow: "hidden" }}>
+                <table className="tbl tbl-luxury">
+                  <thead>
+                    <tr>
+                      <th>Kit Name</th>
+                      <th className="num">MRP</th>
+                      <th className="num">25–99</th>
+                      <th className="num">100–499</th>
+                      <th className="num">500–1,999</th>
+                      <th className="num">2,000+</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {VOLUME_RATE_TABLE.map((r) => (
                       <tr key={r.kit}>
-                        <td>{r.kit}</td><td className="num">{money(r.mrp)}</td><td className="num">{money(r.t1)}</td>
-                        <td className="num">{money(r.t2)}</td><td className="num">{money(r.t3)}</td><td className="num">{money(r.t4)}</td>
+                        <td><strong>{r.kit}</strong></td>
+                        <td className="num">{money(r.mrp)}</td>
+                        <td className="num">{money(r.t1)}</td>
+                        <td className="num"><strong style={{ color: "#946C24" }}>{money(r.t2)}</strong></td>
+                        <td className="num">{money(r.t3)}</td>
+                        <td className="num"><strong style={{ color: "#0A2E2B" }}>{money(r.t4)}</strong></td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 12 }}>
-                Per-unit rates in ₹, excluding GST and freight, for standard specification. Mandap and chakra slabs
-                are quoted on the Mini size; larger sizes scale proportionally. Branded sleeves, name personalisation
-                and premium prasadam are quoted separately.
+
+              <p style={{ fontSize: 13, color: "#6E7C79", marginTop: 14, lineHeight: 1.6 }}>
+                Rates shown in ₹, excluding GST and freight for standard specifications. Custom branded sleeves, named individual employee delivery, and premium dry fruit prasadam upgrades are quoted separately.
               </p>
 
-              <div className="panel" style={{ marginTop: 26, background: "linear-gradient(140deg,#175752,#0A2E2B)", border: 0, color: "#D6E7E3" }}>
-                <div className="eyebrow light">Dealer &amp; distributor programme</div>
-                <h3 style={{ color: "#fff", fontSize: 28, marginBottom: 12 }}>Run a festival counter</h3>
-                <p style={{ color: "#B7CBC7", fontSize: 14.5 }}>
-                  City, Zone and State partner tiers with trade pricing, a branded 3×3 m kiosk kit, display units,
-                  reels and creatives, and a buyback on sealed unsold non-food stock within seven days of visarjan.
+              {/* Light Gold Retail Dealer & Distributor Partner Panel */}
+              <div
+                className="panel"
+                style={{
+                  marginTop: 28,
+                  background: "linear-gradient(135deg, #FFFDF8 0%, #F6EBD9 100%)",
+                  border: "2px solid #D4A853",
+                  borderRadius: 18,
+                  padding: "32px 28px",
+                  color: "#122B27",
+                  boxShadow: "0 16px 40px rgba(196, 151, 70, 0.12)"
+                }}
+              >
+                <div className="eyebrow" style={{ color: "#946C24" }}>Dealer &amp; Stockist Partnership</div>
+                <h3 style={{ color: "#0A2E2B", fontSize: 26, margin: "6px 0 12px", fontFamily: "var(--serif, serif)" }}>
+                  Run a Festival Counter
+                </h3>
+                <p style={{ color: "#5C7370", fontSize: 14.5, lineHeight: 1.6 }}>
+                  City, Zone and State partner tiers with wholesale trade pricing, a branded 3×3 m kiosk setup, POS display units, digital video assets, and a 100% buyback guarantee on sealed unsold non-food inventory within 7 days of visarjan.
                 </p>
-                <ul style={{ listStyle: "none", padding: 0, margin: "16px 0 20px", display: "grid", gap: 9 }}>
-                  <li style={{ fontSize: 13.5, color: "#CFE0DC" }}>✦ &nbsp;Trade pricing from your first 100 units</li>
-                  <li style={{ fontSize: 13.5, color: "#CFE0DC" }}>✦ &nbsp;Branded kiosk with all six kits on display</li>
-                  <li style={{ fontSize: 13.5, color: "#CFE0DC" }}>✦ &nbsp;Marketing creatives and WhatsApp catalogue provided</li>
-                  <li style={{ fontSize: 13.5, color: "#CFE0DC" }}>✦ &nbsp;Buyback on sealed unsold non-food stock</li>
+
+                <ul style={{ listStyle: "none", padding: 0, margin: "18px 0 22px", display: "grid", gap: 10 }}>
+                  <li style={{ fontSize: 14, color: "#8C651F" }}>✦ Wholesale trade pricing starting from 100 units</li>
+                  <li style={{ fontSize: 14, color: "#8C651F" }}>✦ Complete branded kiosk display unit with all 6 kits</li>
+                  <li style={{ fontSize: 14, color: "#8C651F" }}>✦ Marketing creative kit &amp; digital WhatsApp catalog</li>
+                  <li style={{ fontSize: 14, color: "#8C651F" }}>✦ Post-festival buyback on sealed unsold non-food stock</li>
                 </ul>
-                <p style={{ fontSize: 12.5, color: "#8FA7A3", borderTop: "1px solid rgba(255,255,255,.12)", paddingTop: 14, margin: 0 }}>
-                  Sonic Prints partners buy stock at a trade price and sell at MRP — you keep the margin you earn.
-                  We do not promise guaranteed returns or income.
-                </p>
+
+                <a
+                  href={waLink(config.whatsapp, "Namaste Sonic Prints, I am interested in becoming a stockist / dealer partner for Ganesh Chaturthi 2026.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-gold btn-wide"
+                  style={{ textAlign: "center", display: "block" }}
+                >
+                  Apply for Stockist / Dealer Partner Desk
+                </a>
               </div>
             </div>
           </div>

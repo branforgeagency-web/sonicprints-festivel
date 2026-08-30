@@ -265,7 +265,7 @@ p{margin:0 0 1em}
   width:80%; aspect-ratio:1;
   z-index:1;
   transform-origin:50% 50%;
-  animation:spin 40s linear infinite;
+  animation:spin 20s linear infinite;
   will-change:transform;
   backface-visibility:hidden;
 }
@@ -512,14 +512,66 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
 .sg p{font-size:13.4px;color:var(--muted);margin:0;line-height:1.55}
 
 /* ============================================================
-   BULK PAGE
+   BULK PAGE — LUXURY B2B SUITE
    ============================================================ */
-.phead{background:linear-gradient(165deg,#103F3B,#0A2E2B);color:#fff;padding:clamp(52px,6vw,84px) 0;position:relative;overflow:hidden}
-.phead::before{content:"";position:absolute;inset:0;opacity:.4;
+.phead{background:#0A2E2B;color:#fff;padding:clamp(56px,7vw,96px) 0;position:relative;overflow:hidden}
+.phead::before{content:"";position:absolute;inset:0;opacity:.25;z-index:2;pointer-events:none;
   background-image:radial-gradient(rgba(239,209,153,.28) 1px,transparent 1px);background-size:28px 28px;
   -webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
+.phead-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.phead-bg picture,.phead-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+.phead-bg img{opacity:.65;filter:saturate(1.2) brightness(0.92);transform:scale(1.02);transition:transform 6s ease}
+.phead:hover .phead-bg img{transform:scale(1.06)}
+.phead-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(10,46,43,.88) 0%,rgba(16,63,59,.72) 50%,rgba(10,46,43,.9) 100%)}
+.phead-overlay-gold{background:linear-gradient(135deg,rgba(250,247,242,.85) 0%,rgba(245,235,220,.76) 50%,rgba(250,247,242,.88) 100%)}
+.phead .wrap{position:relative;z-index:3}
 .phead h1{font-size:clamp(38px,5.4vw,68px);color:#fff;margin-bottom:14px;position:relative}
 .phead p{color:#C6DAD6;max-width:640px;font-size:16.5px;margin:0;position:relative}
+
+/* Luxury Bulk Header & Perks Bar */
+.luxury-phead{padding:clamp(64px,8vw,110px) 0 48px}
+.phead-light-gold{background:#FAF7F2}
+.phead-badge-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.phead-gold-badge{display:inline-block;padding:6px 14px;border-radius:999px;background:rgba(223,183,108,.2);border:1px solid rgba(223,183,108,.45);color:#F3D085;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.light-badge{background:rgba(184,142,68,.12);border-color:rgba(184,142,68,.35);color:#8C651F}
+.phead-subtitle-tag{font-size:13px;color:#A3C0BC;font-weight:500}
+.phead-title{font-family:var(--serif,"Playfair Display",Georgia,serif);font-size:clamp(40px,5.8vw,74px);color:#FFF;line-height:1.1;margin-bottom:18px}
+.phead-title-gold{background:linear-gradient(135deg,#F3D085 0%,#DFB76C 50%,#C49746 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.phead-desc{color:#C6DAD6;max-width:680px;font-size:17.5px;line-height:1.6;margin:0}
+.phead-metrics-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding-top:28px;border-top:1px solid rgba(223,183,108,.2);margin-top:24px}
+.light-metrics-bar{border-top-color:rgba(196,151,70,.25)}
+.pm-item{display:flex;align-items:center;gap:12px;background:rgba(10,46,43,.55);border:1px solid rgba(223,183,108,.2);border-radius:12px;padding:12px 16px;backdrop-filter:blur(10px)}
+.pm-item-light{background:rgba(255,255,255,.88);border-color:rgba(196,151,70,.25);box-shadow:0 4px 14px rgba(196,151,70,.08)}
+.pm-icon{font-size:22px;flex-shrink:0}
+.pm-item strong{display:block;font-size:13.5px;color:#FFF;font-weight:600}
+.pm-item span{font-size:11.5px;color:#A3C0BC}
+
+/* Light Gold Luxury Segment Section */
+.sec-dark-lux{background:#061A18;background-image:radial-gradient(circle at 50% 0%,rgba(20,75,68,.35) 0%,transparent 70%);padding:clamp(60px,7vw,90px) 0;border-top:1px solid rgba(223,183,108,.15);border-bottom:1px solid rgba(223,183,108,.15)}
+.sec-light-gold{background:#FAF7F2;background-image:radial-gradient(circle at 50% 0%,rgba(223,183,108,.15) 0%,transparent 70%);padding:clamp(60px,7vw,90px) 0;border-top:1px solid rgba(196,151,70,.2);border-bottom:1px solid rgba(196,151,70,.2)}
+.segs-luxury{margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+.seg-lux{background:rgba(12,38,35,.75);border:1px solid rgba(223,183,108,.2);border-radius:18px;padding:28px 24px;text-align:left;backdrop-filter:blur(14px);transition:all .3s cubic-bezier(.16,1,.3,1);color:#E6F2F0}
+.seg-lux-light{background:#FFFFFF;border:1px solid rgba(196,151,70,.25);box-shadow:0 8px 24px rgba(196,151,70,.06)}
+.seg-lux-light:hover{transform:translateY(-5px);border-color:#D4A853;box-shadow:0 14px 32px rgba(196,151,70,.14)}
+.seg-lux-light.on{border:2px solid #B88E44;background:#FFFDF8;box-shadow:0 14px 36px rgba(184,142,68,.18)}
+.seg-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.aud-ic-lux{width:44px;height:44px;border-radius:12px;background:rgba(223,183,108,.14);border:1px solid rgba(223,183,108,.3);display:flex;align-items:center;justify-content:center;color:#DFB76C}
+.aud-ic-lux-gold{background:rgba(184,142,68,.12);border-color:rgba(184,142,68,.3);color:#8C651F}
+.seg-selected-tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(223,183,108,.2);color:#F3D085;padding:3px 9px;border-radius:999px;border:1px solid rgba(223,183,108,.4)}
+.light-tag{background:rgba(184,142,68,.12);color:#8C651F;border-color:rgba(184,142,68,.3)}
+.seg-lux h3{font-family:var(--serif,serif);font-size:23px;color:#FFF;margin-bottom:6px}
+.seg-lux .line{color:#DFB76C;font-size:13px;font-weight:600;margin-bottom:10px}
+.seg-lux p{color:#A3C0BC;font-size:13.8px;line-height:1.6}
+.seg-rec-pill{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(223,183,108,.2);font-size:12.5px;color:#F3D085}
+
+/* Cream Luxury Form & Table Section */
+.sec-cream-lux{background:#FAF7F2;padding:clamp(60px,7vw,90px) 0}
+.panel-luxury{background:#FFFFFF;border:1px solid rgba(196,151,70,.25);border-radius:20px;padding:clamp(28px,4vw,42px);box-shadow:0 20px 50px rgba(10,46,43,.08)}
+.qtygrid-lux label{background:#FAF7F2;border:1px solid rgba(196,151,70,.25);transition:all .2s ease}
+.qtygrid-lux label.checked-pill{background:#F4E8D1;border-color:#B88E44;color:#0A2E2B;font-weight:600}
+.tbl-luxury th{background:#F4EBE0;color:#8C651F;border-bottom:2px solid rgba(196,151,70,.3);font-weight:700;font-size:12px;letter-spacing:.06em;padding:12px 14px}
+.tbl-luxury td{padding:12px 14px;border-bottom:1px solid rgba(196,151,70,.12);font-size:13.5px}
+
 .segs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .seg{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 24px;cursor:pointer;
   transition:.28s;text-align:left;position:relative}
@@ -1131,6 +1183,7 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
 /* ============================================================
    Luxury Kit Store & Kit Card Variants
    ============================================================ */
+.sec-collection,
 .sec-luxury-store {
   position: relative;
 }

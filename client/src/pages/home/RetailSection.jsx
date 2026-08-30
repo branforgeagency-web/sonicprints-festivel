@@ -37,7 +37,7 @@ export default function RetailSection() {
             >
               <Tilt max={4} className="dcard-tilt">
                 <div className="fx-sweep dcard-media">
-                  <img src={imgUrl(c.img)} alt={c.title} loading="lazy" />
+                  <img src={imgUrl(c.img)} alt={c.title} loading="lazy" decoding="async" />
                 </div>
               </Tilt>
               <div><h4>{c.title}</h4><p>{c.text}</p></div>

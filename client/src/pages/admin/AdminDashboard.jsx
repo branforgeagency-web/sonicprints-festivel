@@ -2,57 +2,195 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { adminGetOrders, adminGetEnquiries } from "../../api/client.js";
 import { money } from "../../context/SiteContext.jsx";
+import Icon from "../../components/Icon.jsx";
 
 export default function AdminDashboard() {
   const [orders, setOrders] = useState([]);
   const [enquiries, setEnquiries] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchData = () => {
+    setLoading(true);
     Promise.all([adminGetOrders(), adminGetEnquiries()])
-      .then(([o, e]) => { setOrders(o); setEnquiries(e); })
+      .then(([o, e]) => {
+        setOrders(Array.isArray(o) ? o : []);
+        setEnquiries(Array.isArray(e) ? e : []);
+      })
+      .catch((err) => {
+        console.error("Dashboard fetch error:", err);
+      })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  const revenue = orders.filter((o) => o.status !== "cancelled").reduce((s, o) => s + o.total, 0);
-  const newOrders = orders.filter((o) => o.status === "new").length;
-  const newEnquiries = enquiries.filter((e) => e.status === "new").length;
+  const safeOrders = Array.isArray(orders) ? orders : [];
+  const safeEnquiries = Array.isArray(enquiries) ? enquiries : [];
+
+  const revenue = safeOrders.filter((o) => o.status !== "cancelled").reduce((s, o) => s + (o.total || 0), 0);
+  const newOrders = safeOrders.filter((o) => o.status === "new").length;
+  const newEnquiries = safeEnquiries.filter((e) => e.status === "new").length;
+  const confirmedOrders = safeOrders.filter((o) => o.status === "confirmed" || o.status === "dispatched").length;
 
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <p className="sub">A quick look at what's come in.</p>
+    <div className="admin-page">
+      <div className="admin-header-row">
+        <div>
+          <span className="admin-eyebrow">👑 Executive Suite</span>
+          <h2 className="admin-title">Store Operations &amp; Performance</h2>
+          <p className="admin-subtitle">Real-time overview of customer orders, corporate enquiries, and store revenue.</p>
+        </div>
+        <div className="admin-header-actions">
+          <button onClick={fetchData} className="admin-btn ghost btn-icon" title="Refresh metrics">
+            <Icon name="sparkle" size={15} /> Refresh Data
+          </button>
+        </div>
+      </div>
 
       {loading ? (
-        <p>Loading…</p>
+        <div className="admin-card admin-loading-state">
+          <span className="pageLoader-ring" style={{ width: 36, height: 36, margin: "0 auto 12px" }} />
+          <p>Fetching executive analytics…</p>
+        </div>
       ) : (
         <>
-          <div className="admin-stats">
-            <div className="admin-card admin-stat"><b>{orders.length}</b><span>Total orders</span></div>
-            <div className="admin-card admin-stat"><b>{newOrders}</b><span>New / unconfirmed orders</span></div>
-            <div className="admin-card admin-stat"><b>{money(revenue)}</b><span>Order value (excl. cancelled)</span></div>
-            <div className="admin-card admin-stat"><b>{enquiries.length}</b><span>Bulk enquiries</span></div>
-            <div className="admin-card admin-stat"><b>{newEnquiries}</b><span>New enquiries to follow up</span></div>
+          {/* Top Luxury Metric Cards */}
+          <div className="admin-stats-grid">
+            <div className="admin-card admin-stat-card stat-gold">
+              <div className="stat-icon-wrap">💎</div>
+              <div className="stat-content">
+                <span className="stat-label">Total Store Revenue</span>
+                <b className="stat-value">{money(revenue)}</b>
+                <span className="stat-sub">Excludes cancelled orders</span>
+              </div>
+            </div>
+
+            <div className="admin-card admin-stat-card stat-emerald">
+              <div className="stat-icon-wrap">📦</div>
+              <div className="stat-content">
+                <span className="stat-label">Total Orders</span>
+                <b className="stat-value">{safeOrders.length}</b>
+                <span className="stat-sub">{confirmedOrders} active / in fulfillment</span>
+              </div>
+            </div>
+
+            <div className="admin-card admin-stat-card stat-amber">
+              <div className="stat-icon-wrap">⚡</div>
+              <div className="stat-content">
+                <span className="stat-label">New Orders</span>
+                <b className="stat-value">{newOrders}</b>
+                <span className="stat-sub">{newOrders > 0 ? "Requires confirmation" : "All orders reviewed"}</span>
+              </div>
+            </div>
+
+            <div className="admin-card admin-stat-card stat-teal">
+              <div className="stat-icon-wrap">💼</div>
+              <div className="stat-content">
+                <span className="stat-label">Bulk Enquiries</span>
+                <b className="stat-value">{safeEnquiries.length}</b>
+                <span className="stat-sub">{newEnquiries} pending follow-up</span>
+              </div>
+            </div>
           </div>
 
-          <div className="admin-card">
-            <h3 style={{ marginTop: 0 }}>Latest orders</h3>
-            <table className="admin-table">
-              <thead><tr><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Placed</th></tr></thead>
-              <tbody>
-                {orders.slice(0, 6).map((o) => (
-                  <tr key={o._id}>
-                    <td>{o.customer.name}<br /><span style={{ color: "#8a9895" }}>{o.customer.phone}</span></td>
-                    <td>{o.items.reduce((s, i) => s + i.qty, 0)} items</td>
-                    <td>{money(o.total)}</td>
-                    <td><span className={`admin-badge ${o.status}`}>{o.status}</span></td>
-                    <td>{new Date(o.createdAt).toLocaleDateString("en-IN")}</td>
+          {/* Quick Executive Shortcuts */}
+          <div className="admin-shortcuts-grid">
+            <Link to="/admin/orders" className="admin-shortcut-card">
+              <div className="sc-icon">📋</div>
+              <div>
+                <h4>Manage Customer Orders</h4>
+                <p>View order details, update fulfillment statuses, and manage deliveries.</p>
+              </div>
+              <span className="sc-arrow">→</span>
+            </Link>
+
+            <Link to="/admin/enquiries" className="admin-shortcut-card">
+              <div className="sc-icon">✉️</div>
+              <div>
+                <h4>Review Corporate Enquiries</h4>
+                <p>Respond to corporate clients, apartment societies, and bulk buyers.</p>
+              </div>
+              <span className="sc-arrow">→</span>
+            </Link>
+
+            <Link to="/admin/products" className="admin-shortcut-card">
+              <div className="sc-icon">🎁</div>
+              <div>
+                <h4>Catalog &amp; Pricing</h4>
+                <p>Update product pricing, stock availability, and highlight badges.</p>
+              </div>
+              <span className="sc-arrow">→</span>
+            </Link>
+          </div>
+
+          {/* Recent Orders Section */}
+          <div className="admin-card admin-table-card">
+            <div className="admin-table-header">
+              <div>
+                <h3 className="admin-card-title">Recent Customer Orders</h3>
+                <p className="admin-card-sub">Latest 6 orders received on your storefront</p>
+              </div>
+              <Link to="/admin/orders" className="admin-btn ghost text-btn">
+                View All Orders →
+              </Link>
+            </div>
+
+            <div className="admin-table-responsive">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Customer Info</th>
+                    <th>Items Purchased</th>
+                    <th>Total Value</th>
+                    <th>Fulfillment Status</th>
+                    <th>Order Date</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-                {!orders.length && <tr><td colSpan={5}>No orders yet.</td></tr>}
-              </tbody>
-            </table>
-            <div style={{ marginTop: 14 }}><Link to="/admin/orders" className="admin-btn ghost">View all orders</Link></div>
+                </thead>
+                <tbody>
+                  {safeOrders.slice(0, 6).map((o) => (
+                    <tr key={o._id}>
+                      <td>
+                        <div className="admin-cust-cell">
+                          <strong className="cust-name">{o.customer?.name || "Guest Customer"}</strong>
+                          <span className="cust-phone">📱 {o.customer?.phone || "No phone"}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="item-count-pill">
+                          {(o.items || []).reduce((s, i) => s + (i.qty || 0), 0)} items
+                        </span>
+                      </td>
+                      <td>
+                        <strong className="order-price">{money(o.total || 0)}</strong>
+                      </td>
+                      <td>
+                        <span className={`admin-badge badge-${o.status || "new"}`}>
+                          {o.status || "new"}
+                        </span>
+                      </td>
+                      <td className="date-cell">
+                        {o.createdAt ? new Date(o.createdAt).toLocaleDateString("en-IN") : "—"}
+                      </td>
+                      <td>
+                        <Link to="/admin/orders" className="admin-table-action-btn">
+                          Details →
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                  {!safeOrders.length && (
+                    <tr>
+                      <td colSpan={6} style={{ textAlign: "center", padding: "32px", color: "var(--muted)" }}>
+                        No orders recorded yet. Check storefront or test placing an order.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}

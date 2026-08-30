@@ -334,7 +334,7 @@
   opacity:.78;
   filter:drop-shadow(0 0 14px rgba(255,195,60,.8)) drop-shadow(0 0 28px rgba(245,158,11,.45));
   transform-origin:50% 50%;
-  animation:hcSpin 42s linear infinite;
+  animation:hcSpin 16s linear infinite;
   will-change:transform;
   backface-visibility:hidden;
   user-select:none;

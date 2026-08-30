@@ -177,8 +177,8 @@ export default function ChakraSection() {
               {/* Still ambient glow */}
               <div className="chk-glow" />
 
-              {/* Still Backdrop Disc (Rotation removed as requested) */}
-              <div className="chk-disc is-still">
+              {/* Motorized Rotating Backdrop Disc */}
+              <div className="chk-disc">
                 <AnimatePresence initial={false}>
                   <motion.img
                     key={active.id}
@@ -213,7 +213,7 @@ export default function ChakraSection() {
 
               {/* Foreground Vinayaka */}
               <div className="chk-vinayaka">
-                <img src="/assets/img/vinayaka-transparent.png" alt="Vinayaka seated on his throne" loading="eager" draggable="false" />
+                <img src="/assets/img/vinayaka-transparent.png" alt="Vinayaka seated on his throne" loading="lazy" decoding="async" draggable="false" />
               </div>
 
               <div className="chk-floor" />
