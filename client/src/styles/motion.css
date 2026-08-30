@@ -596,3 +596,70 @@ footer a:hover{transform:translateX(4px)}
   .hero-banner::before{animation:none}
   .hero-stage::after{display:none}
 }
+
+/* ============================================================
+   Navbar Premium Typography & Unclipped Cart Badge Corner Pill
+   ============================================================ */
+
+.navlinks {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.navlinks a {
+  color: #E2F0ED !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.025em !important;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif) !important;
+  padding: 8px 16px !important;
+  border-radius: 999px !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.navlinks a:hover {
+  color: #FFFFFF !important;
+  background: rgba(239, 209, 153, 0.18) !important;
+  text-shadow: 0 0 10px rgba(239, 209, 153, 0.35) !important;
+}
+
+.navlinks a.on,
+.navlinks a.active {
+  color: #F8E2AC !important;
+  background: linear-gradient(135deg, rgba(239, 209, 153, 0.25), rgba(201, 151, 63, 0.28)) !important;
+  font-weight: 700 !important;
+  box-shadow: inset 0 0 0 1px rgba(239, 209, 153, 0.45), 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Fix Cart Button Overflow & Top-Right Corner Count Badge */
+.fx-magnetic-cart {
+  overflow: visible !important;
+}
+
+.cartbtn {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.cartbtn .cnt {
+  position: absolute !important;
+  top: -8px !important;
+  right: -8px !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  padding: 0 6px !important;
+  border-radius: 999px !important;
+  background: #D9531E !important;
+  color: #FFFFFF !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  border: 2px solid #0A2E2B !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4) !important;
+  z-index: 25 !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}

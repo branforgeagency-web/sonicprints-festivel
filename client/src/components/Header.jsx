@@ -145,8 +145,8 @@ export default function Header() {
             </Link>
           </div>
           <div className="navact">
-            <Link to="/bulk" className="btn btn-ghost btn-sm nav-bulk">Bulk enquiry</Link>
-            <Magnetic strength={0.24} cap={5} radius={70}>
+            {/* <Link to="/bulk" className="btn btn-ghost btn-sm nav-bulk">Bulk enquiry</Link> */}
+            <Magnetic strength={0.24} cap={5} radius={70} className="fx-magnetic-cart">
               <button className="btn btn-gold btn-sm cartbtn" onClick={openCart} aria-label="Open cart">
                 <Icon name="cart" size={20} /> Cart
                 <AnimatePresence mode="wait" initial={false}>
