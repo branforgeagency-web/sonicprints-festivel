@@ -338,14 +338,117 @@ p{margin:0 0 1em}
   border-radius:999px;padding:8px 15px;font-size:12.5px;font-weight:600}
 .dnote{color:#B7CBC7;font-size:14.5px;min-height:44px}
 
-/* ---------- dealer band ---------- */
-.dealer{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px}
-.dcard{border-radius:var(--r-lg);overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:var(--sh-1);transition:.3s}
-.dcard:hover{transform:translateY(-6px);box-shadow:var(--sh-2)}
-.dcard img{width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--cream-200)}
-.dcard div{padding:18px 20px 22px}
-.dcard h4{font-size:21px;margin-bottom:5px}
-.dcard p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55}
+/* ---------- dealer band (Arch-Top Cards) ---------- */
+.dealer{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:20px}
+.dcard{
+  border-radius: 180px 180px 24px 24px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.03);
+  padding: 16px 16px 28px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+.dcard:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 28px 56px -14px rgba(0, 0, 0, 0.12), 0 0 20px rgba(218, 90, 24, 0.1);
+  border-color: rgba(218, 90, 24, 0.3);
+}
+.dcard-tilt {
+  width: 100%;
+  border-radius: 160px 160px 14px 14px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+.dcard-media {
+  width: 100%;
+  border-radius: 160px 160px 14px 14px;
+  overflow: hidden;
+  background: #faf8f5;
+}
+.dcard img{
+  width: 100%;
+  aspect-ratio: 4 / 4.4;
+  object-fit: cover;
+  border-radius: 160px 160px 14px 14px;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dcard:hover img {
+  transform: scale(1.04);
+}
+.dcard div.dcard-info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 8px;
+  width: 100%;
+}
+.dcard h4{
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px 0;
+  line-height: 1.25;
+}
+.dcard p{
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0 0 20px 0;
+  line-height: 1.55;
+  max-width: 320px;
+}
+
+/* Shop Now Outlined Button matching reference image */
+.btn-arch-shop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 28px;
+  background: transparent;
+  border: 1.5px solid #111827;
+  color: #111827;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+  letter-spacing: 0.02em;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+}
+.btn-arch-shop:hover {
+  background: #111827;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Orange rounded button for dealer CTA */
+.btn-dealer-orange {
+  background: linear-gradient(135deg, #da5a18 0%, #c84618 100%);
+  color: #ffffff !important;
+  border-radius: 999px;
+  padding: 14px 36px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 8px 24px rgba(218, 90, 24, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background 0.25s ease;
+}
+.btn-dealer-orange:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(218, 90, 24, 0.48);
+  background: linear-gradient(135deg, #e3601d 0%, #d44d1e 100%);
+}
 
 /* ---------- process ---------- */
 .steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
@@ -446,10 +549,10 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
 .crumb{padding:20px 0;font-size:13px;color:var(--muted)}
 .crumb a:hover{color:var(--teal-700)}
 .crumb span{opacity:.5;margin:0 7px}
-.pd{display:grid;grid-template-columns:1.06fr .94fr;gap:50px;align-items:start;padding-bottom:24px}
-.gal{position:sticky;top:calc(var(--nav-h) + 18px)}
-.gal-main{border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--line);background:var(--cream-200);box-shadow:var(--sh-2);position:relative}
-.gal-main img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.pd{display:grid;grid-template-columns:minmax(300px, 440px) 1fr;gap:40px;align-items:start;padding-bottom:24px}
+.gal{position:sticky;top:calc(var(--nav-h) + 18px);max-width:440px;width:100%}
+.gal-main{border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--cream-200);box-shadow:var(--sh-2);position:relative;max-height:440px}
+.gal-main img{width:100%;aspect-ratio:1/1;max-height:440px;object-fit:cover;display:block}
 .gal-main .zoomtag{position:absolute;left:16px;bottom:16px;background:rgba(10,46,43,.86);color:var(--gold-300);
   font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;padding:7px 12px;border-radius:999px;backdrop-filter:blur(6px)}
 .thumbs{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
@@ -1354,7 +1457,8 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
 
 .kcm-img-wrapper {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
+  max-height: 280px;
   overflow: hidden;
   background: var(--bg-soft, #f8f6f0);
   display: block;
@@ -2462,6 +2566,201 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
   }
 }
 
+.cfg-item h5 {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 3px;
+}
+
+.cfg-item p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   Connected Flowing Process Rail (How Section)
+   ============================================================ */
+.sec-pipeline {
+  padding: 80px 0;
+  position: relative;
+  background: var(--bg-dark, #0a1f1c);
+  color: #ffffff;
+}
+
+.process-rail-wrapper {
+  position: relative;
+  margin-top: 48px;
+}
+
+.process-rail-track {
+  position: absolute;
+  top: 28px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.7) 50%, rgba(251, 191, 36, 0.15) 100%);
+  z-index: 1;
+}
+
+.process-rail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.process-rail-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.process-rail-node {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #0d2824;
+  border: 2px solid #fbbf24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fbbf24;
+  margin-bottom: 20px;
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.25);
+}
+
+.process-rail-halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px stroke rgba(251, 191, 36, 0.3);
+}
+
+.process-rail-num {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #fbbf24;
+  color: #000000;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.process-rail-icon {
+  font-size: 18px;
+}
+
+.process-rail-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.process-rail-step-badge {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fbbf24;
+  margin-bottom: 6px;
+}
+
+.process-rail-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px;
+}
+
+.process-rail-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 240px;
+}
+
+/* ============================================================
+   Bal Ganesha Mascot SVG Animations
+   ============================================================ */
+.ganesha-svg-avatar {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@keyframes modakGlow {
+  0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4)); }
+  100% { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.9)); }
+}
+
+.modak-sparkle {
+  transform-origin: center;
+  animation: modakGlow 1.5s ease-in-out infinite alternate;
+}
+
+/* ============================================================
+   Product Page Gallery Viewport
+   ============================================================ */
+.gal-viewport-wrapper {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 20px;
+}
+
+.thumbs-v {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .kit-bento-hero {
+    grid-template-columns: 1fr;
+  }
+  .kit-row-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .aud-split-showcase {
+    grid-template-columns: 1fr;
+  }
+  .aud-stage-bullets {
+    grid-template-columns: 1fr;
+  }
+  .kids-stage-grid {
+    grid-template-columns: 1fr;
+  }
+  .kids-feature-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .kfr-action-block {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
+@media (max-width: 768px) {
+  .process-rail-track {
+    display: none;
+  }
+  .process-rail-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
 @media (max-width: 640px) {
   .chk-features-grid {
     grid-template-columns: 1fr;
@@ -2474,4 +2773,179 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
     order: 2;
     overflow-x: auto;
   }
+}
+
+/* ============================================================
+   Product Landing Page Extensions: Vastu, Policy Tabs & Support
+   ============================================================ */
+.sku-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.adv-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.adv-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.adv-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.adv-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #17272b;
+  margin-bottom: 6px;
+}
+
+.adv-desc {
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Policy Tabs Accordion */
+.policy-section {
+  background: #fdfbf7;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin-top: 40px;
+}
+
+.policy-tabs-header {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 14px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.policy-tab-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #64748b;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.policy-tab-btn.active, .policy-tab-btn:hover {
+  background: var(--teal-900, #0a2e2b);
+  color: #ffffff;
+}
+
+.policy-tab-content {
+  color: #334155;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.policy-subhead {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #17272b;
+  margin: 16px 0 8px 0;
+}
+
+.policy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+
+.policy-table th, .policy-table td {
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.policy-table th {
+  background: #f1f5f9;
+  font-weight: 700;
+}
+
+.support-footer-card {
+  background: linear-gradient(135deg, #17272b 0%, #0a2e2b 100%);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.support-footer-info h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+}
+
+.support-footer-info p {
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.support-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #da5a18 0%, #c84618 100%);
+  color: #ffffff;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(218, 90, 24, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.support-action-btn:hover {
+  transform: translateY(-2px);
 }

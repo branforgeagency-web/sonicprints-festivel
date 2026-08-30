@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { getProductBySlug } from "../api/client.js";
-import { imgUrl, money } from "../context/SiteContext.jsx";
+import { imgUrl, money, useSite } from "../context/SiteContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
 import useReveal from "../hooks/useReveal.js";
 import KitCard from "../components/KitCard.jsx";
@@ -12,19 +12,19 @@ import { useProductTransition } from "../components/fx/ProductTransition.jsx";
 import { EASE_SILK } from "../anim/tokens.js";
 import useMotionProfile from "../anim/useMotionProfile.js";
 
-// The original site's "in store" lifestyle photo differs by category.
+// Category fallback image keys
 const STORE_IMAGE = { chakra: "display-chakra", kids: "display-kids", diy: "display-kids" };
-
 const FADE_IN = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_SILK } } };
 
 const ASSURE_BULLETS = [
   { title: "Natural clay idol", text: "no plaster of Paris, no thermocol, safe for home visarjan." },
   { title: "Sealed prasadam", text: "from an FSSAI-licensed supplier, with licence number and best-before printed on pack." },
-  { title: "Pre-festival delivery", text: "across Tamil Nadu, Andhra Pradesh, Telangana, Karnataka and Maharashtra." },
+  { title: "Pre-festival delivery", text: "guaranteed delivery before the festival across serviced cities." },
   { title: "Custom branding available", text: "on sleeves, cards and certificates — never on the idol." }
 ];
 
 export default function ProductPage() {
+  const { config } = useSite();
   const { slug } = useParams();
   const [searchParams] = useSearchParams();
   const [product, setProduct] = useState(null);
@@ -42,6 +42,7 @@ export default function ProductPage() {
   const [designId, setDesignId] = useState(null);
   const [qty, setQty] = useState(1);
   const [activeThumb, setActiveThumb] = useState(0);
+  const [activePolicyTab, setActivePolicyTab] = useState("returns");
 
   useEffect(() => {
     let cancelled = false;
@@ -61,15 +62,11 @@ export default function ProductPage() {
         setActiveThumb(0);
         window.scrollTo({ top: 0 });
       })
-      .catch(() => !cancelled && setError("This kit could not be found."))
+      .catch(() => !cancelled && setError("This product could not be found."))
       .finally(() => !cancelled && setLoading(false));
     return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+  }, [slug, searchParams]);
 
-  /* Tell the detail-reveal overlay exactly where this gallery landed, so
-     the photo that lifted off the card finishes its flight in the right
-     place rather than at a guessed position. */
   useEffect(() => {
     if (loading || !product) return;
     registerTarget(galRef.current);
@@ -84,16 +81,17 @@ export default function ProductPage() {
       <div className="page">
         <div className="wrap pageLoader" role="status" aria-live="polite">
           <span className="pageLoader-ring" aria-hidden="true" />
-          <span>Loading kit details…</span>
+          <span>Loading product details…</span>
         </div>
       </div>
     );
   }
+
   if (error || !product) {
     return (
       <div className="page">
         <div className="wrap" style={{ padding: "60px 0" }}>
-          <p>{error || "This kit could not be found."}</p>
+          <p>{error || "This product could not be found."}</p>
           <Link className="btn btn-gold" to="/">Back to the collection</Link>
         </div>
       </div>
@@ -102,8 +100,6 @@ export default function ProductPage() {
 
   const baseImg = design ? design.img : product.img;
   const storeImg = STORE_IMAGE[product.id] || "display-main";
-  // Only the rotating-chakra designs have a "-circ" (cropped circular) rendition;
-  // every other product's gallery uses its plain full-size photo.
   const productShotSrc = design ? imgUrl(baseImg, "circ") : imgUrl(baseImg);
   const thumbs = [
     { key: "product", label: "Product", src: productShotSrc },
@@ -115,6 +111,7 @@ export default function ProductPage() {
   function handleAdd() {
     addToCart(product.id, { variant: variantId, design: designId, qty });
   }
+
   function handleBuyNow() {
     addToCart(product.id, { variant: variantId, design: designId, qty });
     navigate("/checkout");
@@ -128,6 +125,7 @@ export default function ProductPage() {
       </div>
 
       <div className="wrap pd">
+        {/* Product Gallery Viewport */}
         <div className="gal">
           <div className="gal-viewport-wrapper">
             <motion.div
@@ -177,12 +175,14 @@ export default function ProductPage() {
           </div>
         </div>
 
+        {/* Product Purchase Actions & Info */}
         <motion.div
           className="buy"
           initial="hidden"
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: reduced ? 0 : 0.07, delayChildren: reduced ? 0 : 0.12 } } }}
         >
+          <motion.span className="sku-badge" variants={FADE_IN}>SKU: {product.sku || "GLAJ11171"}</motion.span>
           <motion.div className="sub" variants={FADE_IN}>{product.subtitle}</motion.div>
           <motion.h1 variants={FADE_IN}>{product.name}</motion.h1>
           {product.tag && <motion.p className="tag" variants={FADE_IN}>“{product.tag}”</motion.p>}
@@ -241,6 +241,7 @@ export default function ProductPage() {
             </button>
             <button className="btn btn-lg" onClick={handleBuyNow}>Buy now</button>
           </motion.div>
+          
           <Link to="/bulk" className="btn btn-line btn-wide">
             Need 25 or more? Get bulk pricing <Icon name="arrow" />
           </Link>
@@ -261,69 +262,159 @@ export default function ProductPage() {
         </motion.div>
       </div>
 
-      {!!product.ledeParagraphs?.length && (
-        <section className="pd-sec">
-          <div className="wrap">
-            <div className="two">
-              <div className="rv">
-                <div className="eyebrow">Why this kit exists</div>
-                <h2>{product.whyHeadline || product.tag}</h2>
-                <div className="pd-lede" style={{ marginTop: 16 }}>
-                  {product.ledeParagraphs.map((p, i) => <p key={i}>{p}</p>)}
-                </div>
+      {/* About The Product & Product-Specific Advantages Section */}
+      <section className="pd-sec" style={{ background: "#ffffff", padding: "60px 0" }}>
+        <div className="wrap">
+          <div className="two">
+            <div className="rv">
+              <div className="eyebrow">About The Product</div>
+              <h2>{product.name} — {product.subtitle}</h2>
+              <div className="pd-lede" style={{ marginTop: 16 }}>
+                <p>
+                  {product.shortDescription || product.kitDescription}
+                </p>
+                {product.ledeParagraphs?.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
                 {product.bestFor && (
                   <p style={{ fontSize: 13.5, color: "var(--muted)", borderTop: "1px dashed var(--line)", paddingTop: 14, marginTop: 20 }}>
                     <strong style={{ color: "var(--ink)" }}>Best for:</strong> {product.bestFor}
                   </p>
                 )}
               </div>
-              <div className="rv rv-d1">
-                <div className="sheetimg">
-                  <img src={design ? imgUrl(design.sheet) : imgUrl(`${product.img}-sheet`)} alt={`${product.name} full specification sheet`} loading="lazy" decoding="async" />
-                </div>
+            </div>
+
+            {/* Why Choose This Product? (Product-Specific Advantages Grid) */}
+            <div className="rv rv-d1">
+              <div className="eyebrow">Why Choose {product.name}?</div>
+              <h3 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: 16 }}>Key Advantages &amp; Useful Highlights</h3>
+              <div className="advantages-grid">
+                {product.highlights?.map((h, idx) => (
+                  <div className="adv-card" key={h.title || idx}>
+                    <div className="adv-icon">{idx === 0 ? "🌟" : idx === 1 ? "📦" : idx === 2 ? "🌿" : "✨"}</div>
+                    <div className="adv-title">{h.title}</div>
+                    <div className="adv-desc">{h.text}</div>
+                  </div>
+                ))}
+                {(!product.highlights || product.highlights.length === 0) && (
+                  <>
+                    <div className="adv-card">
+                      <div className="adv-icon">🌟</div>
+                      <div className="adv-title">Premium Craftsmanship</div>
+                      <div className="adv-desc">Thoughtfully designed and crafted for an elevated festive and spiritual experience.</div>
+                    </div>
+                    <div className="adv-card">
+                      <div className="adv-icon">📦</div>
+                      <div className="adv-title">Complete Setup</div>
+                      <div className="adv-desc">Includes everything needed for immediate use with clear step-by-step guidance.</div>
+                    </div>
+                    <div className="adv-card">
+                      <div className="adv-icon">🌿</div>
+                      <div className="adv-title">Eco-Friendly &amp; Safe</div>
+                      <div className="adv-desc">100% natural, eco-conscious materials that are safe for your home and family.</div>
+                    </div>
+                    <div className="adv-card">
+                      <div className="adv-icon">✨</div>
+                      <div className="adv-title">Guaranteed Quality</div>
+                      <div className="adv-desc">Backed by Sonic Prints quality assurance and dedicated customer support.</div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {!!product.contents?.length && (
-        <section className="sec sec-cream">
-          <div className="wrap">
-            <div className="sec-head rv">
-              <div className="eyebrow">Inside the box</div>
-              <h2>{product.contents.length} components. Nothing else to buy.</h2>
-              <p>Every item is placed in its own compartment, in the order you need it.</p>
+      {/* Structured Shipping, Returns & Customer Policy Section */}
+      <section className="sec" style={{ paddingTop: 0, paddingBottom: 16 }}>
+        <div className="wrap">
+          <div className="policy-section">
+            <div className="sec-head">
+              <div className="eyebrow">Customer Protection &amp; Guarantees</div>
+              <h2>Shipping, Returns &amp; Customer Support</h2>
+              <p>Transparent, flexible, and customer-friendly policies for complete peace of mind.</p>
             </div>
-            <div className="contents rv">
-              {product.contents.map((c, i) => (
-                <div className="citem" key={i}><i>{i + 1}</i><span>{c}</span></div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
-      {!!product.processSteps?.steps?.length && (
-        <section className="sec sec-cream">
-          <div className="wrap">
-            <div className="sec-head rv">
-              <div className="eyebrow">{product.processSteps.eyebrow}</div>
-              <h2>{product.processSteps.headline}</h2>
+            {/* Policy Accordion Tabs */}
+            <div className="policy-tabs-header">
+              <button className={`policy-tab-btn ${activePolicyTab === "returns" ? "active" : ""}`} onClick={() => setActivePolicyTab("returns")}>
+                🔄 Returns &amp; Replacements
+              </button>
+              <button className={`policy-tab-btn ${activePolicyTab === "shipping" ? "active" : ""}`} onClick={() => setActivePolicyTab("shipping")}>
+                🚚 Shipping &amp; Delivery
+              </button>
             </div>
-            <div className="stepgrid">
-              {product.processSteps.steps.map((s, i) => (
-                <div className={`sg rv rv-d${i % 3}`} key={s.title}>
-                  <div className="n">{i + 1}</div><h4>{s.title}</h4><p>{s.text}</p>
+
+            <div className="policy-tab-content">
+              {activePolicyTab === "returns" && (
+                <div>
+                  <div className="policy-subhead">Our Customer-Friendly Return Terms:</div>
+                  <ul>
+                    <li><strong>Wrong Product:</strong> If the product received does not match your order (Unboxing Video Required).</li>
+                    <li><strong>Manufacturing Defect:</strong> If there is a manufacturing defect on the received item (Video Required).</li>
+                    <li><strong>Damaged Condition:</strong> Received in a damaged state in transit (Unboxing Video Required within 12 hours).</li>
+                  </ul>
+
+                  <div className="policy-subhead">Order Cancellation &amp; Process:</div>
+                  <p>
+                    In case you wish to cancel an order, please email us at <strong>{config?.email || "branforgeagency@gmail.com"}</strong> within 12 hours of placing your order. Same-day / fixed-time categories cannot be cancelled once dispatched.
+                  </p>
+
+                  <div className="policy-subhead">Return Freight / Shipping Costs:</div>
+                  <table className="policy-table">
+                    <thead>
+                      <tr><th>Weight Slab (Domestic India)</th><th>Deducted Freight Amount</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>0 – 500 gm</td><td>Rs. 75/-</td></tr>
+                      <tr><td>500 – 999 gm</td><td>Rs. 150/-</td></tr>
+                      <tr><td>1 Kg – 2 Kg</td><td>Rs. 250/-</td></tr>
+                      <tr><td>Above 2 Kg</td><td>Rs. 250/- + Rs. 125 per additional KG</td></tr>
+                    </tbody>
+                  </table>
                 </div>
-              ))}
+              )}
+
+              {activePolicyTab === "shipping" && (
+                <div>
+                  <div className="policy-subhead">Order Processing &amp; Dispatch:</div>
+                  <p>
+                    All orders placed before <strong>12:00 PM (Monday to Saturday)</strong> are processed and dispatched the same day. Orders placed after 12:00 PM or during weekends / public holidays are dispatched on the next business day.
+                  </p>
+
+                  <div className="policy-subhead">International Shipping:</div>
+                  <p>
+                    For international orders, we ship via <strong>DHL Express</strong> with expected delivery in <strong>5–7 working days</strong> across the globe (subject to customs clearance). International packages may be subject to local import duties and taxes, which are paid by the recipient.
+                  </p>
+
+                  <div className="policy-subhead">Order Tracking:</div>
+                  <p>
+                    Once your package is dispatched, a confirmation email and SMS with tracking information will be sent so you can track your shipment directly.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Support Footer Card */}
+            <div className="support-footer-card">
+              <div className="support-footer-info">
+                <h4>SONIC PRINTS PRIVATE LIMITED</h4>
+                <p>{config?.address || "Sonic Prints, Coimbatore, Tamil Nadu, India"} · Country of Origin: INDIA</p>
+                <p style={{ marginTop: 4 }}>Customer Support: Call / WhatsApp: {config?.whatsapp || "+91 63827 18655"} (10:00 AM – 6:00 PM IST Mon–Sat)</p>
+              </div>
+
+              <a href={`https://wa.me/${(config?.whatsapp || "+91 63827 18655").replace(/[^0-9]/g, "")}`} target="_blank" rel="noopener noreferrer" className="support-action-btn">
+                💬 Contact Support
+              </a>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
+      {/* Specifications & Volume Pricing */}
       {(!!product.specs?.length || !!product.bulkPricing?.length) && (
-        <section className="sec">
+        <section className="sec" style={{ paddingTop: 16 }}>
           <div className="wrap two">
             {!!product.specs?.length && (
               <div className="rv">
@@ -347,8 +438,7 @@ export default function ProductPage() {
                   </tbody>
                 </table>
                 <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 12 }}>
-                  Indicative slab pricing, excluding GST and freight, for standard specification. Branded sleeves,
-                  personalisation and premium prasadam are quoted separately. Final rates are confirmed after sample approval.
+                  Indicative slab pricing, excluding GST and freight, for standard specification.
                 </p>
                 <div style={{ marginTop: 16 }}><Link to="/bulk" className="btn btn-gold">Request a rate card</Link></div>
               </div>
@@ -357,6 +447,7 @@ export default function ProductPage() {
         </section>
       )}
 
+      {/* Cross-Sell Recommendations */}
       {!!crossSell.length && (
         <section className="sec sec-cream">
           <div className="wrap">

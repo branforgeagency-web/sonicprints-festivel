@@ -40,14 +40,18 @@ export default function RetailSection() {
                   <img src={imgUrl(c.img)} alt={c.title} loading="lazy" decoding="async" />
                 </div>
               </Tilt>
-              <div><h4>{c.title}</h4><p>{c.text}</p></div>
+              <div className="dcard-info">
+                <h4>{c.title}</h4>
+                <p>{c.text}</p>
+                {/* <Link to="/bulk" className="btn-arch-shop">Shop Now</Link> */}
+              </div>
             </RevealItem>
           ))}
         </RevealGroup>
 
         <Reveal variant="fadeUp" delay={0.1} style={{ textAlign: "center", marginTop: 34 }}>
           <Magnetic>
-            <Link to="/bulk" className="btn btn-gold btn-lg">Become a stockist or dealer</Link>
+            <Link to="/bulk" className="btn-dealer-orange">Become a stockist or dealer</Link>
           </Magnetic>
         </Reveal>
       </div>

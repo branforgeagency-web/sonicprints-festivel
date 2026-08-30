@@ -1,33 +1,30 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { useSite } from "../../context/SiteContext.jsx";
-import KitCard from "../../components/KitCard.jsx";
+import { motion } from "framer-motion";
+import { useSite, imgUrl, money } from "../../context/SiteContext.jsx";
+import Hero3DCarousel from "../../components/Hero3DCarousel.jsx";
 import Icon from "../../components/Icon.jsx";
-import { Reveal, RevealGroup } from "../../components/fx/Reveal.jsx";
+import { Reveal } from "../../components/fx/Reveal.jsx";
 import SplitText from "../../components/fx/SplitText.jsx";
 import { SectionAura, Petals } from "../../components/fx/Decor.jsx";
 import { EASE_SILK } from "../../anim/tokens.js";
 import useMotionProfile from "../../anim/useMotionProfile.js";
 
-const FILTERS = [
-  { id: "all", label: "✨ All Collection", count: 6 },
-  { id: "puja", label: "🪔 Home & Puja", category: ["mini", "employee"] },
-  { id: "kids", label: "🎨 Kids & DIY", category: ["kids", "diy"] },
-  { id: "mandap", label: "🌺 Mandap & Backdrop", category: ["mandap", "chakra"] }
-];
-
 export default function KitsSection() {
   const { products, loading, error } = useSite();
-  const [activeFilter, setActiveFilter] = useState("all");
   const { reduced } = useMotionProfile();
 
-  const filteredProducts = useMemo(() => {
-    if (activeFilter === "all") return products;
-    const currentTab = FILTERS.find((f) => f.id === activeFilter);
-    if (!currentTab?.category) return products;
-    return products.filter((p) => currentTab.category.includes(p.id));
-  }, [products, activeFilter]);
+  const carouselItems = useMemo(() => {
+    return (products || []).map((p, i) => ({
+      id: p.id,
+      title: p.name,
+      category: p.subtitle || p.badge || "Festival Kit",
+      img: imgUrl(p.img),
+      price: money(p.price),
+      slug: p.slug,
+      slideNum: String(i + 1).padStart(2, "0")
+    }));
+  }, [products]);
 
   return (
     <section className="sec sec-collection sec-luxury-store" id="kits">
@@ -35,7 +32,7 @@ export default function KitsSection() {
       <Petals count={5} />
       <div className="wrap">
         {/* Luxury Centered Section Header */}
-        <div className="sec-head center" style={{ marginBottom: 36 }}>
+        <div className="sec-head center" style={{ marginBottom: 24 }}>
           <Reveal variant="fadeUp" duration={0.6}>
             <div className="eyebrow center">✨ The Sonic Festival Store</div>
           </Reveal>
@@ -60,43 +57,27 @@ export default function KitsSection() {
           </Reveal>
         </div>
 
-        {/* Floating Luxury Category Filter Tabs */}
-        <Reveal variant="fadeUp" delay={0.28}>
-          <div className="store-control-bar store-control-centered">
-            <div className="kit-filter-tabs" role="tablist" aria-label="Product categories">
-              {FILTERS.map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`kit-tab${activeFilter === tab.id ? " active" : ""}`}
-                  onClick={() => setActiveFilter(tab.id)}
-                  role="tab"
-                  aria-selected={activeFilter === tab.id}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-
         {loading && <p style={{ color: "var(--muted)", padding: "40px 0", textAlign: "center" }}>Loading the collection…</p>}
         {error && <p style={{ color: "var(--muted)", padding: "40px 0", textAlign: "center" }}>{error}</p>}
 
-        <AnimatePresence mode="wait">
+        {!loading && !error && (
           <motion.div
-            key={activeFilter}
             initial={reduced ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={reduced ? false : { opacity: 0, y: -12 }}
             transition={{ duration: 0.45, ease: EASE_SILK }}
           >
-            <RevealGroup className="store-grid-showcase" stagger={0.1} amount={0.05}>
-              {filteredProducts.map((p, i) => (
-                <KitCard key={p.id} product={p} index={i} />
-              ))}
-            </RevealGroup>
+            <Hero3DCarousel
+              items={carouselItems}
+              showNav={false}
+              showBg={false}
+              eyebrowText=""
+              headingLine1=""
+              headingLine2=""
+              description=""
+              autoPlayInterval={2000}
+            />
           </motion.div>
-        </AnimatePresence>
+        )}
       </div>
     </section>
   );
