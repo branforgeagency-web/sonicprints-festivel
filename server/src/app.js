@@ -18,7 +18,16 @@ const app = express();
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN?.split(",") || "*",
+    origin: (origin, callback) => {
+      if (!origin || origin.includes("localhost") || origin.includes("127.0.0.1")) {
+        return callback(null, true);
+      }
+      const allowed = process.env.CLIENT_ORIGIN?.split(",").map((s) => s.trim()) || ["*"];
+      if (allowed.includes("*") || allowed.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true
   })
 );

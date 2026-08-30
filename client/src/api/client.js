@@ -1,7 +1,11 @@
 import axios from "axios";
 import { FALLBACK_PRODUCTS } from "../data/products.js";
 
-const rawApiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://sonicprints-festivel.onrender.com" : "");
+const isLocalhost =
+  typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+
+const rawApiUrl = import.meta.env.VITE_API_URL || (isLocalhost ? "http://localhost:5000" : "");
 
 let baseURL = "/api";
 if (rawApiUrl) {
