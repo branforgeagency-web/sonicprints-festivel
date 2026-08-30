@@ -37,7 +37,8 @@ export async function getPublicConfig(req, res, next) {
 
 export async function adminUpdateConfig(req, res, next) {
   try {
-    const cfg = await SiteConfig.findByIdAndUpdate("site-config", req.body, {
+    const { _id, createdAt, updatedAt, __v, ...updateData } = req.body || {};
+    const cfg = await SiteConfig.findByIdAndUpdate("site-config", updateData, {
       new: true,
       upsert: true,
       runValidators: true

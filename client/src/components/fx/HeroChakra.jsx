@@ -1,8 +1,6 @@
-import { motion } from "framer-motion";
-
 /* ============================================================
-   HeroChakra — Detailed rotating golden Sudarshan Chakra backdrop,
-   turning continuously at the center of the hero banner.
+   HeroChakra — Continuous 360° rotating golden Sudarshan Chakra
+   backdrop turning smoothly at the center of the hero banner.
    ============================================================ */
 
 export default function HeroChakra() {
@@ -10,7 +8,7 @@ export default function HeroChakra() {
     <span className="hero-chakra" aria-hidden="true">
       <span className="hero-chakra-glow" />
       <span className="hero-chakra-wheel">
-        <motion.img
+        <img
           className="hero-chakra-img"
           src="/assets/img/golden-sudarshan-chakra.png"
           alt=""
@@ -19,8 +17,6 @@ export default function HeroChakra() {
           loading="eager"
           decoding="async"
           draggable="false"
-          animate={{ rotate: [0, 360] }}
-          transition={{ repeat: Infinity, duration: 16, ease: "linear" }}
         />
       </span>
     </span>

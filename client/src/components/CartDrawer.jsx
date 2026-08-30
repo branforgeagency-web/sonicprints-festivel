@@ -73,10 +73,10 @@ export default function CartDrawer() {
                       <button aria-label="Increase" onClick={() => setQty(i, 1)}>+</button>
                     </div>
                   </div>
-                  <div className="rt">
+                  {/* <div className="rt">
                     <b>{money(up * it.qty)}</b><br />
                     <button className="rm" onClick={() => removeAt(i)}>Remove</button>
-                  </div>
+                  </div> */}
                 </div>
               );
             })

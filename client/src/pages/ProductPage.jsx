@@ -107,7 +107,7 @@ export default function ProductPage() {
   const productShotSrc = design ? imgUrl(baseImg, "circ") : imgUrl(baseImg);
   const thumbs = [
     { key: "product", label: "Product", src: productShotSrc },
-    { key: "sheet", label: "Details", src: design ? imgUrl(design.sheet) : imgUrl(`${product.img}-sheet`) },
+    { key: "sheet", label: "Details", src: (design && design.sheet) ? imgUrl(design.sheet) : imgUrl(`${product.img}-sheet`) },
     { key: "store", label: "In store", src: imgUrl(storeImg) }
   ];
   const mainImg = thumbs[activeThumb].src;

@@ -265,7 +265,7 @@ p{margin:0 0 1em}
   width:80%; aspect-ratio:1;
   z-index:1;
   transform-origin:50% 50%;
-  animation:spin 20s linear infinite;
+  animation:spin 20s linear infinite !important;
   will-change:transform;
   backface-visibility:hidden;
 }
@@ -564,6 +564,59 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
 .seg-lux p{color:#A3C0BC;font-size:13.8px;line-height:1.6}
 .seg-rec-pill{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(223,183,108,.2);font-size:12.5px;color:#F3D085}
 
+/* Bulk Page Custom Distinct Section Themes */
+.sec-bulk-segment {
+  background: linear-gradient(180deg, #EEF7F5 0%, #E0F0EC 100%);
+  border-top: 1px solid rgba(23, 87, 82, 0.14);
+  border-bottom: 1px solid rgba(23, 87, 82, 0.14);
+  padding: clamp(60px, 7vw, 90px) 0;
+}
+
+.sec-bulk-form {
+  background: linear-gradient(180deg, #FFFDF9 0%, #F8EFE4 100%);
+  border-top: 1px solid rgba(184, 142, 68, 0.18);
+  border-bottom: 1px solid rgba(184, 142, 68, 0.18);
+  padding: clamp(60px, 7vw, 90px) 0;
+}
+
+.sec-bulk-pricing {
+  background: linear-gradient(180deg, #0A2E2B 0%, #051917 100%);
+  color: #DCEAE7;
+  border-top: 1px solid rgba(223, 183, 108, 0.25);
+  border-bottom: 1px solid rgba(223, 183, 108, 0.25);
+  padding: clamp(60px, 7vw, 90px) 0;
+}
+.sec-bulk-pricing .admin-table-responsive {
+  background: #092825 !important;
+  border: 1px solid rgba(223, 183, 108, 0.35) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+}
+.sec-bulk-pricing .tbl-luxury {
+  background: #092825 !important;
+}
+.sec-bulk-pricing .tbl-luxury th {
+  background: #144944 !important;
+  color: #F8E2AC !important;
+  border-bottom: 2px solid rgba(223, 183, 108, 0.4) !important;
+}
+.sec-bulk-pricing .tbl-luxury td {
+  background: #092825 !important;
+  color: #E5F3F0 !important;
+  border-bottom: 1px solid rgba(223, 183, 108, 0.15) !important;
+}
+.sec-bulk-pricing .tbl-luxury tr:nth-child(even) td {
+  background: #0E3632 !important;
+}
+.sec-bulk-pricing .tbl-luxury td:first-child {
+  color: #FFFFFF !important;
+}
+
+.sec-bulk-dealer {
+  background: linear-gradient(180deg, #FCF5E8 0%, #F4E4C8 100%);
+  border-top: 1px solid rgba(196, 151, 70, 0.3);
+  padding: clamp(60px, 7vw, 90px) 0;
+}
+
 /* Cream Luxury Form & Table Section */
 .sec-cream-lux{background:#FAF7F2;padding:clamp(60px,7vw,90px) 0}
 .panel-luxury{background:#FFFFFF;border:1px solid rgba(196,151,70,.25);border-radius:20px;padding:clamp(28px,4vw,42px);box-shadow:0 20px 50px rgba(10,46,43,.08)}
@@ -605,6 +658,12 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
 .sumrow img{width:52px;height:52px;border-radius:10px;object-fit:cover}
 .sumrow b{font-size:14px;display:block;color:var(--ink)}
 .sumrow span{font-size:12px;color:var(--muted)}
+.sumrow-qty-controls{display:inline-flex;align-items:center;gap:6px;margin-top:6px}
+.sumrow-qty-btn{width:26px;height:26px;border-radius:50%;border:1px solid var(--line,#D6C29E);background:#FFFFFF;color:#0A2E2B;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;line-height:1;transition:all .2s ease}
+.sumrow-qty-btn:hover{background:var(--gold-300,#F3D085);border-color:var(--gold-500,#DFB76C);color:#0A2E2B;transform:scale(1.08)}
+.sumrow-qty-val{font-size:13px;font-weight:700;min-width:18px;text-align:center;color:#0A2E2B}
+.sumrow-remove-btn{background:transparent;border:none;color:#DC2626;font-size:11.5px;font-weight:600;cursor:pointer;margin-left:6px;opacity:.8;transition:opacity .2s ease}
+.sumrow-remove-btn:hover{opacity:1;text-decoration:underline}
 .paybox{display:grid;gap:12px;margin-top:6px}
 .pay{display:flex;gap:13px;align-items:flex-start;border:1.5px solid var(--line);border-radius:var(--r);padding:16px 18px;cursor:pointer;transition:.22s;background:#fff}
 .pay:hover{border-color:var(--gold-400)}

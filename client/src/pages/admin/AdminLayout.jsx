@@ -38,8 +38,8 @@ export default function AdminLayout() {
       <div className="admin-shell">
         {/* Sidebar */}
         <aside className="admin-sidebar">
-          <div className="admin-brand">
-            <span className="admin-brand-icon">✦</span>
+          <div className="admin-brand logo">
+            <span className="mark" style={{ width: 36, height: 36, fontSize: 18, flexShrink: 0 }}><span>ॐ</span></span>
             <div>
               <h1 className="admin-brand-title">Sonic Prints</h1>
               <span className="admin-brand-badge">Executive Suite</span>

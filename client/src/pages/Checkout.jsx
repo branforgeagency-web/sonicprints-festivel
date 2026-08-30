@@ -47,7 +47,7 @@ function loadRazorpayScript() {
 }
 
 export default function Checkout() {
-  const { cart, cartSubtotal, shipping, unitPrice, lineLabel, clearCart } = useCart();
+  const { cart, cartSubtotal, shipping, unitPrice, lineLabel, clearCart, setQty, removeAt } = useCart();
   const { config, productById } = useSite();
   const toast = useToast();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ export default function Checkout() {
   const total = cartSubtotal + shipping;
   const cashfreeReady = !!config.cashfreeAppId;
   const razorpayReady = !!config.razorpayKeyId;
-  const onlineReady = true;
+  const onlineReady = cashfreeReady || razorpayReady;
   const needForFree = (config.freeShipAbove || 1499) - cartSubtotal;
 
   function setField(name, value) {
@@ -104,48 +104,57 @@ export default function Checkout() {
       });
 
       if (payMethod === "online" && cashfreeReady) {
-        const scriptOk = await loadCashfreeScript();
-        if (!scriptOk) {
-          toast("Payment gateway library blocked — please order on WhatsApp");
-          openWhatsApp(config.whatsapp, whatsappText);
-          clearCart();
-          rememberOrderConfirmation(form.name, false);
-          navigate("/order-confirmation", { state: { name: form.name, paid: false } });
-          return;
-        }
-
-        const { paymentSessionId, cashfreeOrderId } = await createCashfreeOrder(order._id);
-        const mode = (config.cashfreeMode || "sandbox").toLowerCase() === "production" ? "production" : "sandbox";
-        const cashfree = window.Cashfree({ mode });
-
-        const result = await cashfree.checkout({
-          paymentSessionId,
-          redirectTarget: "_modal"
-        });
-
-        if (result?.error) {
-          toast("Payment cancelled — you can try again or order on WhatsApp");
-          cancelAbandonedPayment(order._id);
-          setSubmitting(false);
-          return;
-        }
-
         try {
-          const verifyRes = await verifyCashfreePayment({ orderId: order._id, cashfreeOrderId });
-          if (verifyRes?.paid) {
-            clearCart();
-            rememberOrderConfirmation(form.name, true);
-            navigate("/order-confirmation", { state: { name: form.name, paid: true } });
-            return;
-          } else {
-            toast("Payment status pending — we will confirm via WhatsApp");
+          const scriptOk = await loadCashfreeScript();
+          if (!scriptOk) {
+            toast("Payment gateway library blocked — please order on WhatsApp");
+            openWhatsApp(config.whatsapp, whatsappText);
             clearCart();
             rememberOrderConfirmation(form.name, false);
             navigate("/order-confirmation", { state: { name: form.name, paid: false } });
             return;
           }
-        } catch {
-          toast("Payment verification error — order recorded. We will contact you on WhatsApp.");
+
+          const { paymentSessionId, cashfreeOrderId } = await createCashfreeOrder(order._id);
+          const mode = (config.cashfreeMode || "sandbox").toLowerCase() === "production" ? "production" : "sandbox";
+          const cashfree = window.Cashfree({ mode });
+
+          const result = await cashfree.checkout({
+            paymentSessionId,
+            redirectTarget: "_modal"
+          });
+
+          if (result?.error) {
+            toast("Payment cancelled — you can try again or order on WhatsApp");
+            cancelAbandonedPayment(order._id);
+            setSubmitting(false);
+            return;
+          }
+
+          try {
+            const verifyRes = await verifyCashfreePayment({ orderId: order._id, cashfreeOrderId });
+            if (verifyRes?.paid) {
+              clearCart();
+              rememberOrderConfirmation(form.name, true);
+              navigate("/order-confirmation", { state: { name: form.name, paid: true } });
+              return;
+            } else {
+              toast("Payment status pending — we will confirm via WhatsApp");
+              clearCart();
+              rememberOrderConfirmation(form.name, false);
+              navigate("/order-confirmation", { state: { name: form.name, paid: false } });
+              return;
+            }
+          } catch {
+            toast("Payment verification error — order recorded. We will contact you on WhatsApp.");
+            clearCart();
+            rememberOrderConfirmation(form.name, false);
+            navigate("/order-confirmation", { state: { name: form.name, paid: false } });
+            return;
+          }
+        } catch (err) {
+          toast("Online payment error — redirecting to WhatsApp confirmation");
+          openWhatsApp(config.whatsapp, whatsappText);
           clearCart();
           rememberOrderConfirmation(form.name, false);
           navigate("/order-confirmation", { state: { name: form.name, paid: false } });
@@ -154,57 +163,66 @@ export default function Checkout() {
       }
 
       if (payMethod === "online" && razorpayReady) {
-        const scriptOk = await loadRazorpayScript();
-        if (!scriptOk) {
-          toast("Payment library blocked — please order on WhatsApp");
+        try {
+          const scriptOk = await loadRazorpayScript();
+          if (!scriptOk) {
+            toast("Payment library blocked — please order on WhatsApp");
+            openWhatsApp(config.whatsapp, whatsappText);
+            clearCart();
+            rememberOrderConfirmation(form.name, false);
+            navigate("/order-confirmation", { state: { name: form.name, paid: false } });
+            return;
+          }
+          const { razorpayOrderId, amount, currency } = await createRazorpayOrder(order._id);
+          const rzp = new window.Razorpay({
+            key: config.razorpayKeyId,
+            amount, currency, order_id: razorpayOrderId,
+            name: "Sonic Prints",
+            description: "Ganesh Festival Collection 2026",
+            prefill: { name: form.name, contact: form.phone, email: form.email },
+            notes: { city: form.city || "", items: String(cart.length) + " items" },
+            theme: { color: "#175752" },
+            handler: async (res) => {
+              try {
+                await verifyRazorpayPayment({
+                  orderId: order._id,
+                  razorpay_order_id: res.razorpay_order_id,
+                  razorpay_payment_id: res.razorpay_payment_id,
+                  razorpay_signature: res.razorpay_signature
+                });
+                clearCart();
+                rememberOrderConfirmation(form.name, true);
+                navigate("/order-confirmation", { state: { name: form.name, paid: true } });
+              } catch {
+                toast("Payment verification failed — please contact us on WhatsApp");
+              }
+            },
+            modal: {
+              ondismiss: () => {
+                setSubmitting(false);
+                cancelAbandonedPayment(order._id);
+                toast("Payment cancelled — you can try again or order on WhatsApp instead");
+              }
+            }
+          });
+          rzp.open();
+          return;
+        } catch (err) {
+          toast("Online payment error — redirecting to WhatsApp confirmation");
           openWhatsApp(config.whatsapp, whatsappText);
           clearCart();
           rememberOrderConfirmation(form.name, false);
           navigate("/order-confirmation", { state: { name: form.name, paid: false } });
           return;
         }
-        const { razorpayOrderId, amount, currency } = await createRazorpayOrder(order._id);
-        const rzp = new window.Razorpay({
-          key: config.razorpayKeyId,
-          amount, currency, order_id: razorpayOrderId,
-          name: "Sonic Prints",
-          description: "Ganesh Festival Collection 2026",
-          prefill: { name: form.name, contact: form.phone, email: form.email },
-          notes: { city: form.city || "", items: String(cart.length) + " items" },
-          theme: { color: "#175752" },
-          handler: async (res) => {
-            try {
-              await verifyRazorpayPayment({
-                orderId: order._id,
-                razorpay_order_id: res.razorpay_order_id,
-                razorpay_payment_id: res.razorpay_payment_id,
-                razorpay_signature: res.razorpay_signature
-              });
-              clearCart();
-              rememberOrderConfirmation(form.name, true);
-              navigate("/order-confirmation", { state: { name: form.name, paid: true } });
-            } catch {
-              toast("Payment verification failed — please contact us on WhatsApp");
-            }
-          },
-          modal: {
-            ondismiss: () => {
-              setSubmitting(false);
-              cancelAbandonedPayment(order._id);
-              toast("Payment cancelled — you can try again or order on WhatsApp instead");
-            }
-          }
-        });
-        rzp.open();
-        return;
       }
 
       if (payMethod === "online") {
-        toast("Order placed online successfully!");
+        toast("Online gateway not active — placing order via WhatsApp");
         openWhatsApp(config.whatsapp, whatsappText);
         clearCart();
-        rememberOrderConfirmation(form.name, true);
-        navigate("/order-confirmation", { state: { name: form.name, paid: true } });
+        rememberOrderConfirmation(form.name, false);
+        navigate("/order-confirmation", { state: { name: form.name, paid: false } });
         return;
       }
 
@@ -339,7 +357,39 @@ export default function Checkout() {
                     return (
                       <div className="sumrow" key={i}>
                         <img src={imgUrl(p.img, "sm")} alt={p.name || ""} loading="lazy" decoding="async" />
-                        <div><b>{p.name}</b><span>{lbl ? `${lbl} · ` : ""}Qty {it.qty}</span></div>
+                        <div>
+                          <b>{p.name}</b>
+                          {lbl && <span style={{ display: "block", fontSize: 12, color: "var(--muted)", marginBottom: 4 }}>{lbl}</span>}
+                          <div className="sumrow-qty-controls">
+                            <button
+                              type="button"
+                              className="sumrow-qty-btn minus"
+                              onClick={() => setQty(i, -1)}
+                              aria-label="Decrease quantity"
+                              title="Decrease quantity"
+                            >
+                              −
+                            </button>
+                            <span className="sumrow-qty-val">{it.qty}</span>
+                            <button
+                              type="button"
+                              className="sumrow-qty-btn plus"
+                              onClick={() => setQty(i, 1)}
+                              aria-label="Increase quantity"
+                              title="Increase quantity"
+                            >
+                              +
+                            </button>
+                            {/* <button
+                              type="button"
+                              className="sumrow-remove-btn"
+                              onClick={() => removeAt(i)}
+                              title="Remove item"
+                            >
+                              Remove
+                            </button> */}
+                          </div>
+                        </div>
                         <strong style={{ fontFamily: "var(--serif)", fontSize: 17, color: "var(--teal-700)" }}>
                           {money(unitPrice(it.id, it.variant) * it.qty)}
                         </strong>

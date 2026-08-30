@@ -327,19 +327,25 @@
   display:block;
   -webkit-mask-image:radial-gradient(closest-side,#000 88%,transparent 100%);
   mask-image:radial-gradient(closest-side,#000 88%,transparent 100%);
+  animation:hcSpin 16s linear infinite !important;
+  will-change:transform;
+  transform-origin:50% 50%;
 }
 .hero-chakra-img{
   display:block;
   width:100%; height:100%;
-  opacity:.78;
+  opacity:.88;
   filter:drop-shadow(0 0 14px rgba(255,195,60,.8)) drop-shadow(0 0 28px rgba(245,158,11,.45));
   transform-origin:50% 50%;
-  animation:hcSpin 16s linear infinite;
+  animation:hcSpin 16s linear infinite !important;
   will-change:transform;
   backface-visibility:hidden;
   user-select:none;
 }
-@keyframes hcSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes hcSpin{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
 @keyframes hcBreathe{
   0%,100%{opacity:.85;transform:scale(1)}
   50%{opacity:1;transform:scale(1.05)}

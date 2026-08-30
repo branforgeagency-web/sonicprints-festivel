@@ -13,7 +13,7 @@ const api = axios.create({ baseURL, timeout: 10000 });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("sonic_admin_token");
-  if (token && config.url?.includes("/admin")) {
+  if (token && (config.url?.includes("/admin") || config.url?.includes("/auth"))) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;

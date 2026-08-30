@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Product from "../models/Product.js";
 import productsData from "../../seed/productsData.js";
 
@@ -45,9 +46,15 @@ export async function adminListProducts(req, res, next) {
   }
 }
 
+function isObjectId(val) {
+  return typeof val === "string" && /^[0-9a-fA-F]{24}$/.test(val);
+}
+
 export async function adminGetProduct(req, res, next) {
   try {
-    const product = await Product.findById(req.params.id);
+    const target = req.params.id;
+    const query = isObjectId(target) ? { $or: [{ _id: target }, { id: target }] } : { id: target };
+    const product = await Product.findOne(query);
     if (!product) return res.status(404).json({ message: "Product not found" });
     res.json(product);
   } catch (err) {
@@ -66,7 +73,10 @@ export async function adminCreateProduct(req, res, next) {
 
 export async function adminUpdateProduct(req, res, next) {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    const target = req.params.id;
+    const { _id, createdAt, updatedAt, __v, ...updateData } = req.body || {};
+    const query = isObjectId(target) ? { $or: [{ _id: target }, { id: target }] } : { id: target };
+    const product = await Product.findOneAndUpdate(query, updateData, {
       new: true,
       runValidators: true
     });
@@ -79,7 +89,9 @@ export async function adminUpdateProduct(req, res, next) {
 
 export async function adminDeleteProduct(req, res, next) {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const target = req.params.id;
+    const query = isObjectId(target) ? { $or: [{ _id: target }, { id: target }] } : { id: target };
+    const product = await Product.findOneAndDelete(query);
     if (!product) return res.status(404).json({ message: "Product not found" });
     res.json({ message: "Product deleted" });
   } catch (err) {

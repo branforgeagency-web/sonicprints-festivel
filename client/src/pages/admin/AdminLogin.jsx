@@ -31,9 +31,16 @@ export default function AdminLogin() {
     <div className="admin luxury-admin">
       <div className="admin-login-wrap">
         <div className="admin-login-card">
-          <div className="admin-login-logo">✦</div>
-          <h1>Sonic Prints Admin</h1>
-          <p>Sign in to the Executive Suite to manage store orders, corporate enquiries, and product catalog.</p>
+          <div className="logo admin-login-brand" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 16 }}>
+            <span className="mark" style={{ width: 48, height: 48 }}><span>ॐ</span></span>
+            <div style={{ textAlign: "left" }}>
+              <b style={{ display: "block", fontSize: 25, fontFamily: "var(--serif, serif)", color: "#0A2E2B", lineHeight: 1.1 }}>Sonic Prints</b>
+              <span style={{ display: "block", fontSize: 11.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8C651F", marginTop: 3 }}>Executive Admin Suite</span>
+            </div>
+          </div>
+          <p style={{ marginTop: 6, marginBottom: 22, color: "#5C7370" }}>
+            Sign in to manage store orders, corporate enquiries, and product catalog.
+          </p>
           
           {error && <div className="admin-error">⚠️ {error}</div>}
           
