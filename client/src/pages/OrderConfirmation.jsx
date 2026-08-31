@@ -48,7 +48,8 @@ export default function OrderConfirmation() {
                 : `Thank you, ${name}. Your order has opened in WhatsApp — press send there and our team will confirm availability, price and the delivery date on the same chat.`}
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-              <Link className="btn btn-gold" to="/#kits">Continue shopping</Link>
+              <Link className="btn btn-gold" to="/track">📦 Track Your Order Live →</Link>
+              <Link className="btn btn-ghost" to="/#kits">Continue shopping</Link>
               <a
                 className="btn btn-line"
                 href={waLink(config.whatsapp, "Namaste Sonic Prints, I have a question about the Ganesh Festival Collection 2026.")}

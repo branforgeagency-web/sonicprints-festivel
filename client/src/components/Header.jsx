@@ -6,6 +6,8 @@ import { useCart } from "../context/CartContext.jsx";
 import Countdown from "./Countdown.jsx";
 import Icon from "./Icon.jsx";
 import Magnetic from "./fx/Magnetic.jsx";
+import NavGaneshaRunner from "./NavGaneshaRunner.jsx";
+import NavbarFirecrackers from "./NavbarFirecrackers.jsx";
 import { useIntro } from "./fx/Intro.jsx";
 import { EASE_SILK } from "../anim/tokens.js";
 import useMotionProfile from "../anim/useMotionProfile.js";
@@ -145,6 +147,9 @@ export default function Header() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.75, ease: EASE_SILK, delay: reduced ? 0 : ready ? 0.05 : 0.85 }}
       >
+        <NavGaneshaRunner />
+        <NavbarFirecrackers />
+
         <div className="wrap">
           <Link className="logo" to="/" onClick={() => setMobOpen(false)}>
             <span className="mark"><span>ॐ</span></span>
@@ -172,6 +177,13 @@ export default function Header() {
               className={location.pathname === "/bulk" ? "on active" : ""}
             >
               Bulk &amp; Dealers
+            </Link>
+            <Link
+              to="/track"
+              className={location.pathname === "/track" ? "on active" : ""}
+              style={{ color: "#B88E44", fontWeight: 600 }}
+            >
+              📦 Track Order
             </Link>
           </div>
           <div className="navact">
@@ -254,6 +266,17 @@ export default function Header() {
                       <div className="mob-item-left">
                         <span className="mob-item-icon">🏢</span>
                         <span className="mob-item-text">Bulk &amp; Corporate Orders</span>
+                      </div>
+                      <span className="mob-arr">→</span>
+                    </Link>
+                    <Link
+                      to="/track"
+                      className={`mob-item${location.pathname === "/track" ? " on active" : ""}`}
+                      onClick={() => setMobOpen(false)}
+                    >
+                      <div className="mob-item-left">
+                        <span className="mob-item-icon">📦</span>
+                        <span className="mob-item-text">Track Your Orders</span>
                       </div>
                       <span className="mob-arr">→</span>
                     </Link>

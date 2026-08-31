@@ -24,7 +24,12 @@ const OrderSchema = new mongoose.Schema(
       phone: { type: String, required: true },
       email: { type: String, default: "" },
       city: { type: String, default: "" },
-      address: { type: String, default: "" },
+      address: { type: String, required: true },
+      coordinates: {
+        lat: { type: Number, default: null },
+        lng: { type: Number, default: null }
+      },
+      mapUrl: { type: String, default: "" },
       buyerType: { type: String, default: "An individual / household" }
     },
     note: { type: String, default: "" },

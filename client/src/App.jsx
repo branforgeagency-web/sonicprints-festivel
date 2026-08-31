@@ -10,6 +10,7 @@ import ProductPage from "./pages/ProductPage.jsx";
 import Bulk from "./pages/Bulk.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import OrderConfirmation from "./pages/OrderConfirmation.jsx";
+import TrackOrders from "./pages/TrackOrders.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 /* The admin panel is a separate audience — load it on demand so shoppers
@@ -49,6 +50,9 @@ export default function App() {
               <Route path="/bulk" element={<Bulk />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
+              <Route path="/track" element={<TrackOrders />} />
+              <Route path="/my-orders" element={<Navigate to="/track" replace />} />
+              <Route path="/orders" element={<Navigate to="/track" replace />} />
 
               {/* Legacy URL Custom 301 Client-Side Redirects */}
               <Route path="/products/:slug" element={<LegacyProductRedirect />} />

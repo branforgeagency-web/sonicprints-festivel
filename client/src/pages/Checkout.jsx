@@ -9,6 +9,7 @@ import { BUYER_TYPES } from "../data/content.js";
 import useReveal from "../hooks/useReveal.js";
 import Magnetic from "../components/fx/Magnetic.jsx";
 import SEOHead from "../components/SEOHead.jsx";
+import AddressMapModal from "../components/AddressMapModal.jsx";
 
 const EMPTY_FORM = { name: "", phone: "", email: "", city: "", addr: "", type: BUYER_TYPES[0], note: "" };
 
@@ -16,12 +17,35 @@ const EMPTY_FORM = { name: "", phone: "", email: "", city: "", addr: "", type: B
 // lost on a hard refresh — mirror it into sessionStorage so a refresh right
 // after ordering still shows the confirmation instead of bouncing home.
 const ORDER_CONFIRMATION_KEY = "sonicprints_last_order_v1";
-function rememberOrderConfirmation(name, paid) {
+const CUSTOMER_ORDERS_STORAGE_KEY = "sonicprints_customer_orders_v1";
+
+export function saveCustomerOrder(orderId, phone, name) {
   try {
-    sessionStorage.setItem(ORDER_CONFIRMATION_KEY, JSON.stringify({ name, paid }));
+    const raw = JSON.parse(localStorage.getItem(CUSTOMER_ORDERS_STORAGE_KEY) || "{}");
+    const ids = Array.isArray(raw.orderIds) ? raw.orderIds : [];
+    if (orderId && !ids.includes(orderId)) {
+      ids.unshift(orderId);
+    }
+    const cleanPhone = phone ? phone.replace(/\D/g, "").slice(-10) : (raw.phone || "");
+    localStorage.setItem(
+      CUSTOMER_ORDERS_STORAGE_KEY,
+      JSON.stringify({
+        phone: cleanPhone,
+        name: name || raw.name || "",
+        orderIds: ids.slice(0, 30),
+        lastUpdated: new Date().toISOString()
+      })
+    );
+  } catch (err) {
+    console.warn("Could not save customer order in localStorage:", err);
+  }
+}
+
+function rememberOrderConfirmation(name, paid, orderId) {
+  try {
+    sessionStorage.setItem(ORDER_CONFIRMATION_KEY, JSON.stringify({ name, paid, orderId }));
   } catch {
-    // sessionStorage can be unavailable (private browsing etc.) — the router
-    // state still works for the normal, non-refreshed case, so just skip it.
+    // sessionStorage can be unavailable (private browsing etc.)
   }
 }
 
@@ -55,6 +79,9 @@ export default function Checkout() {
   useReveal();
 
   const [form, setForm] = useState(EMPTY_FORM);
+  const [coordinates, setCoordinates] = useState(null);
+  const [mapUrl, setMapUrl] = useState("");
+  const [mapOpen, setMapOpen] = useState(false);
   const [payMethod, setPayMethod] = useState("online");
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
@@ -70,6 +97,18 @@ export default function Checkout() {
     if (errors[name]) setErrors((e) => ({ ...e, [name]: null }));
   }
 
+  function handleLocationSelected(loc) {
+    setForm((f) => ({
+      ...f,
+      addr: loc.address || f.addr,
+      city: loc.city || f.city
+    }));
+    setCoordinates(loc.coordinates || null);
+    setMapUrl(loc.mapUrl || "");
+    setErrors((e) => ({ ...e, addr: null, city: null }));
+    toast("📍 Address & GPS pin saved!");
+  }
+
   function validate() {
     const next = {};
     if (!form.name.trim()) next.name = "Please add your name.";
@@ -79,6 +118,8 @@ export default function Checkout() {
     if (form.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
       next.email = "Enter a valid email address, or leave this blank.";
     }
+    if (!form.city.trim()) next.city = "Please add your city and pincode.";
+    if (!form.addr.trim()) next.addr = "Please add your complete delivery address.";
     return next;
   }
 
@@ -99,10 +140,24 @@ export default function Checkout() {
     try {
       const { order, whatsappText } = await placeOrder({
         items: cart.map((it) => ({ productId: it.id, variant: it.variant, design: it.design, qty: it.qty })),
-        customer: { name: form.name, phone: form.phone, email: form.email, city: form.city, address: form.addr, buyerType: form.type },
+        customer: {
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          city: form.city,
+          address: form.addr,
+          coordinates,
+          mapUrl,
+          buyerType: form.type
+        },
         note: form.note,
         paymentMethod: payMethod === "online" ? "online" : "whatsapp"
       });
+
+      // Save order to customer's order history in localStorage
+      if (order?._id) {
+        saveCustomerOrder(order._id, form.phone, form.name);
+      }
 
       if (payMethod === "online") {
         if (!cashfreeReady && !razorpayReady) {
@@ -140,21 +195,21 @@ export default function Checkout() {
               const verifyRes = await verifyCashfreePayment({ orderId: order._id, cashfreeOrderId });
               if (verifyRes?.paid) {
                 clearCart();
-                rememberOrderConfirmation(form.name, true);
-                navigate("/order-confirmation", { state: { name: form.name, paid: true } });
+                rememberOrderConfirmation(form.name, true, order._id);
+                navigate("/order-confirmation", { state: { name: form.name, paid: true, orderId: order._id } });
                 return;
               } else {
                 toast("Payment status pending — we will verify your payment.");
                 clearCart();
-                rememberOrderConfirmation(form.name, false);
-                navigate("/order-confirmation", { state: { name: form.name, paid: false } });
+                rememberOrderConfirmation(form.name, false, order._id);
+                navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: order._id } });
                 return;
               }
             } catch (vErr) {
               toast("Payment verification error — order recorded.");
               clearCart();
-              rememberOrderConfirmation(form.name, false);
-              navigate("/order-confirmation", { state: { name: form.name, paid: false } });
+              rememberOrderConfirmation(form.name, false, order._id);
+              navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: order._id } });
               return;
             }
           } catch (cfErr) {
@@ -167,8 +222,8 @@ export default function Checkout() {
       } else {
         openWhatsApp(config.whatsapp, whatsappText);
         clearCart();
-        rememberOrderConfirmation(form.name, false);
-        navigate("/order-confirmation", { state: { name: form.name, paid: false } });
+        rememberOrderConfirmation(form.name, false, order._id);
+        navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: order._id } });
       }
     } catch (err) {
       toast(err?.response?.data?.message || "Could not place the order — please try again");
@@ -237,14 +292,49 @@ export default function Checkout() {
                     />
                     {errors.email && <span className="fld-error" id="ck-email-err">{errors.email}</span>}
                   </div>
-                  <div className="fld">
-                    <label htmlFor="ck-city">City &amp; pincode</label>
-                    <input id="ck-city" name="city" value={form.city} onChange={(e) => setField("city", e.target.value)} placeholder="City, 600001" />
+                  <div className={`fld${errors.city ? " has-error" : ""}`}>
+                    <label htmlFor="ck-city">City &amp; pincode *</label>
+                    <input
+                      id="ck-city"
+                      name="city"
+                      value={form.city}
+                      onChange={(e) => setField("city", e.target.value)}
+                      placeholder="City, 600001"
+                      required
+                      aria-invalid={errors.city ? "true" : "false"}
+                      aria-describedby={errors.city ? "ck-city-err" : undefined}
+                    />
+                    {errors.city && <span className="fld-error" id="ck-city-err">{errors.city}</span>}
                   </div>
                 </div>
-                <div className="fld">
-                  <label htmlFor="ck-addr">Delivery address</label>
-                  <textarea id="ck-addr" name="addr" value={form.addr} onChange={(e) => setField("addr", e.target.value)} placeholder="Flat / building, street, area, landmark" />
+                <div className={`fld${errors.addr ? " has-error" : ""}`}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                    <label htmlFor="ck-addr" style={{ margin: 0 }}>Delivery address *</label>
+                    <button
+                      type="button"
+                      className="map-pin-btn"
+                      onClick={() => setMapOpen(true)}
+                    >
+                      📍 Pin on Map / GPS
+                    </button>
+                  </div>
+                  <textarea
+                    id="ck-addr"
+                    name="addr"
+                    value={form.addr}
+                    onChange={(e) => setField("addr", e.target.value)}
+                    placeholder="Flat / building, street, area, landmark"
+                    required
+                    aria-invalid={errors.addr ? "true" : "false"}
+                    aria-describedby={errors.addr ? "ck-addr-err" : undefined}
+                  />
+                  {errors.addr && <span className="fld-error" id="ck-addr-err">{errors.addr}</span>}
+                  {coordinates && (
+                    <div className="map-pinned-badge">
+                      <span>📍 Delivery GPS pinned ({coordinates.lat.toFixed(4)}° N, {coordinates.lng.toFixed(4)}° E) ✓</span>
+                      <button type="button" className="btn-repin" onClick={() => setMapOpen(true)}>Change pin</button>
+                    </div>
+                  )}
                 </div>
                 <div className="fld">
                   <label htmlFor="ck-type">I am buying as</label>
@@ -363,6 +453,13 @@ export default function Checkout() {
           </div>
         </div>
       </div>
+
+      <AddressMapModal
+        isOpen={mapOpen}
+        onClose={() => setMapOpen(false)}
+        onSelectLocation={handleLocationSelected}
+        initialCoords={coordinates}
+      />
     </div>
   );
 }

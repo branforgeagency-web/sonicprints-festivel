@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import "./styles/fonts-display.css";
 import "./styles/site.css";
 import "./styles/motion.css";
+import "./styles/nav-runner.css";
 import "./styles/admin.css";
 import "./styles/hero-3d-carousel.css";
 import "./styles/insight-gallery.css";

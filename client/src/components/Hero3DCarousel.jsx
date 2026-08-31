@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const DEFAULT_CAROUSEL_ITEMS = [
   {
@@ -53,6 +53,7 @@ export default function Hero3DCarousel({
   description = "Transform everyday images into polished, expressive visuals with a faster and more playful editing experience.",
   autoPlayInterval = 2000
 }) {
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
@@ -60,6 +61,7 @@ export default function Hero3DCarousel({
   const timerRef = useRef(null);
   const touchStartPos = useRef({ x: 0, y: 0 });
   const isDragging = useRef(false);
+  const hasMoved = useRef(false);
 
   const totalCards = items.length;
 
@@ -142,7 +144,19 @@ export default function Hero3DCarousel({
   // Touch and pointer drag handlers
   const handlePointerDown = (e) => {
     isDragging.current = true;
+    hasMoved.current = false;
     touchStartPos.current = { x: e.clientX || e.touches?.[0]?.clientX || 0, y: e.clientY || e.touches?.[0]?.clientY || 0 };
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDragging.current) return;
+    const curX = e.clientX || e.touches?.[0]?.clientX || 0;
+    const curY = e.clientY || e.touches?.[0]?.clientY || 0;
+    const dx = Math.abs(curX - touchStartPos.current.x);
+    const dy = Math.abs(curY - touchStartPos.current.y);
+    if (dx > 8 || dy > 8) {
+      hasMoved.current = true;
+    }
   };
 
   const handlePointerUp = (e) => {
@@ -156,11 +170,29 @@ export default function Hero3DCarousel({
 
     // Trigger slide change only if horizontal swipe is dominant and above threshold (30px)
     if (Math.abs(deltaX) > 30 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      hasMoved.current = true;
       if (deltaX < 0) {
         handleUserInteraction(nextSlide);
       } else {
         handleUserInteraction(prevSlide);
       }
+    }
+    setTimeout(() => {
+      hasMoved.current = false;
+    }, 80);
+  };
+
+  const handleCardClick = (item, idx, isActive) => {
+    if (hasMoved.current) return;
+    if (isActive) {
+      if (item.slug) {
+        navigate(`/kit/${item.slug}`);
+      } else if (item.href) {
+        if (item.href.startsWith("/")) navigate(item.href);
+        else window.location.href = item.href;
+      }
+    } else {
+      handleUserInteraction(() => goToSlide(idx));
     }
   };
 
@@ -325,8 +357,10 @@ export default function Hero3DCarousel({
       <div
         className="hero-3d-carousel-wrapper"
         onMouseDown={handlePointerDown}
+        onMouseMove={handlePointerMove}
         onMouseUp={handlePointerUp}
         onTouchStart={handlePointerDown}
+        onTouchMove={handlePointerMove}
         onTouchEnd={handlePointerUp}
       >
         {/* Desktop Prev Button */}
@@ -377,13 +411,9 @@ export default function Hero3DCarousel({
                     </div>
                   </div>
 
-                  {item.slug ? (
-                    <Link to={`/kit/${item.slug}`} className="hero-3d-shop-btn-bottom">
-                      Shop Now →
-                    </Link>
-                  ) : (
-                    <span className="hero-3d-shop-btn-bottom">Shop Now →</span>
-                  )}
+                  <span className="hero-3d-shop-btn-bottom">
+                    Shop Now →
+                  </span>
                 </div>
               </>
             );
@@ -393,12 +423,11 @@ export default function Hero3DCarousel({
                 key={item.id || idx}
                 className={`hero-3d-card ${isActive ? "hero-3d-card-active" : ""}`}
                 style={style}
-                onClick={() => {
-                  if (!isActive) handleUserInteraction(() => goToSlide(idx));
-                }}
-                role="group"
+                onClick={() => handleCardClick(item, idx, isActive)}
+                role="link"
+                tabIndex={0}
                 aria-roledescription="slide"
-                aria-label={`Slide ${idx + 1} of ${totalCards}: ${item.title || item.category}`}
+                aria-label={`View ${item.title || item.category}`}
                 aria-hidden={Math.abs(idx - activeIndex) > 1 && isMobile}
               >
                 {cardContent}

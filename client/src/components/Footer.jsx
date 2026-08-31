@@ -68,6 +68,7 @@ export default function Footer() {
 
           <LinkColumn title="Talk to us">
             {[
+              <Link key="track" to="/track" style={{ color: "#F3D085", fontWeight: 600 }}>📦 Track Your Order</Link>,
               <a key="tel" href={`tel:${config.phoneHref}`}><span>{config.phone}</span></a>,
               <a key="mail" href={`mailto:${config.email}`}><span>{config.email}</span></a>,
               <a key="wa" href={waLink(config.whatsapp, "Namaste Sonic Prints, I have a question about the Ganesh Festival Collection 2026.")} target="_blank" rel="noopener noreferrer">WhatsApp us</a>,

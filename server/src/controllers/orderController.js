@@ -79,8 +79,8 @@ export async function quoteCart(req, res, next) {
 export async function createOrder(req, res, next) {
   try {
     const { items: rawItems, customer, note, paymentMethod } = req.body;
-    if (!customer?.name || !customer?.phone) {
-      const err = new Error("Name and mobile number are required");
+    if (!customer?.name || !customer?.phone || !customer?.address?.trim()) {
+      const err = new Error("Name, mobile number, and complete delivery address are required");
       err.status = 400;
       throw err;
     }
@@ -90,6 +90,11 @@ export async function createOrder(req, res, next) {
     const shipping = subtotal === 0 ? 0 : subtotal >= cfg.freeShipAbove ? 0 : cfg.shipFlat;
     const total = subtotal + shipping;
 
+    const coords = customer.coordinates && customer.coordinates.lat && customer.coordinates.lng
+      ? { lat: Number(customer.coordinates.lat), lng: Number(customer.coordinates.lng) }
+      : null;
+    const mapUrl = coords ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}` : (customer.mapUrl || "");
+
     const order = await Order.create({
       items,
       customer: {
@@ -98,6 +103,8 @@ export async function createOrder(req, res, next) {
         email: customer.email || "",
         city: customer.city || "",
         address: customer.address || "",
+        coordinates: coords,
+        mapUrl,
         buyerType: customer.buyerType || "An individual / household"
       },
       note: note || "",
@@ -130,6 +137,7 @@ function buildWhatsAppOrderText(order, cfg) {
   if (order.customer.email) L.push(`Email: ${order.customer.email}`);
   if (order.customer.city) L.push(`City / Pincode: ${order.customer.city}`);
   if (order.customer.address) L.push(`Address: ${order.customer.address}`);
+  if (order.customer.mapUrl) L.push(`📍 GPS Location: ${order.customer.mapUrl}`);
   L.push(`Buyer type: ${order.customer.buyerType}`);
   L.push("");
   L.push("*Items*");
@@ -262,6 +270,49 @@ export async function verifyRazorpayPayment(req, res, next) {
     order.status = "confirmed";
     await order.save();
     res.json({ message: "Payment verified", order });
+  } catch (err) {
+    next(err);
+  }
+}
+
+// Customer order lookup by mobile number, order ID, or list of recent order IDs
+export async function lookupOrders(req, res, next) {
+  try {
+    const { phone, orderId, orderIds } = req.body || {};
+    const queries = [];
+
+    if (orderId && typeof orderId === "string" && orderId.trim()) {
+      const cleanId = orderId.trim();
+      if (/^[0-9a-fA-F]{24}$/.test(cleanId)) {
+        queries.push({ _id: cleanId });
+      }
+    }
+
+    if (Array.isArray(orderIds) && orderIds.length > 0) {
+      const validIds = orderIds.filter((id) => typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id.trim()));
+      if (validIds.length > 0) {
+        queries.push({ _id: { $in: validIds } });
+      }
+    }
+
+    if (phone && typeof phone === "string" && phone.trim()) {
+      const digits = phone.replace(/\D/g, "");
+      if (digits.length >= 7) {
+        const lastDigits = digits.slice(-10);
+        queries.push({ "customer.phone": { $regex: lastDigits, $options: "i" } });
+      }
+    }
+
+    if (queries.length === 0) {
+      return res.status(400).json({ message: "Please provide a valid 10-digit mobile number or Order ID to track orders." });
+    }
+
+    const orders = await Order.find({ $or: queries })
+      .sort({ createdAt: -1 })
+      .limit(20)
+      .lean();
+
+    res.json({ orders });
   } catch (err) {
     next(err);
   }

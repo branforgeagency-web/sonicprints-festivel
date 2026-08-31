@@ -64,6 +64,7 @@ export const verifyRazorpayPayment = (payload) =>
   api.post("/orders/razorpay/verify", payload).then((r) => r.data);
 export const cancelAbandonedPayment = (orderId) =>
   api.post(`/orders/${orderId}/cancel-abandoned-payment`).then((r) => r.data).catch(() => null);
+export const lookupOrders = (payload) => api.post("/orders/lookup", payload).then((r) => r.data);
 export const submitEnquiry = (payload) => api.post("/enquiries", payload).then((r) => r.data);
 
 /* ---------------- admin endpoints ---------------- */

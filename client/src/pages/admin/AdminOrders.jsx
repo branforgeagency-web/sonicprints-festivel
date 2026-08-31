@@ -122,7 +122,58 @@ export default function AdminOrders() {
                                 <strong style={{ color: "#DFB76C" }}>Customer Note:</strong> {o.note}
                               </div>
                             )}
-                            <div>
+
+                            {/* Delivery Location & Map Navigation Card */}
+                            <div className="admin-delivery-map-card">
+                              <div className="admin-map-header">
+                                <div className="admin-map-title">
+                                  <span>📍 Customer Delivery Map &amp; GPS</span>
+                                  {o.customer?.coordinates?.lat && o.customer?.coordinates?.lng && (
+                                    <span style={{ fontSize: 12, color: "#DFB76C", fontWeight: 400, marginLeft: 8 }}>
+                                      ({Number(o.customer.coordinates.lat).toFixed(5)}° N, {Number(o.customer.coordinates.lng).toFixed(5)}° E)
+                                    </span>
+                                  )}
+                                </div>
+                                <a
+                                  href={
+                                    o.customer?.mapUrl ||
+                                    (o.customer?.coordinates?.lat
+                                      ? `https://www.google.com/maps?q=${o.customer.coordinates.lat},${o.customer.coordinates.lng}`
+                                      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                          [o.customer?.address, o.customer?.city].filter(Boolean).join(", ")
+                                        )}`)
+                                  }
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="admin-btn-gmaps"
+                                  title="Open in Google Maps for live delivery route"
+                                >
+                                  🗺️ Open in Google Maps (Live Route) ↗
+                                </a>
+                              </div>
+
+                              {o.customer?.coordinates?.lat && o.customer?.coordinates?.lng ? (
+                                <div className="admin-map-preview-frame">
+                                  <iframe
+                                    title={`Delivery map for order ${o._id}`}
+                                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${
+                                      Number(o.customer.coordinates.lng) - 0.006
+                                    }%2C${Number(o.customer.coordinates.lat) - 0.004}%2C${
+                                      Number(o.customer.coordinates.lng) + 0.006
+                                    }%2C${
+                                      Number(o.customer.coordinates.lat) + 0.004
+                                    }&layer=mapnik&marker=${o.customer.coordinates.lat}%2C${o.customer.coordinates.lng}`}
+                                    loading="lazy"
+                                  />
+                                </div>
+                              ) : (
+                                <p style={{ margin: 0, fontSize: 12.5, color: "#8FA7A3" }}>
+                                  Customer entered address text: <em>{[o.customer?.address, o.customer?.city].filter(Boolean).join(", ")}</em>. Click the button above to locate on Google Maps.
+                                </p>
+                              )}
+                            </div>
+
+                            <div style={{ marginTop: 16 }}>
                               <strong style={{ color: "#DFB76C", fontSize: 14 }}>Order Items Breakdown:</strong>
                             </div>
                             <ul style={{ margin: "8px 0 0 20px", padding: 0 }}>

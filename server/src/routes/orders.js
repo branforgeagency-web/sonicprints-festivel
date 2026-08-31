@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   quoteCart,
   createOrder,
+  lookupOrders,
   createCashfreeOrder,
   verifyCashfreePayment,
   createRazorpayOrder,
@@ -16,6 +17,7 @@ const router = Router();
 
 router.post("/quote", quoteCart);
 router.post("/", createOrder);
+router.post("/lookup", lookupOrders);
 router.post("/cashfree/create", createCashfreeOrder);
 router.post("/cashfree/verify", verifyCashfreePayment);
 router.post("/razorpay/create", createRazorpayOrder);
