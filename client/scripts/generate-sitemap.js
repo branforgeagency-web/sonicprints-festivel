@@ -10,7 +10,9 @@ const BASE_URL = process.env.VITE_SITE_URL || "https://sonicprints.in";
 const STATIC_PAGES = [
   { path: "/", priority: "1.0", changefreq: "daily" },
   { path: "/bulk", priority: "0.9", changefreq: "weekly" },
+  { path: "/track", priority: "0.8", changefreq: "daily" },
   { path: "/checkout", priority: "0.7", changefreq: "monthly" },
+  { path: "/sitemap", priority: "0.6", changefreq: "weekly" },
 ];
 
 const PRODUCTS = [

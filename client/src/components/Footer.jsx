@@ -93,9 +93,14 @@ export default function Footer() {
         >
           <span>© 2026 Sonic Prints. All rights reserved.</span>
           <span>Natural clay idols · Sealed prasadam · GST inclusive</span>
-          <Link to="/admin" style={{ color: "rgba(239, 209, 153, 0.75)", textDecoration: "none", fontSize: "12px" }} title="Shortcut: Ctrl+Shift+A or Alt+A">
-            ✦ Admin Suite <kbd style={{ background: "rgba(255,255,255,0.1)", padding: "1px 5px", borderRadius: 4, fontFamily: "sans-serif" }}>Ctrl+Shift+A</kbd>
-          </Link>
+          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+            <Link to="/sitemap" style={{ color: "rgba(239, 209, 153, 0.75)", textDecoration: "none", fontSize: "12px" }}>
+              🗺️ Sitemap
+            </Link>
+            <Link to="/admin" style={{ color: "rgba(239, 209, 153, 0.75)", textDecoration: "none", fontSize: "12px" }} title="Shortcut: Ctrl+Shift+A or Alt+A">
+              ✦ Admin Suite <kbd style={{ background: "rgba(255,255,255,0.1)", padding: "1px 5px", borderRadius: 4, fontFamily: "sans-serif" }}>Ctrl+Shift+A</kbd>
+            </Link>
+          </div>
         </motion.div>
       </div>
     </footer>
