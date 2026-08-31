@@ -24,6 +24,16 @@ const PRODUCTS = [
   { slug: "rotating-chakra-backdrop", title: "Rotating Chakra Motorized LED Mandap Backdrop", img: "/assets/img/chakra.jpg", priority: "0.9", changefreq: "weekly" },
 ];
 
+function escapeXml(unsafe) {
+  if (!unsafe) return "";
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
 export function generateSitemapXml() {
   const currentDate = new Date().toISOString().split("T")[0];
 
@@ -33,14 +43,14 @@ export function generateSitemapXml() {
   // Static pages
   STATIC_PAGES.forEach((page) => {
     xml += `  <url>\n`;
-    xml += `    <loc>${BASE_URL}${page.path}</loc>\n`;
-    xml += `    <lastmod>${currentDate}</lastmod>\n`;
-    xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
-    xml += `    <priority>${page.priority}</priority>\n`;
+    xml += `    <loc>${escapeXml(BASE_URL + page.path)}</loc>\n`;
+    xml += `    <lastmod>${escapeXml(currentDate)}</lastmod>\n`;
+    xml += `    <changefreq>${escapeXml(page.changefreq)}</changefreq>\n`;
+    xml += `    <priority>${escapeXml(page.priority)}</priority>\n`;
     if (page.path === "/") {
       xml += `    <image:image>\n`;
-      xml += `      <image:loc>${BASE_URL}/assets/img/hero-banner.jpg</image:loc>\n`;
-      xml += `      <image:title>Sonic Prints Eco-Friendly Ganesh Festival Collection 2026</image:title>\n`;
+      xml += `      <image:loc>${escapeXml(BASE_URL + "/assets/img/hero-banner.jpg")}</image:loc>\n`;
+      xml += `      <image:title>${escapeXml("Sonic Prints Eco-Friendly Ganesh Festival Collection 2026")}</image:title>\n`;
       xml += `    </image:image>\n`;
     }
     xml += `  </url>\n`;
@@ -49,13 +59,13 @@ export function generateSitemapXml() {
   // Product pages
   PRODUCTS.forEach((prod) => {
     xml += `  <url>\n`;
-    xml += `    <loc>${BASE_URL}/kit/${prod.slug}</loc>\n`;
-    xml += `    <lastmod>${currentDate}</lastmod>\n`;
-    xml += `    <changefreq>${prod.changefreq}</changefreq>\n`;
-    xml += `    <priority>${prod.priority}</priority>\n`;
+    xml += `    <loc>${escapeXml(BASE_URL + "/kit/" + prod.slug)}</loc>\n`;
+    xml += `    <lastmod>${escapeXml(currentDate)}</lastmod>\n`;
+    xml += `    <changefreq>${escapeXml(prod.changefreq)}</changefreq>\n`;
+    xml += `    <priority>${escapeXml(prod.priority)}</priority>\n`;
     xml += `    <image:image>\n`;
-    xml += `      <image:loc>${BASE_URL}${prod.img}</image:loc>\n`;
-    xml += `      <image:title>${prod.title}</image:title>\n`;
+    xml += `      <image:loc>${escapeXml(BASE_URL + prod.img)}</image:loc>\n`;
+    xml += `      <image:title>${escapeXml(prod.title)}</image:title>\n`;
     xml += `    </image:image>\n`;
     xml += `  </url>\n`;
   });
