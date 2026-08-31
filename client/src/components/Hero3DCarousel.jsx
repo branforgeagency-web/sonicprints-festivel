@@ -420,8 +420,8 @@ export default function Hero3DCarousel({
         </button>
       </div>
 
-      {/* Pagination Glass Control */}
-      <div className="hero-3d-pagination" role="tablist" aria-label="Carousel pagination">
+      {/* Pagination Glass Control (Desktop) */}
+      <div className="hero-3d-pagination hero-3d-pagination-desktop" role="tablist" aria-label="Carousel pagination">
         {items.map((_, idx) => (
           <button
             key={idx}

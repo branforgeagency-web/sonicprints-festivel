@@ -5,9 +5,9 @@ import { FALLBACK_PRODUCTS } from "../data/products.js";
 const SiteContext = createContext(null);
 
 const DEFAULT_CONFIG = {
-  whatsapp: "+91 63827 18655",
-  phone: "+91 63827 18655",
-  phoneHref: "+91 63827 18655",
+  whatsapp: "+91 93845 56755",
+  phone: "+91 93845 56755",
+  phoneHref: "+91 93845 56755",
   email: "branforgeagency@gmail.com",
   city: "Coimbatore, Tamil Nadu",
   address: "Sonic Prints, Coimbatore, Tamil Nadu, India",

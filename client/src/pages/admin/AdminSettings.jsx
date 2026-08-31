@@ -3,9 +3,9 @@ import { getSiteConfig, adminUpdateConfig } from "../../api/client.js";
 import Icon from "../../components/Icon.jsx";
 
 const FIELDS = [
-  ["whatsapp", "WhatsApp Number (digits with country code, no +)", "+91 63827 18655"],
-  ["phone", "Storefront Display Phone Number", "+91 63827 18655"],
-  ["phoneHref", "Tel: Link Dial String", "+91 63827 18655"],
+  ["whatsapp", "WhatsApp Number (digits with country code, no +)", "+91 93845 56755"],
+  ["phone", "Storefront Display Phone Number", "+91 93845 56755"],
+  ["phoneHref", "Tel: Link Dial String", "+91 93845 56755"],
   ["email", "Official Contact Email", "branforgeagency@gmail.com"],
   ["city", "City & Region (Footer)", "Coimbatore, Tamil Nadu"],
   ["address", "Full Headquarters Address", "Sonic Prints, Coimbatore, Tamil Nadu, India"],

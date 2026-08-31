@@ -14,12 +14,12 @@ const STATIC_PAGES = [
 ];
 
 const PRODUCTS = [
-  { slug: "shubharambh-mini", priority: "0.9", changefreq: "weekly" },
-  { slug: "employee-puja-box", priority: "0.9", changefreq: "weekly" },
-  { slug: "bal-ganesh-kids-kit", priority: "0.9", changefreq: "weekly" },
-  { slug: "make-your-own-ganesha", priority: "0.9", changefreq: "weekly" },
-  { slug: "gruha-ganapathi-mandap", priority: "0.9", changefreq: "weekly" },
-  { slug: "rotating-chakra-backdrop", priority: "0.9", changefreq: "weekly" },
+  { slug: "shubharambh-mini", title: "Shubharambh Mini Eco-Friendly Clay Ganesh Puja Kit", img: "/assets/img/mini.jpg", priority: "0.9", changefreq: "weekly" },
+  { slug: "employee-puja-box", title: "Employee Puja Box Shubharambh Corporate Ganesh Kit", img: "/assets/img/employee.jpg", priority: "0.9", changefreq: "weekly" },
+  { slug: "bal-ganesh-kids-kit", title: "Bal Ganesh Kids Kit Devotional Story & Craft Box", img: "/assets/img/kids.jpg", priority: "0.9", changefreq: "weekly" },
+  { slug: "make-your-own-ganesha", title: "Make Your Own Ganesha DIY Clay Idol Modelling Kit", img: "/assets/img/diy.jpg", priority: "0.9", changefreq: "weekly" },
+  { slug: "gruha-ganapathi-mandap", title: "Gruha Ganapathi Instant 10-Minute Mandap Temple Arch", img: "/assets/img/mandap.jpg", priority: "0.9", changefreq: "weekly" },
+  { slug: "rotating-chakra-backdrop", title: "Rotating Chakra Motorized LED Mandap Backdrop", img: "/assets/img/chakra.jpg", priority: "0.9", changefreq: "weekly" },
 ];
 
 export function generateSitemapXml() {
@@ -35,6 +35,12 @@ export function generateSitemapXml() {
     xml += `    <lastmod>${currentDate}</lastmod>\n`;
     xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
     xml += `    <priority>${page.priority}</priority>\n`;
+    if (page.path === "/") {
+      xml += `    <image:image>\n`;
+      xml += `      <image:loc>${BASE_URL}/assets/img/hero-banner.jpg</image:loc>\n`;
+      xml += `      <image:title>Sonic Prints Eco-Friendly Ganesh Festival Collection 2026</image:title>\n`;
+      xml += `    </image:image>\n`;
+    }
     xml += `  </url>\n`;
   });
 
@@ -45,6 +51,10 @@ export function generateSitemapXml() {
     xml += `    <lastmod>${currentDate}</lastmod>\n`;
     xml += `    <changefreq>${prod.changefreq}</changefreq>\n`;
     xml += `    <priority>${prod.priority}</priority>\n`;
+    xml += `    <image:image>\n`;
+    xml += `      <image:loc>${BASE_URL}${prod.img}</image:loc>\n`;
+    xml += `      <image:title>${prod.title}</image:title>\n`;
+    xml += `    </image:image>\n`;
     xml += `  </url>\n`;
   });
 

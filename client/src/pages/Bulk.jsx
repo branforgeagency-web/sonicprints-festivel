@@ -6,6 +6,7 @@ import { openWhatsApp, waLink } from "../utils/whatsapp.js";
 import useReveal from "../hooks/useReveal.js";
 import Magnetic from "../components/fx/Magnetic.jsx";
 import Icon from "../components/Icon.jsx";
+import SEOHead from "../components/SEOHead.jsx";
 import {
   BULK_SEGMENTS, BULK_KIT_OPTIONS, BULK_QTY_OPTIONS, BULK_BRANDING_OPTIONS, VOLUME_RATE_TABLE
 } from "../data/content.js";
@@ -76,8 +77,39 @@ export default function Bulk() {
     }
   }
 
+  const bulkSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Corporate Ganesh Gifting & Bulk Puja Kits Supply",
+    "provider": {
+      "@type": "Organization",
+      "name": "Sonic Prints",
+      "url": "https://sonicprints.in"
+    },
+    "serviceType": "Corporate Gift Supplier",
+    "description": "Bulk supply of eco-friendly clay Ganesh idols, customized corporate puja boxes, school DIY activity kits, and retail dealer display stands for Ganesh Chaturthi 2026.",
+    "areaServed": {
+      "@type": "Country",
+      "name": "India"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "INR",
+      "lowPrice": "185",
+      "highPrice": "1999",
+      "offerCount": "6"
+    }
+  };
+
   return (
     <div className="page luxury-bulk-page light-gold-theme">
+      <SEOHead
+        title="Corporate Ganesh Festival Gifting & Bulk Puja Kits Wholesale 2026 | Sonic Prints"
+        description="Direct factory rates on corporate Ganesh gifts, branded employee puja boxes, school DIY kits, and dealer displays for Ganesh Chaturthi 2026. Request rate card & samples."
+        keywords="Corporate Ganesh gifting, bulk ganesh idols, wholesale ganesh puja kit, employee festival gift box, ganesh return gifts wholesale, dealer ganesh display stand, custom logo ganesh kit"
+        canonical="/bulk"
+        schema={bulkSchema}
+      />
       {/* Light Gold Hero Header with Divine Ganesha Background */}
       <header className="phead luxury-phead phead-light-gold">
         <div className="phead-bg" aria-hidden="true">

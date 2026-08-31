@@ -592,6 +592,10 @@
     display: none;
   }
 
+  .hero-3d-pagination-desktop {
+    display: none;
+  }
+
   .hero-3d-mobile-controls {
     position: relative;
     z-index: 20;

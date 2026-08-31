@@ -19,9 +19,9 @@ async function run() {
   await SiteConfig.findByIdAndUpdate(
     "site-config",
     {
-      whatsapp: process.env.SITE_WHATSAPP || "+91 63827 18655",
-      phone: process.env.SITE_PHONE || "+91 63827 18655",
-      phoneHref: process.env.SITE_PHONE_HREF || "+91 63827 18655",
+      whatsapp: process.env.SITE_WHATSAPP || "+91 93845 56755",
+      phone: process.env.SITE_PHONE || "+91 93845 56755",
+      phoneHref: process.env.SITE_PHONE_HREF || "+91 93845 56755",
       email: process.env.SITE_EMAIL || "branforgeagency@gmail.com",
       city: process.env.SITE_CITY || "Coimbatore, Tamil Nadu",
       address: process.env.SITE_ADDRESS || "Sonic Prints, Coimbatore, Tamil Nadu, India",

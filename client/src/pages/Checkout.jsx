@@ -8,6 +8,7 @@ import { openWhatsApp } from "../utils/whatsapp.js";
 import { BUYER_TYPES } from "../data/content.js";
 import useReveal from "../hooks/useReveal.js";
 import Magnetic from "../components/fx/Magnetic.jsx";
+import SEOHead from "../components/SEOHead.jsx";
 
 const EMPTY_FORM = { name: "", phone: "", email: "", city: "", addr: "", type: BUYER_TYPES[0], note: "" };
 
@@ -178,6 +179,11 @@ export default function Checkout() {
 
   return (
     <div className="page">
+      <SEOHead
+        title="Secure Checkout | Sonic Prints Ganesh Festival Collection"
+        description="Complete your eco-friendly Ganesh puja kit order securely with UPI, card, netbanking or WhatsApp."
+        canonical="/checkout"
+      />
       <header className="phead" style={{ padding: "44px 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow light">Almost there</div>

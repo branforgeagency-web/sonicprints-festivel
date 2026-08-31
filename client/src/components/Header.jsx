@@ -11,10 +11,10 @@ import { EASE_SILK } from "../anim/tokens.js";
 import useMotionProfile from "../anim/useMotionProfile.js";
 
 const NAV_LINKS = [
-  { label: "Kits", hash: "kits" },
-  { label: "Who It's For", hash: "audiences" },
-  { label: "Kids", hash: "kids" },
-  { label: "Rotating Chakra", hash: "chakra" }
+  { label: "Kits", fullLabel: "Festival Kits & Mandap", hash: "kits", icon: "📦" },
+  { label: "Who It's For", fullLabel: "Who It's For", hash: "audiences", icon: "👥" },
+  { label: "Kids", fullLabel: "Bal Ganesh Kids Kit", hash: "kids", icon: "🎨" },
+  { label: "Rotating Chakra", fullLabel: "Rotating Chakra Backdrop", hash: "chakra", icon: "☸" }
 ];
 
 export default function Header() {
@@ -80,8 +80,38 @@ export default function Header() {
     return () => window.removeEventListener("scroll", checkActiveSection);
   }, [location.pathname]);
 
+  useEffect(() => {
+    /* Close mobile menu on Escape key & lock scroll */
+    function onKeyDown(e) {
+      if (e.key === "Escape") setMobOpen(false);
+    }
+    if (mobOpen) {
+      window.addEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [mobOpen]);
+
+  /* Close mobile nav on route change */
+  useEffect(() => {
+    setMobOpen(false);
+  }, [location.pathname]);
+
   function goToSection(hash) {
     setMobOpen(false);
+    if (location.pathname === "/") {
+      const el = document.getElementById(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.pushState(null, "", `/#${hash}`);
+        return;
+      }
+    }
     navigate(`/#${hash}`);
   }
 
@@ -110,13 +140,13 @@ export default function Header() {
       </div>
 
       <motion.nav
-        className={`nav${stuck ? " is-stuck" : ""}`}
+        className={`nav${stuck ? " is-stuck" : ""}${mobOpen ? " is-open" : ""}`}
         initial={reduced ? false : { y: -22, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.75, ease: EASE_SILK, delay: reduced ? 0 : ready ? 0.05 : 0.85 }}
       >
         <div className="wrap">
-          <Link className="logo" to="/">
+          <Link className="logo" to="/" onClick={() => setMobOpen(false)}>
             <span className="mark"><span>ॐ</span></span>
             <span><b>Sonic Prints</b><i>Festival Collection</i></span>
           </Link>
@@ -145,10 +175,9 @@ export default function Header() {
             </Link>
           </div>
           <div className="navact">
-            {/* <Link to="/bulk" className="btn btn-ghost btn-sm nav-bulk">Bulk enquiry</Link> */}
             <Magnetic strength={0.24} cap={5} radius={70} className="fx-magnetic-cart">
               <button className="btn btn-gold btn-sm cartbtn" onClick={openCart} aria-label="Open cart">
-                <Icon name="cart" size={20} /> Cart
+                <Icon name="cart" size={20} /> <span className="cartbtn-label">Cart</span>
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
                     className="cnt"
@@ -163,50 +192,79 @@ export default function Header() {
                 </AnimatePresence>
               </button>
             </Magnetic>
-            <button className="burger" aria-label="Menu" onClick={() => setMobOpen((v) => !v)}>
+            <button
+              className={`burger${mobOpen ? " open" : ""}`}
+              aria-label={mobOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobOpen}
+              aria-controls="mobile-nav-menu"
+              onClick={() => setMobOpen((v) => !v)}
+            >
               <span />
             </button>
           </div>
         </div>
-        <AnimatePresence initial={false}>
+
+        <AnimatePresence>
           {mobOpen && (
-            <motion.div
-              className="mob open"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.34, ease: EASE_SILK }}
-              style={{ overflow: "hidden" }}
-            >
-              <div className="wrap">
-                {NAV_LINKS.map((l, i) => {
-                  const isCurrent = location.pathname === "/" && activeSection === l.hash;
-                  return (
-                    <motion.a
-                      key={l.hash}
-                      href={`/#${l.hash}`}
-                      className={isCurrent ? "on active" : ""}
-                      initial={reduced ? false : { opacity: 0, x: -12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.35, delay: 0.05 + i * 0.05, ease: EASE_SILK }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        goToSection(l.hash);
-                      }}
+            <>
+              <motion.div
+                className="mob-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setMobOpen(false)}
+                aria-hidden="true"
+              />
+              <motion.div
+                id="mobile-nav-menu"
+                className="mob"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="mob-inner">
+                  <div className="mob-links">
+                    {NAV_LINKS.map((l) => {
+                      const isCurrent = location.pathname === "/" && activeSection === l.hash;
+                      return (
+                        <a
+                          key={l.hash}
+                          href={`/#${l.hash}`}
+                          className={`mob-item${isCurrent ? " on active" : ""}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            goToSection(l.hash);
+                          }}
+                        >
+                          <div className="mob-item-left">
+                            <span className="mob-item-icon">{l.icon}</span>
+                            <span className="mob-item-text">{l.fullLabel || l.label}</span>
+                          </div>
+                          <span className="mob-arr">→</span>
+                        </a>
+                      );
+                    })}
+                    <Link
+                      to="/bulk"
+                      className={`mob-item mob-item-highlight${location.pathname === "/bulk" ? " on active" : ""}`}
+                      onClick={() => setMobOpen(false)}
                     >
-                      {l.label}
-                    </motion.a>
-                  );
-                })}
-                <Link
-                  to="/bulk"
-                  className={location.pathname === "/bulk" ? "on active" : ""}
-                  onClick={() => setMobOpen(false)}
-                >
-                  Bulk &amp; Dealers
-                </Link>
-              </div>
-            </motion.div>
+                      <div className="mob-item-left">
+                        <span className="mob-item-icon">🏢</span>
+                        <span className="mob-item-text">Bulk &amp; Corporate Orders</span>
+                      </div>
+                      <span className="mob-arr">→</span>
+                    </Link>
+                  </div>
+
+                  <div className="mob-footer">
+                    <span>✨ 100% Eco-friendly Ganesh Chaturthi 2026</span>
+                  </div>
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </motion.nav>

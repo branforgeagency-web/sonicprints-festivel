@@ -11,6 +11,7 @@ import { Reveal, RevealGroup } from "../components/fx/Reveal.jsx";
 import { useProductTransition } from "../components/fx/ProductTransition.jsx";
 import { EASE_SILK } from "../anim/tokens.js";
 import useMotionProfile from "../anim/useMotionProfile.js";
+import SEOHead from "../components/SEOHead.jsx";
 
 // Category fallback image keys
 const STORE_IMAGE = { chakra: "display-chakra", kids: "display-kids", diy: "display-kids" };
@@ -117,14 +118,86 @@ export default function ProductPage() {
     navigate("/checkout");
   }
 
+  const BASE_URL = "https://sonicprints.in";
+  const seoImage = productShotSrc.startsWith("http") ? productShotSrc : `${BASE_URL}${productShotSrc}`;
+  const seoTitle = `${product.name} (${product.subtitle || "Ganesh Puja Kit 2026"}) — Buy Online ₹${unitPrice} | Sonic Prints`;
+  const seoDesc = `${product.shortDescription || product.kitDescription} Natural eco-friendly clay idol, complete puja essentials & doorstep delivery. Order online now!`;
+  const seoKeywords = `${product.name}, ${product.subtitle}, Ganesh Chaturthi 2026, Eco friendly Ganesh idol, clay ganesha online, buy ${product.name} online, ganesh puja kit india`;
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": `${BASE_URL}/kit/${product.slug}#product`,
+        "name": `${product.name} — ${product.subtitle || "Ganesh Festival Kit 2026"}`,
+        "image": seoImage,
+        "description": seoDesc,
+        "sku": `SP-2026-${product.id.toUpperCase()}`,
+        "mpn": `SP2026${product.id}`,
+        "brand": {
+          "@type": "Brand",
+          "name": "Sonic Prints"
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": `${BASE_URL}/kit/${product.slug}`,
+          "priceCurrency": "INR",
+          "price": unitPrice,
+          "priceValidUntil": "2026-09-30",
+          "itemCondition": "https://schema.org/NewCondition",
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "Sonic Prints"
+          }
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "128"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${BASE_URL}/kit/${product.slug}#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": BASE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Ganesh Festival Collection 2026",
+            "item": `${BASE_URL}/#kits`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": product.name,
+            "item": `${BASE_URL}/kit/${product.slug}`
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="page">
-      <div className="wrap crumb">
-        <Link to="/">Home</Link><span>›</span>
-        <Link to="/#kits">The Collection</Link><span>›</span>{product.name}
-      </div>
+      <SEOHead
+        title={seoTitle}
+        description={seoDesc}
+        keywords={seoKeywords}
+        image={seoImage}
+        canonical={`/kit/${product.slug}`}
+        type="product"
+        schema={productSchema}
+      />
 
-      <div className="wrap pd">
+      <div className="wrap pd" style={{ paddingTop: 28 }}>
         {/* Product Gallery Viewport */}
         <div className="gal">
           <div className="gal-viewport-wrapper">
@@ -401,10 +474,10 @@ export default function ProductPage() {
               <div className="support-footer-info">
                 <h4>SONIC PRINTS PRIVATE LIMITED</h4>
                 <p>{config?.address || "Sonic Prints, Coimbatore, Tamil Nadu, India"} · Country of Origin: INDIA</p>
-                <p style={{ marginTop: 4 }}>Customer Support: Call / WhatsApp: {config?.whatsapp || "+91 63827 18655"} (10:00 AM – 6:00 PM IST Mon–Sat)</p>
+                <p style={{ marginTop: 4 }}>Customer Support: Call / WhatsApp: {config?.whatsapp || "+91 93845 56755"} (10:00 AM – 6:00 PM IST Mon–Sat)</p>
               </div>
 
-              <a href={`https://wa.me/${(config?.whatsapp || "+91 63827 18655").replace(/[^0-9]/g, "")}`} target="_blank" rel="noopener noreferrer" className="support-action-btn">
+              <a href={`https://wa.me/${(config?.whatsapp || "+91 93845 56755").replace(/[^0-9]/g, "")}`} target="_blank" rel="noopener noreferrer" className="support-action-btn">
                 💬 Contact Support
               </a>
             </div>

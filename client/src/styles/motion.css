@@ -663,3 +663,383 @@ footer a:hover{transform:translateX(4px)}
   z-index: 25 !important;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
+
+/* ============================================================
+   Enhanced Mobile Navbar & Hamburger Menu Transformation
+   ============================================================ */
+
+.burger {
+  display: none;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(239, 209, 153, 0.28);
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 880px) {
+  .burger {
+    display: flex !important;
+  }
+}
+
+.burger:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(239, 209, 153, 0.5);
+}
+
+.burger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+  position: relative;
+  transition: background 0.25s ease;
+}
+
+.burger span::before,
+.burger span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), top 0.28s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
+}
+
+.burger span::before {
+  top: -6px;
+}
+
+.burger span::after {
+  top: 6px;
+}
+
+/* Open hamburger state: transform 3 lines into a clean 'X' icon */
+.burger.open {
+  background: rgba(239, 209, 153, 0.2) !important;
+  border-color: rgba(239, 209, 153, 0.6) !important;
+  box-shadow: 0 0 12px rgba(239, 209, 153, 0.2);
+}
+
+.burger.open span {
+  background: transparent !important;
+}
+
+.burger.open span::before {
+  top: 0 !important;
+  transform: rotate(45deg) !important;
+  background: #EFD199 !important;
+}
+
+.burger.open span::after {
+  top: 0 !important;
+  transform: rotate(-45deg) !important;
+  background: #EFD199 !important;
+}
+
+/* Navigation Bar Header Container */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.nav .wrap {
+  position: relative;
+  z-index: 102;
+}
+
+.nav.is-open {
+  background: #072220 !important;
+  border-bottom: 1px solid rgba(239, 209, 153, 0.28) !important;
+}
+
+/* Backdrop dim overlay when menu is open */
+.mob-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 15, 14, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 90;
+}
+
+/* Mobile Dropdown Navigation Drawer */
+.mob {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #082623 !important;
+  background: linear-gradient(180deg, #072220 0%, #0a2e2b 100%) !important;
+  border-bottom: 2px solid rgba(239, 209, 153, 0.28) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65) !important;
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: 101;
+  display: block !important;
+}
+
+.mob-inner {
+  padding: 16px 18px 24px;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.mob-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mob-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 18px !important;
+  color: #DCEBE8 !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.mob-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mob-item-icon {
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+}
+
+.mob-item-text {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.mob-item:hover,
+.mob-item:active,
+.mob-item.on,
+.mob-item.active {
+  color: #EFD199 !important;
+  background: rgba(239, 209, 153, 0.16) !important;
+  border-color: rgba(239, 209, 153, 0.4) !important;
+  padding-left: 20px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mob-item-highlight {
+  background: linear-gradient(135deg, rgba(239, 209, 153, 0.2), rgba(218, 89, 24, 0.22)) !important;
+  border-color: rgba(239, 209, 153, 0.45) !important;
+  color: #EFD199 !important;
+  margin-top: 4px;
+}
+
+.mob-arr {
+  font-size: 16px;
+  color: #EFD199;
+  opacity: 0.7;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mob-item:hover .mob-arr,
+.mob-item.on .mob-arr {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.mob-footer {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  font-size: 12.5px;
+  color: #EFD199;
+  opacity: 0.9;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Chakra Section Mobile View Enhancements (Balanced & Minimal)
+   ============================================================ */
+@media (max-width: 768px) {
+  .chk-stage-frame {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 24px !important;
+  }
+
+  .chk-stage {
+    width: 100% !important;
+    padding: 8px 0 12px !important;
+  }
+
+  .chk-mandap {
+    width: min(340px, 80vw) !important;
+    margin: 0 auto 12px !important;
+    transform: none !important;
+  }
+
+  .chk-disc {
+    width: 80% !important;
+  }
+
+  .chk-vinayaka {
+    width: 90% !important;
+  }
+
+  .chk-dots {
+    gap: 9px !important;
+    margin-top: 14px !important;
+  }
+
+  .chk-dot {
+    width: 9px !important;
+    height: 9px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .chk-mandap {
+    width: min(300px, 78vw) !important;
+    margin: 4px auto 10px !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   Animated & Elegant Product Breadcrumb Navigation
+   ============================================================ */
+.crumb {
+  padding: 16px 0 10px !important;
+}
+
+.crumb-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(239, 209, 153, 0.4);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 10px rgba(10, 46, 43, 0.04);
+  font-size: 13px;
+  color: #4A615D;
+  transition: all 0.25s ease;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.crumb-track:hover {
+  border-color: rgba(239, 209, 153, 0.7);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 4px 16px rgba(201, 151, 63, 0.12);
+}
+
+.crumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.crumb-link {
+  color: #4A615D;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.crumb-link:hover {
+  color: #0A2E2B;
+  background: rgba(239, 209, 153, 0.25);
+  transform: translateY(-1px);
+}
+
+.crumb-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.crumb-sep {
+  color: #9CA3AF;
+  font-size: 13px;
+  user-select: none;
+  opacity: 0.7;
+}
+
+.crumb-item.is-active {
+  color: #0A2E2B;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  background: rgba(239, 209, 153, 0.2);
+  border-radius: 999px;
+}
+
+.crumb-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #C9973F;
+  box-shadow: 0 0 8px rgba(201, 151, 63, 0.6);
+  animation: crumbPulse 2s infinite ease-in-out;
+}
+
+@keyframes crumbPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(201, 151, 63, 0.9);
+  }
+}
+
+.crumb-current {
+  color: #0A2E2B;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+

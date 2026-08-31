@@ -1,9 +1,9 @@
-# www.robotstxt.org/
-
+# Robots.txt for Sonic Prints Festival Collection
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
 
+# Primary Search Engine Sitemaps
 Sitemap: https://sonicprints.in/sitemap.xml
-Sitemap: https://sonicprints-festivel.onrender.com/sitemap.xml
+

@@ -1,6 +1,7 @@
 import { Link, useLocation, Navigate } from "react-router-dom";
 import { useSite } from "../context/SiteContext.jsx";
 import { waLink } from "../utils/whatsapp.js";
+import SEOHead from "../components/SEOHead.jsx";
 
 const ORDER_CONFIRMATION_KEY = "sonicprints_last_order_v1";
 function readRememberedOrder() {
@@ -27,6 +28,11 @@ export default function OrderConfirmation() {
 
   return (
     <div className="page">
+      <SEOHead
+        title="Order Confirmation | Sonic Prints"
+        description="Thank you for ordering with Sonic Prints Ganesh Festival Collection."
+        canonical="/order-confirmation"
+      />
       <div className="sec">
         <div className="wrap">
           <div className="okbox narrow">
