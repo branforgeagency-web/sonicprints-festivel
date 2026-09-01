@@ -98,7 +98,9 @@ export default function SEOHead({
               "@type": "ImageObject",
               "url": `${BASE_URL}/assets/img/hero-banner.jpg`
             },
-            "sameAs": []
+            "sameAs": [
+              "https://www.instagram.com/sonicprints.in"
+            ]
           },
           {
             "@type": "WebSite",

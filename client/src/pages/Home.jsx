@@ -32,7 +32,10 @@ export default function Home() {
           "@type": "ImageObject",
           "url": `${BASE_URL}/assets/img/hero-banner.jpg`
         },
-        "description": "Premium 100% Eco-Friendly Ganesh Festival Kits, Clay Idols, Kids Activity Boxes & Motorized Rotating Chakra Mandap Backdrops for 2026."
+        "description": "Premium 100% Eco-Friendly Ganesh Festival Kits, Clay Idols, Kids Activity Boxes & Motorized Rotating Chakra Mandap Backdrops for 2026.",
+        "sameAs": [
+          "https://www.instagram.com/sonicprints.in"
+        ]
       },
       {
         "@type": "WebSite",

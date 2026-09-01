@@ -25,7 +25,7 @@ async function run() {
       email: process.env.SITE_EMAIL || "branforgeagency@gmail.com",
       city: process.env.SITE_CITY || "Coimbatore, Tamil Nadu",
       address: process.env.SITE_ADDRESS || "Sonic Prints, Coimbatore, Tamil Nadu, India",
-      instagram: process.env.SITE_INSTAGRAM || "https://instagram.com/sonicprints",
+      instagram: process.env.SITE_INSTAGRAM || "https://www.instagram.com/sonicprints.in",
       currency: process.env.SITE_CURRENCY || "INR",
       freeShipAbove: Number(process.env.SITE_FREE_SHIP_ABOVE || 1499),
       shipFlat: Number(process.env.SITE_SHIP_FLAT || 79),

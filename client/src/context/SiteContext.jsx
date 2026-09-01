@@ -11,7 +11,7 @@ const DEFAULT_CONFIG = {
   email: "branforgeagency@gmail.com",
   city: "Coimbatore, Tamil Nadu",
   address: "Sonic Prints, Coimbatore, Tamil Nadu, India",
-  instagram: "https://instagram.com/sonicprints",
+  instagram: "https://www.instagram.com/sonicprints.in",
   currency: "INR",
   freeShipAbove: 1499,
   shipFlat: 79,

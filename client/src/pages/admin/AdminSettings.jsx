@@ -9,7 +9,7 @@ const FIELDS = [
   ["email", "Official Contact Email", "branforgeagency@gmail.com"],
   ["city", "City & Region (Footer)", "Coimbatore, Tamil Nadu"],
   ["address", "Full Headquarters Address", "Sonic Prints, Coimbatore, Tamil Nadu, India"],
-  ["instagram", "Instagram Profile URL", "https://instagram.com/sonicprints"],
+  ["instagram", "Instagram Profile URL", "https://www.instagram.com/sonicprints.in"],
   ["freeShipAbove", "Free Delivery Threshold (₹)", "1499", "number"],
   ["shipFlat", "Flat Shipping Rate Below Threshold (₹)", "79", "number"],
   ["bulkThreshold", "Bulk Slab Pricing Threshold (Qty)", "25", "number"],

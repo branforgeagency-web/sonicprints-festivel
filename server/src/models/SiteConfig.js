@@ -10,7 +10,7 @@ const SiteConfigSchema = new mongoose.Schema(
     email: { type: String, default: "branforgeagency@gmail.com" },
     city: { type: String, default: "Coimbatore, Tamil Nadu" },
     address: { type: String, default: "Sonic Prints, Coimbatore, Tamil Nadu, India" },
-    instagram: { type: String, default: "https://instagram.com/sonicprints" },
+    instagram: { type: String, default: "https://www.instagram.com/sonicprints.in" },
     currency: { type: String, default: "INR" },
     freeShipAbove: { type: Number, default: 1499 },
     shipFlat: { type: Number, default: 79 },
