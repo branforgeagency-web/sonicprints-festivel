@@ -1,20 +1,82 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false,
   "redirects": [
-    { "source": "/products/:slug*", "destination": "/kit/:slug*", "permanent": true },
-    { "source": "/kits/:slug*", "destination": "/kit/:slug*", "permanent": true },
-    { "source": "/product/:slug*", "destination": "/kit/:slug*", "permanent": true },
-    { "source": "/shop", "destination": "/", "permanent": true },
-    { "source": "/store", "destination": "/", "permanent": true },
-    { "source": "/collection", "destination": "/", "permanent": true },
-    { "source": "/corporate", "destination": "/bulk", "permanent": true },
-    { "source": "/corporate-gifting", "destination": "/bulk", "permanent": true },
-    { "source": "/b2b", "destination": "/bulk", "permanent": true },
-    { "source": "/kids", "destination": "/kit/bal-ganesh-kids-kit", "permanent": true },
-    { "source": "/mini", "destination": "/kit/shubharambh-mini", "permanent": true },
-    { "source": "/employee", "destination": "/kit/employee-puja-box", "permanent": true },
-    { "source": "/diy", "destination": "/kit/make-your-own-ganesha", "permanent": true },
-    { "source": "/mandap", "destination": "/kit/gruha-ganapathi-mandap", "permanent": true },
-    { "source": "/chakra", "destination": "/kit/rotating-chakra-backdrop", "permanent": true }
+    {
+      "source": "/products/:slug*",
+      "destination": "/kit/:slug*",
+      "permanent": true
+    },
+    {
+      "source": "/kits/:slug*",
+      "destination": "/kit/:slug*",
+      "permanent": true
+    },
+    {
+      "source": "/product/:slug*",
+      "destination": "/kit/:slug*",
+      "permanent": true
+    },
+    {
+      "source": "/shop",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/store",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/collection",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/corporate",
+      "destination": "/bulk",
+      "permanent": true
+    },
+    {
+      "source": "/corporate-gifting",
+      "destination": "/bulk",
+      "permanent": true
+    },
+    {
+      "source": "/b2b",
+      "destination": "/bulk",
+      "permanent": true
+    },
+    {
+      "source": "/kids",
+      "destination": "/kit/bal-ganesh-kids-kit",
+      "permanent": true
+    },
+    {
+      "source": "/mini",
+      "destination": "/kit/shubharambh-mini",
+      "permanent": true
+    },
+    {
+      "source": "/employee",
+      "destination": "/kit/employee-puja-box",
+      "permanent": true
+    },
+    {
+      "source": "/diy",
+      "destination": "/kit/make-your-own-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/mandap",
+      "destination": "/kit/gruha-ganapathi-mandap",
+      "permanent": true
+    },
+    {
+      "source": "/chakra",
+      "destination": "/kit/rotating-chakra-backdrop",
+      "permanent": true
+    }
   ],
   "rewrites": [
     {
@@ -22,8 +84,68 @@
       "destination": "https://sonicprints-festivel.onrender.com/api/:path*"
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*).js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*).css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
     }
   ]
 }
