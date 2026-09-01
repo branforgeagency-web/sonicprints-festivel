@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const BASE_URL = "https://sonicprints.in";
+const BASE_URL = import.meta.env.VITE_SITE_URL || "https://sonicprints.shop";
 
 /**
  * SEOHead - Updates document title, meta tags, canonical links, OpenGraph,

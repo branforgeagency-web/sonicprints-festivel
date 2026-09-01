@@ -1,7 +1,7 @@
 import https from "https";
 import http from "http";
 
-const SITEMAP_URL = process.env.SITEMAP_URL || "https://sonicprints.in/sitemap.xml";
+const SITEMAP_URL = process.env.SITEMAP_URL || "https://sonicprints.shop/sitemap.xml";
 
 console.log(`\n======================================================`);
 console.log(`🚀 Sonic Prints XML Sitemap Submission Helper`);
@@ -32,7 +32,7 @@ console.log(`\n------------------------------------------------------`);
 console.log(`📋 Manual Google Search Console Submission Steps:`);
 console.log(`------------------------------------------------------`);
 console.log(`1. Go to Google Search Console: https://search.google.com/search-console`);
-console.log(`2. Select property for: https://sonicprints.in`);
+console.log(`2. Select property for: https://sonicprints.shop`);
 console.log(`3. Click 'Sitemaps' in the left sidebar navigation.`);
 console.log(`4. Under 'Add a new sitemap', enter: sitemap.xml`);
 console.log(`5. Click SUBMIT.`);

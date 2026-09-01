@@ -118,7 +118,7 @@ export default function ProductPage() {
     navigate("/checkout");
   }
 
-  const BASE_URL = "https://sonicprints.in";
+  const BASE_URL = import.meta.env.VITE_SITE_URL || "https://sonicprints.shop";
   const seoImage = productShotSrc.startsWith("http") ? productShotSrc : `${BASE_URL}${productShotSrc}`;
   const seoTitle = `${product.name} (${product.subtitle || "Ganesh Puja Kit 2026"}) — Buy Online ₹${unitPrice} | Sonic Prints`;
   const seoDesc = `${product.shortDescription || product.kitDescription} Natural eco-friendly clay idol, complete puja essentials & doorstep delivery. Order online now!`;

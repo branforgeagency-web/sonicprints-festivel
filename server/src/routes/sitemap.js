@@ -20,7 +20,7 @@ const FALLBACK_SLUGS = [
 
 router.get("/sitemap.xml", async (req, res) => {
   try {
-    const baseUrl = process.env.CLIENT_ORIGIN?.split(",")[0] || "https://sonicprints.in";
+    const baseUrl = process.env.CLIENT_ORIGIN?.split(",")[0] || "https://sonicprints.shop";
     const currentDate = new Date().toISOString().split("T")[0];
 
     let productSlugs = FALLBACK_SLUGS;

@@ -84,7 +84,7 @@ export default function Bulk() {
     "provider": {
       "@type": "Organization",
       "name": "Sonic Prints",
-      "url": "https://sonicprints.in"
+      "url": "https://sonicprints.shop"
     },
     "serviceType": "Corporate Gift Supplier",
     "description": "Bulk supply of eco-friendly clay Ganesh idols, customized corporate puja boxes, school DIY activity kits, and retail dealer display stands for Ganesh Chaturthi 2026.",

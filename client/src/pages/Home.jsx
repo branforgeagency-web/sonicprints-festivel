@@ -13,7 +13,7 @@ import HowSection from "./home/HowSection.jsx";
 import FaqSection from "./home/FaqSection.jsx";
 import ContactCta from "./home/ContactCta.jsx";
 
-const BASE_URL = "https://sonicprints.in";
+const BASE_URL = import.meta.env.VITE_SITE_URL || "https://sonicprints.shop";
 
 export default function Home() {
   const { loading } = useSite();
