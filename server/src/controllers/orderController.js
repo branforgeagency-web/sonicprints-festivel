@@ -1,6 +1,7 @@
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import SiteConfig from "../models/SiteConfig.js";
+import { getNextOrderId } from "../models/Counter.js";
 import productsData from "../../seed/productsData.js";
 import { getRazorpayInstance } from "../utils/razorpay.js";
 import { createCashfreeOrderSession, fetchCashfreeOrderStatus } from "../utils/cashfree.js";
@@ -95,7 +96,10 @@ export async function createOrder(req, res, next) {
       : null;
     const mapUrl = coords ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}` : (customer.mapUrl || "");
 
+    const orderId = await getNextOrderId();
+
     const order = await Order.create({
+      orderId,
       items,
       customer: {
         name: customer.name,
@@ -131,7 +135,7 @@ function buildWhatsAppOrderText(order, cfg) {
   L.push("*SONIC PRINTS — ORDER REQUEST*");
   L.push("Ganesh Festival Collection 2026");
   L.push("");
-  L.push(`Order ref: ${order._id}`);
+  L.push(`Order ref: ${order.orderId || order._id}`);
   L.push(`Name: ${order.customer.name}`);
   L.push(`Mobile: ${order.customer.phone}`);
   if (order.customer.email) L.push(`Email: ${order.customer.email}`);
@@ -163,7 +167,13 @@ function buildWhatsAppOrderText(order, cfg) {
 export async function createCashfreeOrder(req, res, next) {
   try {
     const { orderId } = req.body;
-    const order = await Order.findById(orderId);
+    let order = null;
+    if (orderId && /^[0-9a-fA-F]{24}$/.test(String(orderId))) {
+      order = await Order.findById(orderId);
+    }
+    if (!order && orderId) {
+      order = await Order.findOne({ $or: [{ orderId }, { orderId: `#${orderId}` }] });
+    }
     if (!order) return res.status(404).json({ message: "Order not found" });
 
     const sessionData = await createCashfreeOrderSession({
@@ -192,7 +202,13 @@ export async function createCashfreeOrder(req, res, next) {
 export async function verifyCashfreePayment(req, res, next) {
   try {
     const { orderId, cashfreeOrderId } = req.body;
-    const order = await Order.findById(orderId);
+    let order = null;
+    if (orderId && /^[0-9a-fA-F]{24}$/.test(String(orderId))) {
+      order = await Order.findById(orderId);
+    }
+    if (!order && orderId) {
+      order = await Order.findOne({ $or: [{ orderId }, { orderId: `#${orderId}` }] });
+    }
     if (!order) return res.status(404).json({ message: "Order not found" });
 
     const targetCashfreeId = cashfreeOrderId || order.cashfreeOrderId;
@@ -225,7 +241,13 @@ export async function verifyCashfreePayment(req, res, next) {
 export async function createRazorpayOrder(req, res, next) {
   try {
     const { orderId } = req.body;
-    const order = await Order.findById(orderId);
+    let order = null;
+    if (orderId && /^[0-9a-fA-F]{24}$/.test(String(orderId))) {
+      order = await Order.findById(orderId);
+    }
+    if (!order && orderId) {
+      order = await Order.findOne({ $or: [{ orderId }, { orderId: `#${orderId}` }] });
+    }
     if (!order) return res.status(404).json({ message: "Order not found" });
 
     const razorpay = getRazorpayInstance();
@@ -236,7 +258,7 @@ export async function createRazorpayOrder(req, res, next) {
     const rpOrder = await razorpay.orders.create({
       amount: Math.round(order.total * 100),
       currency: "INR",
-      receipt: String(order._id)
+      receipt: String(order.orderId || order._id)
     });
 
     order.razorpayOrderId = rpOrder.id;
@@ -251,7 +273,13 @@ export async function createRazorpayOrder(req, res, next) {
 export async function verifyRazorpayPayment(req, res, next) {
   try {
     const { orderId, razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-    const order = await Order.findById(orderId);
+    let order = null;
+    if (orderId && /^[0-9a-fA-F]{24}$/.test(String(orderId))) {
+      order = await Order.findById(orderId);
+    }
+    if (!order && orderId) {
+      order = await Order.findOne({ $or: [{ orderId }, { orderId: `#${orderId}` }] });
+    }
     if (!order) return res.status(404).json({ message: "Order not found" });
 
     const expected = crypto
@@ -286,12 +314,29 @@ export async function lookupOrders(req, res, next) {
       if (/^[0-9a-fA-F]{24}$/.test(cleanId)) {
         queries.push({ _id: cleanId });
       }
+      const stripped = cleanId.replace(/^#/, "");
+      // Matches #SONIC001, SONIC001, sonic001 etc.
+      queries.push({ orderId: { $regex: new RegExp(`^#?${stripped}$`, "i") } });
     }
 
     if (Array.isArray(orderIds) && orderIds.length > 0) {
-      const validIds = orderIds.filter((id) => typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id.trim()));
-      if (validIds.length > 0) {
-        queries.push({ _id: { $in: validIds } });
+      const validMongoIds = orderIds.filter((id) => typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id.trim()));
+      if (validMongoIds.length > 0) {
+        queries.push({ _id: { $in: validMongoIds } });
+      }
+
+      const stringIds = orderIds.filter((id) => typeof id === "string" && id.trim()).map((id) => id.trim());
+      const expandedIds = [];
+      for (const id of stringIds) {
+        expandedIds.push(id);
+        if (id.startsWith("#")) {
+          expandedIds.push(id.slice(1));
+        } else {
+          expandedIds.push(`#${id}`);
+        }
+      }
+      if (expandedIds.length > 0) {
+        queries.push({ orderId: { $in: expandedIds } });
       }
     }
 
@@ -326,7 +371,14 @@ export async function lookupOrders(req, res, next) {
 // in the admin queue looking like real pending orders.
 export async function cancelAbandonedPayment(req, res, next) {
   try {
-    const order = await Order.findById(req.params.id);
+    const id = req.params.id;
+    let order = null;
+    if (id && /^[0-9a-fA-F]{24}$/.test(String(id))) {
+      order = await Order.findById(id);
+    }
+    if (!order && id) {
+      order = await Order.findOne({ $or: [{ orderId: id }, { orderId: `#${id}` }] });
+    }
     if (!order) return res.status(404).json({ message: "Order not found" });
 
     if (order.paymentMethod === "online" && order.paymentStatus === "pending" && order.status === "new") {

@@ -10,6 +10,7 @@ const BASE_URL = process.env.VITE_SITE_URL || "https://sonicprints.shop";
 const STATIC_PAGES = [
   { path: "/", priority: "1.0", changefreq: "daily" },
   { path: "/bulk", priority: "0.9", changefreq: "weekly" },
+  { path: "/blog", priority: "0.8", changefreq: "weekly" },
   { path: "/track", priority: "0.8", changefreq: "daily" },
   { path: "/checkout", priority: "0.7", changefreq: "monthly" },
   { path: "/sitemap", priority: "0.6", changefreq: "weekly" },
@@ -21,7 +22,7 @@ const PRODUCTS = [
   { slug: "bal-ganesh-kids-kit", title: "Bal Ganesh Kids Kit Devotional Story & Craft Box", img: "/assets/img/kids.jpg", priority: "0.9", changefreq: "weekly" },
   { slug: "make-your-own-ganesha", title: "Make Your Own Ganesha DIY Clay Idol Modelling Kit", img: "/assets/img/diy.jpg", priority: "0.9", changefreq: "weekly" },
   { slug: "gruha-ganapathi-mandap", title: "Gruha Ganapathi Instant 10-Minute Mandap Temple Arch", img: "/assets/img/mandap.jpg", priority: "0.9", changefreq: "weekly" },
-  { slug: "rotating-chakra-backdrop", title: "Rotating Chakra Motorized LED Mandap Backdrop", img: "/assets/img/chakra.jpg", priority: "0.9", changefreq: "weekly" },
+  { slug: "rotating-chakra-backdrop", title: "Rotating Chakra Motorized LED Mandap Backdrop", img: "/assets/img/chakra-classic.jpg", priority: "0.9", changefreq: "weekly" },
 ];
 
 function escapeXml(unsafe) {

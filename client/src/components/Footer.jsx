@@ -8,10 +8,18 @@ import useMotionProfile from "../anim/useMotionProfile.js";
 
 /* The footer assembles itself: decoration, then the mark, then each
    column's links one after another. */
-function LinkColumn({ title, children, delay = 0 }) {
+function LinkColumn({ title, href, children, delay = 0 }) {
   return (
     <RevealItem variant="fadeUp" transition={{ duration: 0.6, delay, ease: EASE_SILK }}>
-      <h5>{title}</h5>
+      <h5>
+        {href ? (
+          <Link to={href} style={{ color: "inherit", textDecoration: "none" }}>
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
+      </h5>
       {children}
     </RevealItem>
   );
@@ -32,6 +40,7 @@ export default function Footer() {
     <footer>
       <span className="footer-aura" aria-hidden="true" />
       <div className="wrap">
+        {/* Footer Navigation Columns */}
         <RevealGroup className="fgrid" stagger={0.09} amount={0.1}>
           <RevealItem variant="fadeUp">
             <Link className="logo" to="/" style={{ color: "#fff" }}>
@@ -66,6 +75,23 @@ export default function Footer() {
             ))}
           </LinkColumn>
 
+          {/* Blog Title Column */}
+          <LinkColumn title="Blog" href="/blog">
+            <motion.span style={{ display: "block" }} {...stagger(0)}>
+              <Link to="/blog" style={{ color: "#F3D085", fontWeight: 700 }}>
+                Festival Collection Stories →
+              </Link>
+            </motion.span>
+            <p className="about" style={{ marginTop: 8, fontSize: "13px", lineHeight: "1.6" }}>
+              Explore the craftsmanship, sacred clay traditions, and ritual guides behind all six festival collections.
+            </p>
+            <motion.span style={{ display: "block", marginTop: 10 }} {...stagger(1)}>
+              <Link to="/blog" style={{ color: "var(--gold-400)", fontSize: "13px", fontWeight: 600 }}>
+                Browse All 6 Products →
+              </Link>
+            </motion.span>
+          </LinkColumn>
+
           <LinkColumn title="Talk to us">
             {[
               <Link key="track" to="/track" style={{ color: "#F3D085", fontWeight: 600 }}>📦 Track Your Order</Link>,
@@ -94,6 +120,9 @@ export default function Footer() {
           <span>© 2026 Sonic Prints. All rights reserved.</span>
           <span>Natural clay idols · Sealed prasadam · GST inclusive</span>
           <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+            <Link to="/blog" style={{ color: "rgba(239, 209, 153, 0.75)", textDecoration: "none", fontSize: "12px" }}>
+              📖 Blogs
+            </Link>
             <Link to="/sitemap" style={{ color: "rgba(239, 209, 153, 0.75)", textDecoration: "none", fontSize: "12px" }}>
               🗺️ Sitemap
             </Link>

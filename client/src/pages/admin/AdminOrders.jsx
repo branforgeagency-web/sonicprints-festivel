@@ -72,6 +72,21 @@ export default function AdminOrders() {
                     >
                       <td>
                         <div className="admin-cust-cell">
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                            <span style={{
+                              fontFamily: "monospace",
+                              fontWeight: 700,
+                              fontSize: 12.5,
+                              background: "rgba(223, 183, 108, 0.15)",
+                              color: "#DFB76C",
+                              padding: "2px 7px",
+                              borderRadius: 4,
+                              border: "1px solid rgba(223, 183, 108, 0.3)",
+                              letterSpacing: "0.5px"
+                            }}>
+                              {o.orderId || (o._id ? `#${String(o._id).slice(-6)}` : "—")}
+                            </span>
+                          </div>
                           <strong className="cust-name">{o.customer?.name || "Guest Customer"}</strong>
                           <span className="cust-phone">📱 {o.customer?.phone || "No phone"}</span>
                         </div>
@@ -112,6 +127,7 @@ export default function AdminOrders() {
                         <td colSpan={6} style={{ background: "rgba(6, 21, 19, 0.95)", padding: "20px 24px" }}>
                           <div style={{ fontSize: 13.5, lineHeight: 1.8, color: "#DDEEEB" }}>
                             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 16 }}>
+                              <div><strong style={{ color: "#DFB76C" }}>Order ID:</strong> <span style={{ fontFamily: "monospace", color: "#FFF", fontWeight: 700 }}>{o.orderId || o._id}</span></div>
                               <div><strong style={{ color: "#DFB76C" }}>Email:</strong> {o.customer?.email || "—"}</div>
                               <div><strong style={{ color: "#DFB76C" }}>City:</strong> {o.customer?.city || "—"}</div>
                               <div><strong style={{ color: "#DFB76C" }}>Address:</strong> {o.customer?.address || "—"}</div>

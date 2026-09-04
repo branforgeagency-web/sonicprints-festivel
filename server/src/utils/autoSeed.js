@@ -1,6 +1,8 @@
 import Product from "../models/Product.js";
 import SiteConfig from "../models/SiteConfig.js";
 import Admin from "../models/Admin.js";
+import Order from "../models/Order.js";
+import Counter from "../models/Counter.js";
 import productsData from "../../seed/productsData.js";
 
 export async function autoSeed() {
@@ -46,6 +48,36 @@ export async function autoSeed() {
       const passwordHash = await Admin.hashPassword(process.env.ADMIN_PASSWORD || "change-this-password");
       await Admin.create({ email: adminEmail, passwordHash, name: "Sonic Prints Admin" });
       console.log(`[autoSeed] Created default admin user: ${adminEmail}`);
+    }
+
+    // Backfill orderId for existing orders if any are missing
+    const unassignedOrders = await Order.find({
+      $or: [{ orderId: { $exists: false } }, { orderId: null }, { orderId: "" }]
+    }).sort({ createdAt: 1 });
+
+    if (unassignedOrders.length > 0) {
+      console.log(`[autoSeed] Found ${unassignedOrders.length} orders without orderId. Backfilling...`);
+      let counterDoc = await Counter.findById("orderId");
+      let currentSeq = counterDoc ? counterDoc.seq : 0;
+
+      for (const ord of unassignedOrders) {
+        currentSeq += 1;
+        const formatted = `#SONIC${String(currentSeq).padStart(3, "0")}`;
+        await Order.updateOne({ _id: ord._id }, { $set: { orderId: formatted } });
+      }
+
+      await Counter.findByIdAndUpdate(
+        "orderId",
+        { $set: { seq: currentSeq } },
+        { upsert: true }
+      );
+      console.log(`[autoSeed] Backfilled ${unassignedOrders.length} orders. Next order will be #SONIC${String(currentSeq + 1).padStart(3, "0")}.`);
+    } else {
+      const existingOrderCount = await Order.countDocuments();
+      const counterDoc = await Counter.findById("orderId");
+      if (!counterDoc && existingOrderCount > 0) {
+        await Counter.create({ _id: "orderId", seq: existingOrderCount });
+      }
     }
   } catch (err) {
     console.error("[autoSeed] Automatic seeding error:", err.message);

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useSite, money } from "../context/SiteContext.jsx";
 import SEOHead from "../components/SEOHead.jsx";
 import Icon from "../components/Icon.jsx";
+import { BLOG_POSTS } from "../data/blogs.js";
 
 export default function SitemapPage() {
   const { products, config } = useSite();
@@ -9,6 +10,7 @@ export default function SitemapPage() {
   const mainPages = [
     { title: "Home — Ganesh Festival Collection 2026", path: "/", desc: "Complete 2026 festival showcase, interactive 3D kit carousel, and animated celebration features." },
     { title: "Bulk & Corporate Orders", path: "/bulk", desc: "Volume slabs for 25 to 5,000+ units for offices, schools, academies, and dealers." },
+    { title: "Festival Guides & Blog", path: "/blog", desc: "Authoritative guides on eco visarjan, 10-minute mandap setups, and festive traditions." },
     { title: "Track Your Orders (Live Fulfillment)", path: "/track", desc: "Check live status, items, delivery schedule, and GPS map tracking with mobile lookup." },
     { title: "Checkout & Instant Payment", path: "/checkout", desc: "Secure online checkout with Cashfree / Razorpay or direct WhatsApp ordering." }
   ];
@@ -73,7 +75,30 @@ export default function SitemapPage() {
               </div>
             </div>
 
-            {/* 3. Search Engine Feeds & XML Sitemap */}
+            {/* 3. Festival Collection Blog */}
+            <div className="panel" style={{ padding: "28px 32px", borderRadius: 18, border: "1.5px solid rgba(184, 142, 68, 0.25)", background: "#FFF" }}>
+              <h2 style={{ fontSize: 22, fontFamily: "var(--serif, serif)", color: "#0A2E2B", marginBottom: 16, display: "flex", alignItems: "center", gap: 10 }}>
+                <span>📖</span> Festival Collection Blog
+              </h2>
+              <p style={{ margin: "0 0 16px", fontSize: 14, color: "#5C7370" }}>
+                Complete design stories, Vedic traditions, and setup guides for all six festival products on one dedicated page:
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+                <div style={{ background: "#FAF7F2", border: "1px solid rgba(184,142,68,0.2)", borderRadius: 12, padding: "16px 18px" }}>
+                  <Link to="/blog" style={{ fontSize: 15, fontWeight: 700, color: "#0A2E2B", textDecoration: "none", display: "block", marginBottom: 4 }}>
+                    The 6 Products Blog &amp; Story Guide →
+                  </Link>
+                  <span style={{ fontSize: 12, color: "#8C651F", fontWeight: 600, display: "block" }}>
+                    Complete 2026 Collection Feature
+                  </span>
+                  <p style={{ fontSize: 12.5, color: "#5C7370", margin: "6px 0 0", lineHeight: 1.4 }}>
+                    Shubharambh Mini, Employee Puja Box, Bal Ganesh Kids Kit, Make Your Own Ganesha, Gruha Ganapathi Mandap, and Rotating Chakra.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Search Engine Feeds & XML Sitemap */}
             <div className="panel" style={{ padding: "24px 28px", borderRadius: 16, background: "linear-gradient(135deg, #FAF7F0 0%, #F5ECDD 100%)", border: "1px solid rgba(184,142,68,0.3)" }}>
               <h3 style={{ fontSize: 17, color: "#0A2E2B", margin: "0 0 8px" }}>🤖 Search Engine &amp; Developer Feeds</h3>
               <p style={{ fontSize: 13.5, color: "#5C7370", margin: "0 0 12px" }}>

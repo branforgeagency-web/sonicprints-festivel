@@ -155,8 +155,9 @@ export default function Checkout() {
       });
 
       // Save order to customer's order history in localStorage
-      if (order?._id) {
-        saveCustomerOrder(order._id, form.phone, form.name);
+      const displayOrderId = order?.orderId || order?._id;
+      if (displayOrderId) {
+        saveCustomerOrder(displayOrderId, form.phone, form.name);
       }
 
       if (payMethod === "online") {
@@ -195,21 +196,21 @@ export default function Checkout() {
               const verifyRes = await verifyCashfreePayment({ orderId: order._id, cashfreeOrderId });
               if (verifyRes?.paid) {
                 clearCart();
-                rememberOrderConfirmation(form.name, true, order._id);
-                navigate("/order-confirmation", { state: { name: form.name, paid: true, orderId: order._id } });
+                rememberOrderConfirmation(form.name, true, displayOrderId);
+                navigate("/order-confirmation", { state: { name: form.name, paid: true, orderId: displayOrderId } });
                 return;
               } else {
                 toast("Payment status pending — we will verify your payment.");
                 clearCart();
-                rememberOrderConfirmation(form.name, false, order._id);
-                navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: order._id } });
+                rememberOrderConfirmation(form.name, false, displayOrderId);
+                navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId } });
                 return;
               }
             } catch (vErr) {
               toast("Payment verification error — order recorded.");
               clearCart();
-              rememberOrderConfirmation(form.name, false, order._id);
-              navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: order._id } });
+              rememberOrderConfirmation(form.name, false, displayOrderId);
+              navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId } });
               return;
             }
           } catch (cfErr) {
@@ -222,8 +223,8 @@ export default function Checkout() {
       } else {
         openWhatsApp(config.whatsapp, whatsappText);
         clearCart();
-        rememberOrderConfirmation(form.name, false, order._id);
-        navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: order._id } });
+        rememberOrderConfirmation(form.name, false, displayOrderId);
+        navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId } });
       }
     } catch (err) {
       toast(err?.response?.data?.message || "Could not place the order — please try again");

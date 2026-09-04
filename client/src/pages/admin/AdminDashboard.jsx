@@ -154,6 +154,21 @@ export default function AdminDashboard() {
                     <tr key={o._id}>
                       <td>
                         <div className="admin-cust-cell">
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                            <span style={{
+                              fontFamily: "monospace",
+                              fontWeight: 700,
+                              fontSize: 12,
+                              background: "rgba(223, 183, 108, 0.15)",
+                              color: "#DFB76C",
+                              padding: "2px 6px",
+                              borderRadius: 4,
+                              border: "1px solid rgba(223, 183, 108, 0.3)",
+                              letterSpacing: "0.5px"
+                            }}>
+                              {o.orderId || (o._id ? `#${String(o._id).slice(-6)}` : "—")}
+                            </span>
+                          </div>
                           <strong className="cust-name">{o.customer?.name || "Guest Customer"}</strong>
                           <span className="cust-phone">📱 {o.customer?.phone || "No phone"}</span>
                         </div>

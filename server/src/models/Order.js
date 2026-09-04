@@ -17,6 +17,7 @@ const OrderItemSchema = new mongoose.Schema(
 
 const OrderSchema = new mongoose.Schema(
   {
+    orderId: { type: String, unique: true, sparse: true, index: true },
     items: { type: [OrderItemSchema], required: true, validate: (v) => v.length > 0 },
 
     customer: {

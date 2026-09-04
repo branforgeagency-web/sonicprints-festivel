@@ -44,7 +44,7 @@ export default function TrackOrders() {
 
       if (digits.length >= 10) {
         payload.phone = digits;
-      } else if (/^[0-9a-fA-F]{24}$/.test(trimmed)) {
+      } else if (trimmed) {
         payload.orderId = trimmed;
       } else {
         // Try stored orderIds or stored phone
@@ -165,7 +165,7 @@ export default function TrackOrders() {
                 <input
                   type="text"
                   className="track-search-input"
-                  placeholder="Enter 10-digit mobile number or Order ID (e.g. 9876543210)…"
+                  placeholder="Enter 10-digit mobile number or Order ID (e.g. #SONIC001 or 9876543210)…"
                   value={inputVal}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -235,6 +235,7 @@ export default function TrackOrders() {
               {orders.map((o) => {
                 const isCancelled = o.status === "cancelled";
                 const stageIdx = getStageIndex(o.status);
+                const displayId = o.orderId || (o._id ? (String(o._id).startsWith("#") ? o._id : `#${o._id}`) : "—");
 
                 return (
                   <div key={o._id} className="panel track-order-card">
@@ -242,7 +243,7 @@ export default function TrackOrders() {
                     <div className="track-order-top">
                       <div>
                         <span className="track-ref-label">Order Reference</span>
-                        <h3 className="track-order-id">#{o._id}</h3>
+                        <h3 className="track-order-id">{displayId}</h3>
                         <span className="track-order-date">
                           Placed on {o.createdAt ? new Date(o.createdAt).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—"}
                         </span>
@@ -348,7 +349,7 @@ export default function TrackOrders() {
                     <div className="track-order-card-footer">
                       <span>Questions about this order?</span>
                       <a
-                        href={waLink(config.whatsapp, `Namaste Sonic Prints, I have a question regarding my order #${o._id} placed by ${o.customer?.name}.`)}
+                        href={waLink(config.whatsapp, `Namaste Sonic Prints, I have a question regarding my order ${displayId} placed by ${o.customer?.name}.`)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-gold btn-sm"

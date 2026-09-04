@@ -42,6 +42,25 @@ export default function OrderConfirmation() {
             <h1 style={{ fontSize: "clamp(32px,4vw,50px)", marginBottom: 12 }}>
               {paid ? "Payment received" : "Order sent"}
             </h1>
+            {effective?.orderId && (
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "8px 20px",
+                background: "rgba(223, 183, 108, 0.12)",
+                border: "1px solid rgba(223, 183, 108, 0.35)",
+                borderRadius: 999,
+                margin: "0 auto 20px",
+                fontSize: 15,
+                fontWeight: 600,
+                color: "#DFB76C",
+                letterSpacing: "0.5px"
+              }}>
+                <span>Order Reference:</span>
+                <span style={{ fontFamily: "monospace", color: "#FFF", fontSize: 16, fontWeight: 700 }}>{effective.orderId}</span>
+              </div>
+            )}
             <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 560, margin: "0 auto 26px" }}>
               {paid
                 ? `Thank you, ${name}. Your payment is confirmed and our team will WhatsApp you the delivery schedule shortly.`

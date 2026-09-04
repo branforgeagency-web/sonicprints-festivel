@@ -481,8 +481,10 @@ p{margin:0 0 1em}
 
 /* ---------- footer ---------- */
 footer{background:#072220;color:#8FA7A3;padding:60px 0 26px;border-top:1px solid rgba(239,209,153,.14)}
-.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:38px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,.08)}
+.fgrid{display:grid;grid-template-columns:1.35fr 0.9fr 0.9fr 1.05fr 1.15fr;gap:30px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,.08)}
 footer h5{font-family:var(--sans);font-size:11.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--gold-400);margin:0 0 16px;font-weight:700}
+footer h5 a{color:inherit;text-decoration:none;transition:color .2s;display:inline-flex;align-items:center;gap:4px}
+footer h5 a:hover{color:var(--gold-200);text-decoration:underline}
 footer a{display:block;padding:5px 0;font-size:14px;color:#A9C1BD;transition:.2s}
 footer a:hover{color:var(--gold-300)}
 footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
@@ -3807,7 +3809,264 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
   pointer-events: none;
 }
 
+/* ==========================================================================
+   Minimal Premium Blog Landing Page (The 6 Festive Products)
+   ========================================================================== */
+.blog-minimal-page {
+  background: #FAF8F5;
+  min-height: 100vh;
+  color: #1A2E2B;
+}
 
+/* Luxury Hero Header */
+.bm-hero {
+  position: relative;
+  background: radial-gradient(circle at 50% 0%, #0C3632 0%, #061F1D 100%);
+  color: #FFFFFF;
+  padding: 64px 0 50px;
+  text-align: center;
+  border-bottom: 1px solid rgba(239, 209, 153, 0.16);
+}
+.bm-hero-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.bm-eyebrow {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #F3D085;
+  background: rgba(243, 208, 133, 0.1);
+  border: 1px solid rgba(243, 208, 133, 0.25);
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+.bm-title {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4.2vw, 48px);
+  line-height: 1.18;
+  color: #FFFFFF;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.bm-subtitle {
+  font-size: clamp(14.5px, 1.5vw, 16.5px);
+  line-height: 1.6;
+  color: #B2CCC7;
+  margin: 0 auto;
+}
 
+/* 6 Products Grid Section */
+.bm-grid-section {
+  padding: 56px 0 80px;
+}
+.bm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
 
+/* Luxury Product Card */
+.bm-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(184, 142, 68, 0.2);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(10, 46, 43, 0.04);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.bm-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(184, 142, 68, 0.45);
+  box-shadow: 0 16px 36px rgba(10, 46, 43, 0.09);
+}
 
+/* Card Media */
+.bm-card-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background: #061F1D;
+}
+.bm-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bm-card:hover .bm-card-media img {
+  transform: scale(1.05);
+}
+.bm-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(7, 34, 32, 0.88);
+  backdrop-filter: blur(4px);
+  color: #F8E3B6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(248, 227, 182, 0.3);
+}
+.bm-price {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: #FFFFFF;
+  color: #0A2E2B;
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 8px;
+  border: 1px solid rgba(184, 142, 68, 0.25);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Body */
+.bm-card-body {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.bm-card-head {
+  margin-bottom: 10px;
+}
+.bm-card-sub {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8C651F;
+  margin-bottom: 4px;
+}
+.bm-card-title {
+  font-family: var(--serif);
+  font-size: 21px;
+  line-height: 1.25;
+  color: #0A2E2B;
+  margin: 0;
+}
+.bm-card-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.bm-card-title a:hover {
+  color: #8C651F;
+}
+.bm-card-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #556E6B;
+  margin: 0 0 16px;
+  flex: 1;
+}
+
+/* Tags */
+.bm-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.bm-tag {
+  background: #F4F1EC;
+  color: #4C6461;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Actions */
+.bm-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 10px;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+.bm-btn-view {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0A2E2B;
+  background: transparent;
+  border: 1.5px solid rgba(184, 142, 68, 0.35);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.bm-btn-view:hover {
+  border-color: #8C651F;
+  background: #FAF6EE;
+  color: #8C651F;
+}
+.bm-btn-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0A2E2B;
+  background: linear-gradient(180deg, #F9DE9E 0%, #EFD199 100%);
+  border: 1px solid #D6B575;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(239, 209, 153, 0.3);
+}
+.bm-btn-add:hover {
+  background: linear-gradient(180deg, #FDE6AE 0%, #F5DCA5 100%);
+  box-shadow: 0 4px 12px rgba(184, 142, 68, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Minimal Footer Note */
+.bm-footer-note {
+  margin-top: 48px;
+  text-align: center;
+  font-size: 12.5px;
+  color: #728B87;
+  letter-spacing: 0.04em;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 1040px) {
+  .bm-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+}
+@media (max-width: 640px) {
+  .bm-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .bm-card-actions {
+    grid-template-columns: 1fr;
+  }
+}
