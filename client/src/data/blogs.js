@@ -1,4 +1,5 @@
 // Festival blog articles and celebration guides for the six Sonic Prints festival products
+import { assetUrl } from "../utils/assetHelper.js";
 
 export const BLOG_POSTS = [
   {
@@ -12,7 +13,7 @@ export const BLOG_POSTS = [
     category: "Festival Guide",
     readTime: "5 min read",
     date: "August 2026",
-    coverImg: "/assets/img/blog/blog_1.jpeg"
+    coverImg: assetUrl("/assets/img/blog/blog_1.jpeg")
   },
   {
     slug: "shubharambh-mini",
@@ -25,7 +26,7 @@ export const BLOG_POSTS = [
     category: "Home & Puja Kits",
     readTime: "3 min read",
     date: "August 2026",
-    coverImg: "/assets/img/mini.jpg",
+    coverImg: assetUrl("/assets/img/mini.jpg"),
     sections: [
       {
         heading: "Why We Created Shubharambh Mini",
@@ -59,7 +60,7 @@ Instead of running around busy markets trying to locate 15 different items, Shub
     category: "Corporate Gifting",
     readTime: "4 min read",
     date: "August 2026",
-    coverImg: "/assets/img/employee.jpg",
+    coverImg: assetUrl("/assets/img/employee.jpg"),
     sections: [
       {
         heading: "The Gifting Philosophy: Moving Beyond Sweet Boxes",
@@ -92,7 +93,7 @@ It honors employees' spiritual and family values while reflecting your company's
     category: "Kids & Schools",
     readTime: "4 min read",
     date: "August 2026",
-    coverImg: "/assets/img/kids.jpg",
+    coverImg: assetUrl("/assets/img/kids.jpg"),
     sections: [
       {
         heading: "Connecting Young Minds to Living Heritage",
@@ -125,7 +126,7 @@ The Bal Ganesh Kids Kit was engineered in collaboration with child educators and
     category: "DIY & Eco Visarjan",
     readTime: "4 min read",
     date: "August 2026",
-    coverImg: "/assets/img/diy.jpg",
+    coverImg: assetUrl("/assets/img/diy.jpg"),
     sections: [
       {
         heading: "The Spiritual Joy of Creating Your Own Deity",
@@ -157,7 +158,7 @@ No previous sculpting experience is necessary. With our guided proportion templa
     category: "Decor & Temple Arches",
     readTime: "3 min read",
     date: "August 2026",
-    coverImg: "/assets/img/mandap.jpg",
+    coverImg: assetUrl("/assets/img/mandap.jpg"),
     sections: [
       {
         heading: "Temple Grandeur Without Carpentry Clutter",
@@ -189,7 +190,7 @@ The Gruha Ganapathi Mandap solves this with precision German-engineered interloc
     category: "Kinetic Decor",
     readTime: "3 min read",
     date: "August 2026",
-    coverImg: "/assets/img/chakra-classic.jpg",
+    coverImg: assetUrl("/assets/img/chakra-classic.jpg"),
     sections: [
       {
         heading: "The Symbolism of the Revolving Sudarshan Chakra",

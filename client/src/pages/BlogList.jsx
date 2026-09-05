@@ -5,6 +5,7 @@ import { useSite, money } from "../context/SiteContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
 import { EASE_SILK } from "../anim/tokens.js";
 import useMotionProfile from "../anim/useMotionProfile.js";
+import { assetUrl } from "../utils/assetHelper.js";
 
 const SIX_PRODUCTS = [
   {
@@ -123,7 +124,7 @@ export default function BlogList() {
               >
                 {/* Visual Image */}
                 <Link to={`/kit/${prod.slug}`} className="bm-card-media" tabIndex={-1} aria-hidden="true">
-                  <img src={prod.img} alt={prod.name} loading="lazy" />
+                  <img src={assetUrl(prod.img)} alt={prod.name} loading="lazy" />
                   <span className="bm-badge">{prod.badge}</span>
                   <span className="bm-price">{money(prod.price)}</span>
                 </Link>

@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { assetUrl } from "../utils/assetHelper.js";
 
 const BASE_URL = import.meta.env.VITE_SITE_URL || "https://sonicprints.shop";
+const DEFAULT_BANNER = assetUrl("/assets/img/hero-banner.jpg").startsWith("http")
+  ? assetUrl("/assets/img/hero-banner.jpg")
+  : `${BASE_URL}/assets/img/hero-banner.jpg`;
 
 /**
  * SEOHead - Updates document title, meta tags, canonical links, OpenGraph,
@@ -11,7 +15,7 @@ export default function SEOHead({
   title = "Sonic Prints | Eco-Friendly Ganesh Festival Kits & Mandaps 2026",
   description = "Buy 100% eco-friendly clay Ganesh idols, complete puja kits, kids DIY Ganesha activity boxes, instant 10-minute mandaps and motorized rotating chakra backdrops online. Fast pan-India delivery.",
   keywords = "Ganesh Chaturthi 2026, Eco friendly Ganesh idol, clay ganesha online, ganesh puja kit, instant ganesh mandap, rotating chakra backdrop, bal ganesh kids kit, corporate ganesh gifting, buy ganesha online india, return gifts ganesh festival",
-  image = `${BASE_URL}/assets/img/hero-banner.jpg`,
+  image = DEFAULT_BANNER,
   canonical = null,
   type = "website",
   schema = null
@@ -96,7 +100,7 @@ export default function SEOHead({
             "url": BASE_URL,
             "logo": {
               "@type": "ImageObject",
-              "url": `${BASE_URL}/assets/img/hero-banner.jpg`
+              "url": DEFAULT_BANNER
             },
             "sameAs": [
               "https://www.instagram.com/sonicprints.in"

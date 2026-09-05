@@ -3,6 +3,8 @@
    backdrop turning smoothly at the center of the hero banner.
    ============================================================ */
 
+import { assetUrl } from "../../utils/assetHelper.js";
+
 export default function HeroChakra() {
   return (
     <span className="hero-chakra" aria-hidden="true">
@@ -10,7 +12,7 @@ export default function HeroChakra() {
       <span className="hero-chakra-wheel">
         <img
           className="hero-chakra-img"
-          src="/assets/img/golden-sudarshan-chakra.png"
+          src={assetUrl("/assets/img/golden-sudarshan-chakra.png")}
           alt=""
           width="600"
           height="600"

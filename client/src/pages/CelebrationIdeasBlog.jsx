@@ -8,6 +8,7 @@ import { EASE_SILK, EASE_INOUT } from "../anim/tokens.js";
 import useMotionProfile from "../anim/useMotionProfile.js";
 import Tilt from "../components/fx/Tilt.jsx";
 import { SectionAura } from "../components/fx/Decor.jsx";
+import { assetUrl } from "../utils/assetHelper.js";
 
 const SIX_PRODUCTS = [
   {
@@ -151,7 +152,7 @@ export default function CelebrationIdeasBlog() {
         description="From festive home setups and kids' activities to décor, gifting and office celebrations, find ideas to make Ganesh Chaturthi 2026 memorable. Explore more."
         canonical="/ganesh-chaturthi-2026-celebration-ideas"
         type="article"
-        image="/assets/img/blog/blog_1.jpeg"
+        image={assetUrl("/assets/img/blog/blog_1.jpeg")}
         schema={articleSchema}
       />
 
@@ -245,24 +246,24 @@ export default function CelebrationIdeasBlog() {
 
           {/* IMAGE 1: Hero Editorial Showcase */}
           <motion.div
-            className="blog-image-frame"
+            className="blog-suite-panoramic-frame"
             initial={reduced ? false : { opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.55, ease: EASE_SILK }}
           >
-            <Tilt max={5} lift={2}>
+            <Tilt max={4} lift={2}>
               <Link to="/" className="blog-image-link" title="Explore Ganesh Chaturthi 2026 Collection">
                 <span className="blog-floating-badge">✦ FESTIVE INSPIRATION 2026</span>
                 <img
-                  src="/assets/img/blog/blog_1.jpeg"
+                  src={assetUrl("/assets/img/blog/blog_1.jpeg")}
                   alt="Before Every New Beginning There Is Ganapathi - Sonic Prints Festival Collection"
                   loading="eager"
                 />
               </Link>
-              <div className="blog-image-caption">
-                <span>Before Every New Beginning, There Is Ganapathi</span>
-                <Link to="/">Explore Festival Collection →</Link>
+              <div className="blog-suite-caption">
+                <span className="blog-suite-caption-name">Before Every New Beginning, There Is Ganapathi</span>
+                <Link to="/" className="blog-suite-caption-link">Explore Festival Collection →</Link>
               </div>
             </Tilt>
           </motion.div>
@@ -272,7 +273,7 @@ export default function CelebrationIdeasBlog() {
               ================================================================ */}
           <motion.article
             id="idea-1"
-            className="blog-chapter-card"
+            className="blog-chapter-card blog-chapter-suite"
             initial={reduced ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
@@ -288,111 +289,135 @@ export default function CelebrationIdeasBlog() {
               </h2>
             </div>
 
-            <div className="blog-chapter-split">
-              {/* Left Column: Narrative & Features */}
-              <div className="blog-chapter-left">
-                <div className="blog-prose">
-                  <p>
-                    The puja space is often the heart of the celebration. But creating one can sometimes involve more planning than expected.
-                  </p>
-                  <p>
-                    Choosing a backdrop, arranging decorative elements, finding the right space and making everything look coordinated can quickly turn into multiple small tasks.
-                  </p>
-                  <p>Instead of thinking about each item separately, start with one question:</p>
+            {/* Narrative & Reflection */}
+            <div className="blog-prose">
+              <p className="blog-lead-text">
+                The puja space is often the heart of the celebration. But creating one can sometimes involve more planning than expected.
+              </p>
+              <p>
+                Choosing a backdrop, arranging decorative elements, finding the right space and making everything look coordinated can quickly turn into multiple small tasks.
+              </p>
+              <p>Instead of thinking about each item separately, start with one question:</p>
+            </div>
 
-                  <div className="blog-question-callout">
-                    <p>How do you want this space to feel?</p>
-                  </div>
+            {/* Elevated Sacred Question Callout Box */}
+            <div className="blog-suite-callout">
+              <div className="blog-suite-quote-icon" aria-hidden="true">“</div>
+              <div className="blog-suite-quote-body">
+                <span className="blog-suite-quote-label">Sacred Design Principle</span>
+                <p className="blog-suite-quote-text">How do you want this space to feel?</p>
+              </div>
+            </div>
 
-                  <p>
-                    A well-planned celebration corner can bring together the puja setup, mandap, décor and festive details in one space. Consider:
-                  </p>
+            <div className="blog-prose" style={{ marginTop: 14 }}>
+              <p>
+                A well-planned celebration corner can bring together the puja setup, mandap, décor and festive details in one space. Consider:
+              </p>
+            </div>
 
-                  {/* Modern Feature Cards */}
-                  <div className="blog-feature-grid">
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">✨</span>
-                      <span>Organised puja area</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🏛️</span>
-                      <span>Coordinated backdrop</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🌸</span>
-                      <span>Fresh floral accents</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">💡</span>
-                      <span>Ambient sacred lighting</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🪔</span>
-                      <span>Simple decorative pieces</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">✦</span>
-                      <span>Harmonious central setup</span>
-                    </div>
-                  </div>
-
-                  <p>
-                    For families looking for convenient Ganesh Chaturthi decoration ideas for home, starting from scratch isn't always necessary.
-                  </p>
-                  <p>
-                    Sonic Prints' <strong>Gruha Ganapathi</strong> is designed for people who want to create a dedicated Ganapathi celebration space without spending time sourcing and coordinating every decorative element individually.
-                  </p>
-                  <p>
-                    It helps turn an ordinary corner into a more organised festive setup—especially useful for busy households or homes with limited space.
-                  </p>
-                </div>
-
-                {/* Integrated Product Spotlight Card */}
-                <div className="blog-product-spotlight">
-                  <div className="blog-spotlight-info">
-                    <span className="blog-spotlight-tag">Featured Solution</span>
-                    <h3 className="blog-spotlight-title">Gruha Ganapathi Instant Mandap</h3>
-                    <p className="blog-spotlight-desc">10-Minute tool-free temple architecture plinth with 8 kg capacity.</p>
-                  </div>
-                  <div className="blog-spotlight-actions">
-                    <span className="blog-spotlight-price">{money(699)}</span>
-                    <Link to="/kit/gruha-ganapathi-mandap" className="blog-btn-cta">
-                      Explore Mandap →
+            {/* Full-Width Visual Media Showcase */}
+            <div style={{ marginTop: 24, marginBottom: 28 }}>
+              <Tilt max={3} lift={2}>
+                <div className="blog-suite-panoramic-frame">
+                  <Link to="/kit/gruha-ganapathi-mandap" className="blog-image-link" title="Explore Gruha Ganapathi Instant Mandap">
+                    <span className="blog-floating-badge">TEMPLE ARCHITECTURE</span>
+                    <img
+                      src={assetUrl("/assets/img/blog/blog_2.jpeg")}
+                      alt="Don't Just Decorate. Create A Celebration Corner - Gruha Ganapathi"
+                      loading="lazy"
+                    />
+                    <span className="blog-floating-badge-bottom">10-Min Tool-Free Setup</span>
+                  </Link>
+                  <div className="blog-suite-caption">
+                    <span className="blog-suite-caption-name">Gruha Ganapathi Instant Mandap</span>
+                    <Link to="/kit/gruha-ganapathi-mandap" className="blog-suite-caption-link">
+                      View Kit ({money(699)}) →
                     </Link>
-                    <button
-                      type="button"
-                      className="blog-btn-quick-add"
-                      onClick={() => handleQuickAdd("gruha-ganapathi-mandap")}
-                    >
-                      + Add to Cart
-                    </button>
                   </div>
                 </div>
+              </Tilt>
+            </div>
 
-                <div className="blog-takeaway">
-                  The idea is simple: don't just decorate a corner. Create a space where people naturally want to gather and celebrate.
-                </div>
+            {/* 6 Essential Elements Grid */}
+            <div className="blog-suite-pillars-section">
+              <div className="blog-suite-pillars-header">
+                <span className="blog-suite-pillars-tag">Essential Harmony</span>
+                <h3 className="blog-suite-pillars-title">Key Elements of a Sacred Celebration Corner</h3>
               </div>
 
-              {/* Right Column: Tilt Media Card */}
-              <div className="blog-chapter-right">
-                <Tilt max={6} lift={2}>
-                  <div className="blog-image-frame">
-                    <Link to="/kit/gruha-ganapathi-mandap" className="blog-image-link" title="Explore Gruha Ganapathi Instant Mandap">
-                      <span className="blog-floating-badge">TEMPLE ARCHITECTURE</span>
-                      <img
-                        src="/assets/img/blog/blog_2.jpeg"
-                        alt="Don't Just Decorate. Create A Celebration Corner - Gruha Ganapathi"
-                        loading="lazy"
-                      />
-                      <span className="blog-floating-badge-bottom">10-Min Tool-Free Setup</span>
-                    </Link>
-                    <div className="blog-image-caption">
-                      <span>Gruha Ganapathi Instant Mandap</span>
-                      <Link to="/kit/gruha-ganapathi-mandap">View Kit ({money(699)}) →</Link>
-                    </div>
-                  </div>
-                </Tilt>
+              <div className="blog-suite-pillars-grid">
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">✨</span>
+                  <span className="blog-suite-pill-title">Organised puja area</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🏛️</span>
+                  <span className="blog-suite-pill-title">Coordinated backdrop</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🌸</span>
+                  <span className="blog-suite-pill-title">Fresh floral accents</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">💡</span>
+                  <span className="blog-suite-pill-title">Ambient sacred lighting</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🪔</span>
+                  <span className="blog-suite-pill-title">Simple decorative pieces</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">✦</span>
+                  <span className="blog-suite-pill-title">Harmonious central setup</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Lower Narrative & Philosophy */}
+            <div className="blog-suite-lower">
+              <div className="blog-prose blog-suite-lower-prose">
+                <p>
+                  For families looking for convenient Ganesh Chaturthi decoration ideas for home, starting from scratch isn't always necessary.
+                </p>
+                <p>
+                  Sonic Prints' <strong>Gruha Ganapathi</strong> is designed for people who want to create a dedicated Ganapathi celebration space without spending time sourcing and coordinating every decorative element individually.
+                </p>
+                <p>
+                  It helps turn an ordinary corner into a more organised festive setup—especially useful for busy households or homes with limited space.
+                </p>
+              </div>
+
+              <div className="blog-suite-takeaway">
+                <div className="blog-suite-takeaway-star">✦</div>
+                <p>The idea is simple: don't just decorate a corner. Create a space where people naturally want to gather and celebrate.</p>
+              </div>
+            </div>
+
+            {/* Integrated Grand Product Spotlight Card */}
+            <div className="blog-suite-spotlight">
+              <div className="blog-spotlight-info">
+                <div className="blog-suite-spotlight-tag-row">
+                  <span className="blog-suite-spotlight-tag">Featured Solution</span>
+                  <span className="blog-suite-spotlight-badge">10-Min Tool-Free Setup</span>
+                </div>
+                <h3 className="blog-suite-spotlight-title">Gruha Ganapathi Instant Mandap</h3>
+                <p className="blog-suite-spotlight-desc">10-Minute tool-free temple architecture plinth with 8 kg capacity.</p>
+              </div>
+              <div className="blog-spotlight-actions">
+                <div className="blog-suite-price-box">
+                  <span className="blog-suite-price-label">Complete Sanctum</span>
+                  <span className="blog-suite-spotlight-price">{money(699)}</span>
+                </div>
+                <Link to="/kit/gruha-ganapathi-mandap" className="blog-btn-cta">
+                  Explore Mandap →
+                </Link>
+                <button
+                  type="button"
+                  className="blog-btn-quick-add"
+                  onClick={() => handleQuickAdd("gruha-ganapathi-mandap")}
+                >
+                  + Add to Cart
+                </button>
               </div>
             </div>
           </motion.article>
@@ -402,7 +427,7 @@ export default function CelebrationIdeasBlog() {
               ================================================================ */}
           <motion.article
             id="idea-2"
-            className="blog-chapter-card"
+            className="blog-chapter-card blog-chapter-suite"
             initial={reduced ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
@@ -418,108 +443,165 @@ export default function CelebrationIdeasBlog() {
               </h2>
             </div>
 
-            <div className="blog-chapter-split">
-              {/* Left Column: Narrative & Activity Grid */}
-              <div className="blog-chapter-left">
-                <div className="blog-prose">
-                  <p>
-                    For children, festivals are often remembered through the things they get to do.
-                  </p>
-                  <p>
-                    But during festival preparation, children can sometimes become spectators while adults manage the decorations, arrangements and other responsibilities.
-                  </p>
-                  <p>Instead of asking them to simply watch the celebration, give them a role in it:</p>
+            {/* Narrative & Reflection */}
+            <div className="blog-prose">
+              <p className="blog-lead-text">
+                For children, festivals are often remembered through the things they get to do.
+              </p>
+              <p>
+                But during festival preparation, children can sometimes become spectators while adults manage the decorations, arrangements and other responsibilities.
+              </p>
+              <p>Instead of asking them to simply watch the celebration, give them an active role in it:</p>
+            </div>
 
-                  {/* Interactive Kids Activity Badges */}
-                  <div className="blog-activity-grid">
-                    <div className="blog-activity-badge">
-                      <span className="blog-activity-badge-emoji">🎨</span>
-                      <span className="blog-activity-badge-title">Festival Colouring</span>
-                    </div>
-                    <div className="blog-activity-badge">
-                      <span className="blog-activity-badge-emoji">✂️</span>
-                      <span className="blog-activity-badge-title">Creative Crafts</span>
-                    </div>
-                    <div className="blog-activity-badge">
-                      <span className="blog-activity-badge-emoji">📖</span>
-                      <span className="blog-activity-badge-title">Ganesha Legends</span>
-                    </div>
-                    <div className="blog-activity-badge">
-                      <span className="blog-activity-badge-emoji">🏺</span>
-                      <span className="blog-activity-badge-title">River Clay DIY</span>
-                    </div>
-                    <div className="blog-activity-badge">
-                      <span className="blog-activity-badge-emoji">🌱</span>
-                      <span className="blog-activity-badge-title">Seed Visarjan</span>
-                    </div>
-                    <div className="blog-activity-badge">
-                      <span className="blog-activity-badge-emoji">🏅</span>
-                      <span className="blog-activity-badge-title">Eco Certificate</span>
-                    </div>
-                  </div>
+            {/* Elevated Sacred Question Callout Box */}
+            <div className="blog-suite-callout">
+              <div className="blog-suite-quote-icon" aria-hidden="true">“</div>
+              <div className="blog-suite-quote-body">
+                <span className="blog-suite-quote-label">Family Principle</span>
+                <p className="blog-suite-quote-text">Give children a role in the celebration, not just a seat in the room.</p>
+              </div>
+            </div>
 
-                  <p>
-                    One of the best Ganesh Chaturthi activities for kids is something that allows them to participate, create and proudly share what they have made.
-                  </p>
-                  <p>
-                    For parents looking for an activity-led festival experience, Sonic Prints' <strong>Bal Ganesh</strong> brings children into the celebration through engaging and creative participation.
-                  </p>
-                  <p>
-                    For families looking for something more hands-on, <strong>Make Your Own Ganesha</strong> adds another creative dimension by turning festival time into an opportunity to sculpt pure river clay together.
-                  </p>
-                </div>
+            <div className="blog-prose" style={{ marginTop: 14 }}>
+              <p>
+                One of the best Ganesh Chaturthi activities for kids is something that allows them to participate, create and proudly share what they have made with loved ones.
+              </p>
+            </div>
 
-                {/* Dual Product Spotlight Cards */}
-                <div className="blog-dual-spotlight">
-                  <div className="blog-product-spotlight" style={{ margin: 0, flexDirection: "column", alignItems: "flex-start" }}>
-                    <span className="blog-spotlight-tag">Kids Favourite</span>
-                    <h3 className="blog-spotlight-title">Bal Ganesh Activity Kit</h3>
-                    <p className="blog-spotlight-desc">Storybook, unbaked clay moulding & eco badge.</p>
-                    <div className="blog-spotlight-actions" style={{ marginTop: 10, width: "100%", justifyContent: "space-between" }}>
-                      <span className="blog-spotlight-price">{money(349)}</span>
-                      <Link to="/kit/bal-ganesh-kids-kit" className="blog-btn-cta">
-                        Bal Ganesh →
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="blog-product-spotlight" style={{ margin: 0, flexDirection: "column", alignItems: "flex-start" }}>
-                    <span className="blog-spotlight-tag">100% Eco Visarjan</span>
-                    <h3 className="blog-spotlight-title">Make Your Own Ganesha</h3>
-                    <p className="blog-spotlight-desc">River clay, wooden carving tools & seed ball.</p>
-                    <div className="blog-spotlight-actions" style={{ marginTop: 10, width: "100%", justifyContent: "space-between" }}>
-                      <span className="blog-spotlight-price">{money(499)}</span>
-                      <Link to="/kit/make-your-own-ganesha" className="blog-btn-cta blog-btn-cta-gold">
-                        DIY Kit →
-                      </Link>
-                    </div>
+            {/* Full-Width Visual Media Showcase */}
+            <div style={{ marginTop: 24, marginBottom: 28 }}>
+              <Tilt max={3} lift={2}>
+                <div className="blog-suite-panoramic-frame">
+                  <Link to="/kit/bal-ganesh-kids-kit" className="blog-image-link" title="Explore Bal Ganesh & Make Your Own Ganesha">
+                    <span className="blog-floating-badge">HANDS-ON MEMORIES</span>
+                    <img
+                      src={assetUrl("/assets/img/blog/blog_3.jpeg")}
+                      alt="Let Little Hands Create Big Festival Memories - Bal Ganesh, Make Your Own Ganesha"
+                      loading="lazy"
+                    />
+                    <span className="blog-floating-badge-bottom">100% Eco Balcony Visarjan</span>
+                  </Link>
+                  <div className="blog-suite-caption">
+                    <span className="blog-suite-caption-name">Bal Ganesh &amp; DIY Sculpting Kits</span>
+                    <Link to="/kit/bal-ganesh-kids-kit" className="blog-suite-caption-link">
+                      Explore Kids Kits →
+                    </Link>
                   </div>
                 </div>
+              </Tilt>
+            </div>
 
-                <div className="blog-takeaway">
-                  Because sometimes the best festival memory for a child is not what they watched—but what they created.
+            {/* 6 Hands-On Activities Grid */}
+            <div className="blog-suite-pillars-section">
+              <div className="blog-suite-pillars-header">
+                <span className="blog-suite-pillars-tag">Creative Participation</span>
+                <h3 className="blog-suite-pillars-title">Interactive Experiences for Young Devotees</h3>
+              </div>
+
+              <div className="blog-suite-pillars-grid">
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🎨</span>
+                  <span className="blog-suite-pill-title">Festival Colouring</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">✂️</span>
+                  <span className="blog-suite-pill-title">Creative Crafts</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">📖</span>
+                  <span className="blog-suite-pill-title">Ganesha Legends</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🏺</span>
+                  <span className="blog-suite-pill-title">River Clay DIY</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🌱</span>
+                  <span className="blog-suite-pill-title">Seed Visarjan</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🏅</span>
+                  <span className="blog-suite-pill-title">Eco Certificate</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Lower Narrative & Philosophy */}
+            <div className="blog-suite-lower">
+              <div className="blog-prose blog-suite-lower-prose">
+                <p>
+                  For parents looking for an activity-led festival experience, Sonic Prints' <strong>Bal Ganesh</strong> brings children into the celebration through engaging and creative participation.
+                </p>
+                <p>
+                  For families looking for something more hands-on, <strong>Make Your Own Ganesha</strong> adds another creative dimension by turning festival time into an opportunity to sculpt pure river clay together.
+                </p>
+              </div>
+
+              <div className="blog-suite-takeaway">
+                <div className="blog-suite-takeaway-star">✦</div>
+                <p>Because sometimes the best festival memory for a child is not what they watched—but what they created.</p>
+              </div>
+            </div>
+
+            {/* Dual Product Spotlight Cards in Suite */}
+            <div className="blog-suite-dual-spotlight">
+              <div className="blog-suite-mini-spotlight">
+                <div>
+                  <div className="blog-suite-spotlight-tag-row">
+                    <span className="blog-suite-spotlight-tag">Kids Favourite</span>
+                    <span className="blog-suite-spotlight-badge">Ages 4-12</span>
+                  </div>
+                  <h3 className="blog-spotlight-title">Bal Ganesh Activity Kit</h3>
+                  <p className="blog-spotlight-desc">Storybook, unbaked clay moulding &amp; eco badge.</p>
+                </div>
+                <div className="blog-suite-mini-spotlight-actions">
+                  <div className="blog-suite-price-box">
+                    <span className="blog-suite-price-label">Activity Kit</span>
+                    <span className="blog-spotlight-price">{money(349)}</span>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <Link to="/kit/bal-ganesh-kids-kit" className="blog-btn-cta">
+                      Bal Ganesh →
+                    </Link>
+                    <button
+                      type="button"
+                      className="blog-btn-quick-add"
+                      onClick={() => handleQuickAdd("bal-ganesh-kids-kit")}
+                    >
+                      + Add
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Right Column: Tilt Media Card */}
-              <div className="blog-chapter-right">
-                <Tilt max={6} lift={2}>
-                  <div className="blog-image-frame">
-                    <Link to="/kit/bal-ganesh-kids-kit" className="blog-image-link" title="Explore Bal Ganesh & Make Your Own Ganesha">
-                      <span className="blog-floating-badge">HANDS-ON MEMORIES</span>
-                      <img
-                        src="/assets/img/blog/blog_3.jpeg"
-                        alt="Let Little Hands Create Big Festival Memories - Bal Ganesh, Make Your Own Ganesha"
-                        loading="lazy"
-                      />
-                      <span className="blog-floating-badge-bottom">100% Eco Balcony Visarjan</span>
-                    </Link>
-                    <div className="blog-image-caption">
-                      <span>Bal Ganesh &amp; DIY Sculpting Kits</span>
-                      <Link to="/kit/bal-ganesh-kids-kit">Explore Kids Kits →</Link>
-                    </div>
+              <div className="blog-suite-mini-spotlight">
+                <div>
+                  <div className="blog-suite-spotlight-tag-row">
+                    <span className="blog-suite-spotlight-tag">100% Eco Visarjan</span>
+                    <span className="blog-suite-spotlight-badge">Hands-on River Clay</span>
                   </div>
-                </Tilt>
+                  <h3 className="blog-spotlight-title">Make Your Own Ganesha</h3>
+                  <p className="blog-spotlight-desc">River clay, wooden carving tools &amp; plantable seed ball.</p>
+                </div>
+                <div className="blog-suite-mini-spotlight-actions">
+                  <div className="blog-suite-price-box">
+                    <span className="blog-suite-price-label">Complete DIY Kit</span>
+                    <span className="blog-spotlight-price">{money(499)}</span>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <Link to="/kit/make-your-own-ganesha" className="blog-btn-cta blog-btn-cta-gold">
+                      DIY Kit →
+                    </Link>
+                    <button
+                      type="button"
+                      className="blog-btn-quick-add"
+                      onClick={() => handleQuickAdd("make-your-own-ganesha")}
+                    >
+                      + Add
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.article>
@@ -529,7 +611,7 @@ export default function CelebrationIdeasBlog() {
               ================================================================ */}
           <motion.article
             id="idea-3"
-            className="blog-chapter-card blog-chapter-dark"
+            className="blog-chapter-card blog-chapter-suite blog-chapter-dark"
             initial={reduced ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
@@ -545,137 +627,161 @@ export default function CelebrationIdeasBlog() {
               </h2>
             </div>
 
-            <div className="blog-chapter-split">
-              {/* Left Column: Narrative & Kinetic Highlights */}
-              <div className="blog-chapter-left">
-                <div className="blog-prose">
-                  <p>
-                    When people think about Ganesh Chaturthi decoration, they often focus only on how the final setup will look.
-                  </p>
-                  <p>But good décor can do more than make a space beautiful.</p>
+            {/* Narrative & Reflection */}
+            <div className="blog-prose">
+              <p className="blog-lead-text">
+                When people think about Ganesh Chaturthi decoration, they often focus only on how the final setup will look.
+              </p>
+              <p>
+                But good décor can do more than make a space beautiful. It can create an atmosphere where people linger and connect.
+              </p>
+            </div>
 
-                  <div className="blog-question-callout">
-                    <p>It can create moments.</p>
-                  </div>
+            {/* Elevated Sacred Question Callout Box */}
+            <div className="blog-suite-callout">
+              <div className="blog-suite-quote-icon" aria-hidden="true">“</div>
+              <div className="blog-suite-quote-body">
+                <span className="blog-suite-quote-label">Experiential Principle</span>
+                <p className="blog-suite-quote-text">It can create moments.</p>
+              </div>
+            </div>
 
-                  <p>
-                    Think about where family members will gather. Where will everyone take photographs? What will become the visual highlight of the celebration?
-                  </p>
-                  <p>
-                    Instead of decorating every available corner, focus on creating one or two spaces that people will naturally notice and enjoy:
-                  </p>
+            <div className="blog-prose" style={{ marginTop: 14 }}>
+              <p>
+                Think about where family members will gather. Where will everyone take photographs? What will become the visual highlight of the celebration?
+              </p>
+              <p>
+                Instead of decorating every available corner, focus on creating one or two spaces that people will naturally notice and enjoy.
+              </p>
+            </div>
 
-                  {/* Feature Grid */}
-                  <div className="blog-feature-grid">
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">☸</span>
-                      <span>Whisper-silent motor</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">📸</span>
-                      <span>Dedicated photo highlight</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">💡</span>
-                      <span>Warm 2700K ambient glow</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🌸</span>
-                      <span>Sacred floral mandala</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🌺</span>
-                      <span>Continuous rotation</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">✨</span>
-                      <span>Mesmerizing centerpiece</span>
-                    </div>
-                  </div>
+            {/* Full-Width Visual Media Showcase with Rotating Halo */}
+            <div style={{ position: "relative", marginTop: 24, marginBottom: 28 }}>
+              <motion.svg
+                className="blog-chakra-halo-bg"
+                viewBox="0 0 200 200"
+                animate={reduced ? undefined : { rotate: 360 }}
+                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              >
+                {Array.from({ length: 16 }).map((_, i) => (
+                  <ellipse
+                    key={i}
+                    cx="100"
+                    cy="100"
+                    rx="90"
+                    ry="24"
+                    transform={`rotate(${(i * 180) / 16} 100 100)`}
+                    fill="none"
+                    stroke="#F3D085"
+                    strokeWidth="0.8"
+                  />
+                ))}
+                <circle cx="100" cy="100" r="54" fill="none" stroke="#F3D085" strokeWidth="1" />
+              </motion.svg>
 
-                  <p>
-                    The challenge with larger setups is often finding that one element that makes the entire space stand out.
-                  </p>
-                  <p>
-                    Sonic Prints' <strong>Motorized Rotating Chakra</strong> is designed to add a visually engaging element to a Ganapathi setup, backdrop or celebration area.
-                  </p>
-                  <p>
-                    Rather than adding more and more decorations, one distinctive centrepiece can create a stronger visual impact and become a natural point of attention.
-                  </p>
-                </div>
-
-                {/* Product Spotlight Card */}
-                <div className="blog-product-spotlight">
-                  <div className="blog-spotlight-info">
-                    <span className="blog-spotlight-tag">Kinetic Showstopper</span>
-                    <h3 className="blog-spotlight-title">Motorized Rotating Chakra</h3>
-                    <p className="blog-spotlight-desc">Continuous silent motor with 2700K ambient halo reflections.</p>
-                  </div>
-                  <div className="blog-spotlight-actions">
-                    <span className="blog-spotlight-price">{money(999)}</span>
-                    <Link to="/kit/rotating-chakra-backdrop" className="blog-btn-cta blog-btn-cta-gold">
-                      Explore Chakra →
+              <Tilt max={3} lift={2}>
+                <div className="blog-suite-panoramic-frame">
+                  <Link to="/kit/rotating-chakra-backdrop" className="blog-image-link" title="Explore Motorized Rotating Chakra">
+                    <span className="blog-floating-badge" style={{ background: "rgba(243, 208, 133, 0.95)", color: "#0A2E2B" }}>
+                      KINETIC SHOWPIECE
+                    </span>
+                    <img
+                      src={assetUrl("/assets/img/blog/blog_4.jpeg")}
+                      alt="Make Your Ganapathi Setup the Centre of Every Eye - Motorized Rotating Chakra"
+                      loading="lazy"
+                    />
+                    <span className="blog-floating-badge-bottom">Whisper-Silent 2700K Glow</span>
+                  </Link>
+                  <div className="blog-suite-caption">
+                    <span className="blog-suite-caption-name">Distinctive Centerpiece: Rotating Chakra</span>
+                    <Link to="/kit/rotating-chakra-backdrop" className="blog-suite-caption-link">
+                      View Chakra ({money(999)}) →
                     </Link>
-                    <button
-                      type="button"
-                      className="blog-btn-quick-add"
-                      onClick={() => handleQuickAdd("rotating-chakra-backdrop")}
-                    >
-                      + Add to Cart
-                    </button>
                   </div>
                 </div>
+              </Tilt>
+            </div>
 
-                <div className="blog-takeaway">
-                  The goal isn't to decorate more. It's to create something people remember.
-                </div>
+            {/* 6 Kinetic Highlights Grid */}
+            <div className="blog-suite-pillars-section">
+              <div className="blog-suite-pillars-header">
+                <span className="blog-suite-pillars-tag">Kinetic Architecture</span>
+                <h3 className="blog-suite-pillars-title">Engineering Sacred Motion &amp; Illumination</h3>
               </div>
 
-              {/* Right Column: Tilt Media Card with Rotating Halo Background */}
-              <div className="blog-chapter-right">
-                <motion.svg
-                  className="blog-chakra-halo-bg"
-                  viewBox="0 0 200 200"
-                  animate={reduced ? undefined : { rotate: 360 }}
-                  transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                >
-                  {Array.from({ length: 16 }).map((_, i) => (
-                    <ellipse
-                      key={i}
-                      cx="100"
-                      cy="100"
-                      rx="90"
-                      ry="24"
-                      transform={`rotate(${(i * 180) / 16} 100 100)`}
-                      fill="none"
-                      stroke="#F3D085"
-                      strokeWidth="0.8"
-                    />
-                  ))}
-                  <circle cx="100" cy="100" r="54" fill="none" stroke="#F3D085" strokeWidth="1" />
-                </motion.svg>
+              <div className="blog-suite-pillars-grid">
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">☸</span>
+                  <span className="blog-suite-pill-title">Whisper-silent motor</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">📸</span>
+                  <span className="blog-suite-pill-title">Dedicated photo highlight</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">💡</span>
+                  <span className="blog-suite-pill-title">Warm 2700K ambient glow</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🌸</span>
+                  <span className="blog-suite-pill-title">Sacred floral mandala</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🌺</span>
+                  <span className="blog-suite-pill-title">Continuous rotation</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">✨</span>
+                  <span className="blog-suite-pill-title">Mesmerizing centerpiece</span>
+                </div>
+              </div>
+            </div>
 
-                <Tilt max={6} lift={2}>
-                  <div className="blog-image-frame" style={{ borderColor: "rgba(243, 208, 133, 0.4)" }}>
-                    <Link to="/kit/rotating-chakra-backdrop" className="blog-image-link" title="Explore Motorized Rotating Chakra">
-                      <span className="blog-floating-badge" style={{ background: "rgba(243, 208, 133, 0.95)", color: "#0A2E2B" }}>
-                        KINETIC SHOWPIECE
-                      </span>
-                      <img
-                        src="/assets/img/blog/blog_4.jpeg"
-                        alt="Make Your Ganapathi Setup the Centre of Every Eye - Motorized Rotating Chakra"
-                        loading="lazy"
-                      />
-                      <span className="blog-floating-badge-bottom">Whisper-Silent 2700K Glow</span>
-                    </Link>
-                    <div className="blog-image-caption" style={{ background: "#0D332F", borderColor: "rgba(243, 208, 133, 0.2)" }}>
-                      <span style={{ color: "#FAF4E8" }}>Distinctive Centerpiece: Rotating Chakra</span>
-                      <Link to="/kit/rotating-chakra-backdrop" style={{ color: "#F3D085" }}>
-                        View Chakra ({money(999)}) →
-                      </Link>
-                    </div>
-                  </div>
-                </Tilt>
+            {/* Lower Narrative & Philosophy */}
+            <div className="blog-suite-lower">
+              <div className="blog-prose blog-suite-lower-prose">
+                <p>
+                  The challenge with larger setups is often finding that one element that makes the entire space stand out.
+                </p>
+                <p>
+                  Sonic Prints' <strong>Motorized Rotating Chakra</strong> is designed to add a visually engaging element to a Ganapathi setup, backdrop or celebration area.
+                </p>
+                <p>
+                  Rather than adding more and more decorations, one distinctive centrepiece can create a stronger visual impact and become a natural point of attention.
+                </p>
+              </div>
+
+              <div className="blog-suite-takeaway">
+                <div className="blog-suite-takeaway-star">✦</div>
+                <p>The goal isn't to decorate more. It's to create something people remember.</p>
+              </div>
+            </div>
+
+            {/* Integrated Grand Product Spotlight Card */}
+            <div className="blog-suite-spotlight">
+              <div className="blog-spotlight-info">
+                <div className="blog-suite-spotlight-tag-row">
+                  <span className="blog-suite-spotlight-tag">Kinetic Showstopper</span>
+                  <span className="blog-suite-spotlight-badge">Dual-Layer Mandala</span>
+                </div>
+                <h3 className="blog-suite-spotlight-title">Motorized Rotating Chakra</h3>
+                <p className="blog-suite-spotlight-desc">Continuous silent motor with 2700K ambient halo reflections.</p>
+              </div>
+              <div className="blog-spotlight-actions">
+                <div className="blog-suite-price-box">
+                  <span className="blog-suite-price-label">Kinetic Centerpiece</span>
+                  <span className="blog-suite-spotlight-price">{money(999)}</span>
+                </div>
+                <Link to="/kit/rotating-chakra-backdrop" className="blog-btn-cta blog-btn-cta-gold">
+                  Explore Chakra →
+                </Link>
+                <button
+                  type="button"
+                  className="blog-btn-quick-add"
+                  onClick={() => handleQuickAdd("rotating-chakra-backdrop")}
+                >
+                  + Add to Cart
+                </button>
               </div>
             </div>
           </motion.article>
@@ -685,7 +791,7 @@ export default function CelebrationIdeasBlog() {
               ================================================================ */}
           <motion.article
             id="idea-4"
-            className="blog-chapter-card"
+            className="blog-chapter-card blog-chapter-suite"
             initial={reduced ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
@@ -702,15 +808,21 @@ export default function CelebrationIdeasBlog() {
             </div>
 
             <div className="blog-prose">
-              <p>
+              <p className="blog-lead-text">
                 One of the easiest ways to make Ganesh Chaturthi more meaningful is to stop treating preparation as work that needs to be finished. Preparation itself can become part of the celebration.
               </p>
               <p>
                 Instead of one person managing an endless checklist, involve everyone in small ways. Someone can help with decoration. Children can participate in creative activities. Family members can organise the celebration space together.
               </p>
-              <p>You can even create a simple celebration flow throughout the festival day:</p>
+            </div>
 
-              {/* Connected Timeline Stepper */}
+            {/* Connected Timeline Stepper */}
+            <div className="blog-suite-pillars-section" style={{ marginTop: 24, marginBottom: 24 }}>
+              <div className="blog-suite-pillars-header">
+                <span className="blog-suite-pillars-tag">Harmonious Rhythm</span>
+                <h3 className="blog-suite-pillars-title">The Sacred Festival Day Flow</h3>
+              </div>
+
               <div className="blog-timeline-stepper">
                 <div className="blog-timeline-step">
                   <div className="blog-timeline-badge">01</div>
@@ -731,35 +843,46 @@ export default function CelebrationIdeasBlog() {
                   <p className="blog-timeline-text">Turn on the motorized chakra halo, chant holy aarti, and capture joyful family portraits.</p>
                 </div>
               </div>
-
-              <p>The exact plan can vary from family to family. What matters is giving everyone a role.</p>
-              <p>
-                When every item has to be sourced separately, preparation can become stressful. But when the right elements are already planned around a specific festival experience, families can spend less time managing arrangements and more time enjoying them.
-              </p>
-
-              <div className="blog-takeaway">
-                A celebration often becomes more memorable when people feel involved in creating it.
-              </div>
             </div>
 
-            {/* Panoramic Showcase Image */}
-            <div style={{ marginTop: 24 }}>
-              <Tilt max={4} lift={2}>
-                <div className="blog-image-frame">
+            {/* Large Panoramic Showcase Media Frame */}
+            <div style={{ marginTop: 28, marginBottom: 28 }}>
+              <Tilt max={3} lift={2}>
+                <div className="blog-suite-panoramic-frame">
                   <Link to="/" className="blog-image-link" title="Explore the Ganesh Chaturthi 2026 Collection">
                     <span className="blog-floating-badge">ONE FESTIVAL · MANY EXPERIENCES</span>
                     <img
-                      src="/assets/img/blog/blog_7.jpeg"
+                      src={assetUrl("/assets/img/blog/blog_7.jpeg")}
                       alt="One Festival. So Many Ways to Celebrate - Explore the Ganesh Chaturthi 2026 Collection"
                       loading="lazy"
                     />
+                    <span className="blog-floating-badge-bottom">Sonic Prints 2026 Collection</span>
                   </Link>
-                  <div className="blog-image-caption">
-                    <span>One Festival. So Many Ways to Celebrate — Ganesh Chaturthi 2026 Collection</span>
-                    <Link to="/">Explore Festival Collection →</Link>
+                  <div className="blog-suite-caption">
+                    <span className="blog-suite-caption-name">One Festival. So Many Ways to Celebrate — Ganesh Chaturthi 2026 Collection</span>
+                    <Link to="/" className="blog-suite-caption-link">
+                      Explore Festival Collection →
+                    </Link>
                   </div>
                 </div>
               </Tilt>
+            </div>
+
+            {/* Lower Narrative & Philosophy */}
+            <div className="blog-suite-lower" style={{ margin: "24px 0 0" }}>
+              <div className="blog-prose blog-suite-lower-prose">
+                <p>
+                  The exact plan can vary from family to family. What matters is giving everyone a role.
+                </p>
+                <p>
+                  When every item has to be sourced separately, preparation can become stressful. But when the right elements are already planned around a specific festival experience, families can spend less time managing arrangements and more time enjoying them.
+                </p>
+              </div>
+
+              <div className="blog-suite-takeaway">
+                <div className="blog-suite-takeaway-star">✦</div>
+                <p>A celebration often becomes more memorable when people feel involved in creating it.</p>
+              </div>
             </div>
           </motion.article>
 
@@ -768,7 +891,7 @@ export default function CelebrationIdeasBlog() {
               ================================================================ */}
           <motion.article
             id="idea-5"
-            className="blog-chapter-card"
+            className="blog-chapter-card blog-chapter-suite"
             initial={reduced ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
@@ -784,93 +907,124 @@ export default function CelebrationIdeasBlog() {
               </h2>
             </div>
 
-            <div className="blog-chapter-split">
-              {/* Left Column: Narrative & Gifting Criteria */}
-              <div className="blog-chapter-left">
-                <div className="blog-prose">
-                  <p>Choosing a festival gift sounds simple—until you start looking for one.</p>
-                  <p>
-                    Generic gifts may not feel connected to the occasion. Buying multiple items separately can take time. And sometimes, the final gift looks festive but doesn't actually become part of the celebration.
-                  </p>
-                  <p>A better approach is to choose something that feels relevant to the occasion itself:</p>
+            {/* Narrative & Reflection */}
+            <div className="blog-prose">
+              <p className="blog-lead-text">
+                Choosing a festival gift sounds simple—until you start looking for one.
+              </p>
+              <p>
+                Generic gifts may not feel connected to the occasion. Buying multiple items separately can take time. And sometimes, the final gift looks festive but doesn't actually become part of the celebration.
+              </p>
+              <p>A better approach is to choose something that feels deeply relevant to the sacred occasion itself.</p>
+            </div>
 
-                  {/* Modern Gifting Criteria Grid */}
-                  <div className="blog-feature-grid">
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🎁</span>
-                      <span>Used during the festival</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🪔</span>
-                      <span>Devotional connection</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🏡</span>
-                      <span>Suitable for every home</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">💖</span>
-                      <span>Creates an experience</span>
-                    </div>
-                  </div>
+            {/* Elevated Sacred Question Callout Box */}
+            <div className="blog-suite-callout">
+              <div className="blog-suite-quote-icon" aria-hidden="true">“</div>
+              <div className="blog-suite-quote-body">
+                <span className="blog-suite-quote-label">Gifting Philosophy</span>
+                <p className="blog-suite-quote-text">A festival gift should not just be given—it should belong to the ritual.</p>
+              </div>
+            </div>
 
-                  <p>
-                    This is where Sonic Prints' <strong>Shubharambh Mini</strong> can become a relevant festive choice.
-                  </p>
-                  <p>
-                    Instead of choosing something completely unrelated to Ganesh Chaturthi, a festival-focused product can naturally become part of the celebration experience.
-                  </p>
-                  <p>
-                    That is what makes gifting feel more thoughtful—not necessarily the size of the gift, but its relevance to the moment.
-                  </p>
-                </div>
+            <div className="blog-prose" style={{ marginTop: 14 }}>
+              <p>
+                Instead of choosing something completely unrelated to Ganesh Chaturthi, a festival-focused product naturally becomes part of the celebration experience for the receiver.
+              </p>
+            </div>
 
-                {/* Product Spotlight Card */}
-                <div className="blog-product-spotlight">
-                  <div className="blog-spotlight-info">
-                    <span className="blog-spotlight-tag">Best Seller Gifting Kit</span>
-                    <h3 className="blog-spotlight-title">Shubharambh Mini Puja Box</h3>
-                    <p className="blog-spotlight-desc">Natural clay idol, complete samagri, sealed prasadam &amp; katha.</p>
-                  </div>
-                  <div className="blog-spotlight-actions">
-                    <span className="blog-spotlight-price">{money(299)}</span>
-                    <Link to="/kit/shubharambh-mini" className="blog-btn-cta">
-                      Explore Mini →
+            {/* Full-Width Visual Media Showcase */}
+            <div style={{ marginTop: 24, marginBottom: 28 }}>
+              <Tilt max={3} lift={2}>
+                <div className="blog-suite-panoramic-frame">
+                  <Link to="/kit/shubharambh-mini" className="blog-image-link" title="Explore Shubharambh Mini">
+                    <span className="blog-floating-badge">SACRED RETURN GIFT</span>
+                    <img
+                      src={assetUrl("/assets/img/blog/blog_5.jpeg")}
+                      alt="This Festive Season, Gift More Than Just A Box - Shubharambh Mini"
+                      loading="lazy"
+                    />
+                    <span className="blog-floating-badge-bottom">100% Water-Soluble Clay</span>
+                  </Link>
+                  <div className="blog-suite-caption">
+                    <span className="blog-suite-caption-name">Festive Gifting: Shubharambh Mini Box</span>
+                    <Link to="/kit/shubharambh-mini" className="blog-suite-caption-link">
+                      View Kit ({money(299)}) →
                     </Link>
-                    <button
-                      type="button"
-                      className="blog-btn-quick-add"
-                      onClick={() => handleQuickAdd("shubharambh-mini")}
-                    >
-                      + Add to Cart
-                    </button>
                   </div>
                 </div>
+              </Tilt>
+            </div>
 
-                <div className="blog-takeaway">
-                  Because a good festival gift shouldn't just be given. It should feel like it belongs to the celebration.
-                </div>
+            {/* 4 Pillars of Meaningful Gifting Grid */}
+            <div className="blog-suite-pillars-section">
+              <div className="blog-suite-pillars-header">
+                <span className="blog-suite-pillars-tag">Thoughtful Giving</span>
+                <h3 className="blog-suite-pillars-title">The Four Marks of a Memorable Festive Gift</h3>
               </div>
 
-              {/* Right Column: Tilt Media Card */}
-              <div className="blog-chapter-right">
-                <Tilt max={6} lift={2}>
-                  <div className="blog-image-frame">
-                    <Link to="/kit/shubharambh-mini" className="blog-image-link" title="Explore Shubharambh Mini">
-                      <span className="blog-floating-badge">SACRED RETURN GIFT</span>
-                      <img
-                        src="/assets/img/blog/blog_5.jpeg"
-                        alt="This Festive Season, Gift More Than Just A Box - Shubharambh Mini"
-                        loading="lazy"
-                      />
-                      <span className="blog-floating-badge-bottom">100% Water-Soluble Clay</span>
-                    </Link>
-                    <div className="blog-image-caption">
-                      <span>Festive Gifting: Shubharambh Mini Box</span>
-                      <Link to="/kit/shubharambh-mini">View Kit ({money(299)}) →</Link>
-                    </div>
-                  </div>
-                </Tilt>
+              <div className="blog-suite-pillars-grid blog-suite-pillars-grid-4">
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🎁</span>
+                  <span className="blog-suite-pill-title">Used during the festival</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🪔</span>
+                  <span className="blog-suite-pill-title">Devotional connection</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🏡</span>
+                  <span className="blog-suite-pill-title">Suitable for every home</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">💖</span>
+                  <span className="blog-suite-pill-title">Creates an experience</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Lower Narrative & Philosophy */}
+            <div className="blog-suite-lower">
+              <div className="blog-prose blog-suite-lower-prose">
+                <p>
+                  This is where Sonic Prints' <strong>Shubharambh Mini</strong> can become a relevant festive choice.
+                </p>
+                <p>
+                  That is what makes gifting feel more thoughtful—not necessarily the size of the gift, but its relevance to the moment and the sentiment it carries into another home.
+                </p>
+              </div>
+
+              <div className="blog-suite-takeaway">
+                <div className="blog-suite-takeaway-star">✦</div>
+                <p>Because a good festival gift shouldn't just be given. It should feel like it belongs to the celebration.</p>
+              </div>
+            </div>
+
+            {/* Integrated Grand Product Spotlight Card */}
+            <div className="blog-suite-spotlight">
+              <div className="blog-spotlight-info">
+                <div className="blog-suite-spotlight-tag-row">
+                  <span className="blog-suite-spotlight-tag">Best Seller Gifting Kit</span>
+                  <span className="blog-suite-spotlight-badge">Complete Ritual Samagri</span>
+                </div>
+                <h3 className="blog-suite-spotlight-title">Shubharambh Mini Puja Box</h3>
+                <p className="blog-suite-spotlight-desc">Natural clay idol, complete samagri, sealed prasadam &amp; katha.</p>
+              </div>
+              <div className="blog-spotlight-actions">
+                <div className="blog-suite-price-box">
+                  <span className="blog-suite-price-label">Sacred Gifting Box</span>
+                  <span className="blog-suite-spotlight-price">{money(299)}</span>
+                </div>
+                <Link to="/kit/shubharambh-mini" className="blog-btn-cta">
+                  Explore Mini →
+                </Link>
+                <button
+                  type="button"
+                  className="blog-btn-quick-add"
+                  onClick={() => handleQuickAdd("shubharambh-mini")}
+                >
+                  + Add to Cart
+                </button>
               </div>
             </div>
           </motion.article>
@@ -880,7 +1034,7 @@ export default function CelebrationIdeasBlog() {
               ================================================================ */}
           <motion.article
             id="idea-6"
-            className="blog-chapter-card"
+            className="blog-chapter-card blog-chapter-suite"
             initial={reduced ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
@@ -896,98 +1050,132 @@ export default function CelebrationIdeasBlog() {
               </h2>
             </div>
 
-            <div className="blog-chapter-split">
-              {/* Left Column: Narrative & Corporate Features */}
-              <div className="blog-chapter-left">
-                <div className="blog-prose">
-                  <p>
-                    Ganesh Chaturthi celebrations are no longer limited to homes. Many workplaces also use festivals as an opportunity to bring teams together.
-                  </p>
-                  <p>
-                    HR and Admin teams may need to think about employee participation, decoration, gifting, quantities and coordination—all while managing regular work schedules.
-                  </p>
-                  <p>
-                    The good news is that a meaningful Ganesh Chaturthi office celebration doesn't need to take over the entire workday:
-                  </p>
+            {/* Narrative & Reflection */}
+            <div className="blog-prose">
+              <p className="blog-lead-text">
+                Ganesh Chaturthi celebrations are no longer limited to homes. Many workplaces also use festivals as an opportunity to bring teams together.
+              </p>
+              <p>
+                HR and Admin teams may need to think about employee participation, decoration, gifting, quantities and coordination—all while managing regular work schedules.
+              </p>
+              <p>
+                The good news is that a meaningful Ganesh Chaturthi office celebration doesn't need to take over the entire workday.
+              </p>
+            </div>
 
-                  {/* Workplace Checklist */}
-                  <div className="blog-feature-grid">
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🏢</span>
-                      <span>Desk-to-altar puja box</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">📸</span>
-                      <span>Photo-friendly setup</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🤝</span>
-                      <span>Short team gathering</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🎨</span>
-                      <span>Voluntary desk crafts</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">🎁</span>
-                      <span>Custom branded sleeves</span>
-                    </div>
-                    <div className="blog-feature-pill">
-                      <span className="blog-feature-pill-icon">📋</span>
-                      <span>Early bulk coordination</span>
-                    </div>
-                  </div>
+            {/* Elevated Sacred Question Callout Box */}
+            <div className="blog-suite-callout">
+              <div className="blog-suite-quote-icon" aria-hidden="true">“</div>
+              <div className="blog-suite-quote-body">
+                <span className="blog-suite-quote-label">Workplace Culture Principle</span>
+                <p className="blog-suite-quote-text">Create a small festive moment that brings people together.</p>
+              </div>
+            </div>
 
-                  <p>
-                    For companies looking for a more organized option, Sonic Prints' <strong>Employee Puja Box</strong> offers a festival-focused gifting solution designed around the occasion.
-                  </p>
-                  <p>
-                    It gives organisations a more relevant way to acknowledge the festival while making gifting easier to plan across multiple employees with custom company sleeves and leadership video greeting cards.
-                  </p>
-                </div>
+            <div className="blog-prose" style={{ marginTop: 14 }}>
+              <p>
+                It gives organisations a more relevant way to acknowledge the festival while making gifting easier to plan across multiple employees with custom company sleeves and leadership video greeting cards.
+              </p>
+            </div>
 
-                {/* Product Spotlight Card with Bulk Action */}
-                <div className="blog-product-spotlight">
-                  <div className="blog-spotlight-info">
-                    <span className="blog-spotlight-tag">Corporate Favourite</span>
-                    <h3 className="blog-spotlight-title">Employee Puja Box (Corporate Edition)</h3>
-                    <p className="blog-spotlight-desc">Respectfully unbranded idol, custom sleeve &amp; leadership QR video greeting.</p>
-                  </div>
-                  <div className="blog-spotlight-actions">
-                    <span className="blog-spotlight-price">{money(499)}</span>
-                    <Link to="/kit/employee-puja-box" className="blog-btn-cta">
-                      Explore Box →
-                    </Link>
-                    <Link to="/bulk" className="blog-btn-cta blog-btn-cta-gold">
-                      Bulk Enquiry →
+            {/* Full-Width Visual Media Showcase */}
+            <div style={{ marginTop: 24, marginBottom: 28 }}>
+              <Tilt max={3} lift={2}>
+                <div className="blog-suite-panoramic-frame">
+                  <Link to="/kit/employee-puja-box" className="blog-image-link" title="Explore Employee Puja Box">
+                    <span className="blog-floating-badge">CORPORATE FESTIVE SUITE</span>
+                    <img
+                      src={assetUrl("/assets/img/blog/blog_6.jpeg")}
+                      alt="A Small Celebration Can Bring a Whole Team Together - Employee Puja Box"
+                      loading="lazy"
+                    />
+                    <span className="blog-floating-badge-bottom">Custom Sleeve &amp; QR Video</span>
+                  </Link>
+                  <div className="blog-suite-caption">
+                    <span className="blog-suite-caption-name">Employee Puja Box (Corporate Edition)</span>
+                    <Link to="/kit/employee-puja-box" className="blog-suite-caption-link">
+                      View Box ({money(499)}) →
                     </Link>
                   </div>
                 </div>
+              </Tilt>
+            </div>
 
-                <div className="blog-takeaway">
-                  The goal isn't simply to organise another office event. It's to create a small festive moment that brings people together.
-                </div>
+            {/* 6 Workplace Checklist Pillars Grid */}
+            <div className="blog-suite-pillars-section">
+              <div className="blog-suite-pillars-header">
+                <span className="blog-suite-pillars-tag">Seamless Coordination</span>
+                <h3 className="blog-suite-pillars-title">The Complete Workplace Celebration Blueprint</h3>
               </div>
 
-              {/* Right Column: Tilt Media Card */}
-              <div className="blog-chapter-right">
-                <Tilt max={6} lift={2}>
-                  <div className="blog-image-frame">
-                    <Link to="/kit/employee-puja-box" className="blog-image-link" title="Explore Employee Puja Box">
-                      <span className="blog-floating-badge">CORPORATE FESTIVE SUITE</span>
-                      <img
-                        src="/assets/img/blog/blog_6.jpeg"
-                        alt="A Small Celebration Can Bring a Whole Team Together - Employee Puja Box"
-                        loading="lazy"
-                      />
-                      <span className="blog-floating-badge-bottom">Custom Sleeve &amp; QR Video</span>
-                    </Link>
-                    <div className="blog-image-caption">
-                      <span>Employee Puja Box (Corporate Edition)</span>
-                      <Link to="/kit/employee-puja-box">View Box ({money(499)}) →</Link>
-                    </div>
-                  </div>
-                </Tilt>
+              <div className="blog-suite-pillars-grid">
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🏢</span>
+                  <span className="blog-suite-pill-title">Desk-to-altar puja box</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">📸</span>
+                  <span className="blog-suite-pill-title">Photo-friendly setup</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🤝</span>
+                  <span className="blog-suite-pill-title">Short team gathering</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🎨</span>
+                  <span className="blog-suite-pill-title">Voluntary desk crafts</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">🎁</span>
+                  <span className="blog-suite-pill-title">Custom branded sleeves</span>
+                </div>
+                <div className="blog-suite-pill">
+                  <span className="blog-suite-pill-icon">📋</span>
+                  <span className="blog-suite-pill-title">Early bulk coordination</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Lower Narrative & Philosophy */}
+            <div className="blog-suite-lower">
+              <div className="blog-prose blog-suite-lower-prose">
+                <p>
+                  For companies looking for a more organized option, Sonic Prints' <strong>Employee Puja Box</strong> offers a festival-focused gifting solution designed around the occasion.
+                </p>
+                <p>
+                  With custom company sleeves, leadership QR video greeting cards, and complete ritual items, your teams celebrate effortlessly without administrative headaches.
+                </p>
+              </div>
+
+              <div className="blog-suite-takeaway">
+                <div className="blog-suite-takeaway-star">✦</div>
+                <p>The goal isn't simply to organise another office event. It's to create a small festive moment that brings people together.</p>
+              </div>
+            </div>
+
+            {/* Integrated Grand Product Spotlight Card with Dual Action */}
+            <div className="blog-suite-spotlight">
+              <div className="blog-spotlight-info">
+                <div className="blog-suite-spotlight-tag-row">
+                  <span className="blog-suite-spotlight-tag">Corporate Favourite</span>
+                  <span className="blog-suite-spotlight-badge">Custom Branding Available</span>
+                </div>
+                <h3 className="blog-suite-spotlight-title">Employee Puja Box (Corporate Edition)</h3>
+                <p className="blog-suite-spotlight-desc">Respectfully unbranded idol, custom sleeve &amp; leadership QR video greeting.</p>
+              </div>
+              <div className="blog-spotlight-actions">
+                <div className="blog-suite-price-box">
+                  <span className="blog-suite-price-label">Corporate Box</span>
+                  <span className="blog-suite-spotlight-price">{money(499)}</span>
+                </div>
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  <Link to="/kit/employee-puja-box" className="blog-btn-cta">
+                    Explore Box →
+                  </Link>
+                  <Link to="/bulk" className="blog-btn-cta blog-btn-cta-gold">
+                    Bulk Enquiry →
+                  </Link>
+                </div>
               </div>
             </div>
           </motion.article>
@@ -1180,7 +1368,7 @@ export default function CelebrationIdeasBlog() {
                 >
                   <Tilt max={6} lift={2} className="bm-card-media">
                     <Link to={`/kit/${prod.slug}`} tabIndex={-1} aria-hidden="true">
-                      <img src={prod.img} alt={prod.name} loading="lazy" />
+                      <img src={assetUrl(prod.img)} alt={prod.name} loading="lazy" />
                       <span className="bm-badge">{prod.badge}</span>
                       <span className="bm-price">{money(prod.price)}</span>
                     </Link>

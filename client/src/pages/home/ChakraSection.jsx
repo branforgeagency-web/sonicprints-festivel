@@ -9,8 +9,9 @@ import Icon from "../../components/Icon.jsx";
 import { SectionAura } from "../../components/fx/Decor.jsx";
 import { EASE_SILK } from "../../anim/tokens.js";
 import useMotionProfile from "../../anim/useMotionProfile.js";
+import { assetUrl } from "../../utils/assetHelper.js";
 
-const DISC_DIR = "/assets/img/chakra";
+const DISC_DIR = assetUrl("/assets/img/chakra");
 const IDS = [
   "lotus-chakra",
   "temple-aura",
@@ -213,7 +214,7 @@ export default function ChakraSection() {
 
               {/* Foreground Vinayaka */}
               <div className="chk-vinayaka">
-                <img src="/assets/img/vinayaka-transparent.png" alt="Vinayaka seated on his throne" loading="lazy" decoding="async" draggable="false" />
+                <img src={assetUrl("/assets/img/vinayaka-transparent.png")} alt="Vinayaka seated on his throne" loading="lazy" decoding="async" draggable="false" />
               </div>
 
               <div className="chk-floor" />

@@ -1,6 +1,9 @@
 import { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import { getProducts, getSiteConfig } from "../api/client.js";
 import { FALLBACK_PRODUCTS } from "../data/products.js";
+import { assetUrl } from "../utils/assetHelper.js";
+
+export { assetUrl };
 
 const SiteContext = createContext(null);
 
@@ -29,10 +32,11 @@ export function money(n) {
 
 export function imgUrl(key, size) {
   if (!key) return "";
-  if (key.startsWith("http://") || key.startsWith("https://") || key.startsWith("/")) return key;
+  if (key.startsWith("http://") || key.startsWith("https://") || key.startsWith("data:")) return key;
+  if (key.startsWith("/")) return assetUrl(key);
   const cleanKey = key.replace(/\.(jpg|jpeg|png|webp)$/i, "");
   const name = size ? `${cleanKey}-${size}` : cleanKey;
-  return `/assets/img/${name}.jpg`;
+  return assetUrl(`/assets/img/${name}.jpg`);
 }
 
 // A handful of large, rarely-changing marketing images (the hero banner) also

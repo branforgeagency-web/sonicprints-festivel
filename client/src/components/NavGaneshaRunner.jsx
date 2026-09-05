@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import useMotionProfile from "../anim/useMotionProfile.js";
+import { assetUrl } from "../utils/assetHelper.js";
 
 /* ============================================================
    NavGaneshaRunner
@@ -161,7 +162,7 @@ export default function NavGaneshaRunner() {
     later(() => setCheer(false), 900);
   }
 
-  const sprite = reduced ? "/assets/img/nav-run-still.png" : "/assets/img/nav-run.webp";
+  const sprite = assetUrl(reduced ? "/assets/img/nav-run-still.png" : "/assets/img/nav-run.webp");
 
   return (
     <div className="navrun" ref={stripRef} aria-hidden="true">

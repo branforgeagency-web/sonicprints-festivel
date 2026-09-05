@@ -7,6 +7,7 @@ import useReveal from "../hooks/useReveal.js";
 import Magnetic from "../components/fx/Magnetic.jsx";
 import Icon from "../components/Icon.jsx";
 import SEOHead from "../components/SEOHead.jsx";
+import { assetUrl } from "../utils/assetHelper.js";
 import {
   BULK_SEGMENTS, BULK_KIT_OPTIONS, BULK_QTY_OPTIONS, BULK_BRANDING_OPTIONS, VOLUME_RATE_TABLE
 } from "../data/content.js";
@@ -114,7 +115,7 @@ export default function Bulk() {
       <header className="phead luxury-phead phead-light-gold">
         <div className="phead-bg" aria-hidden="true">
           <img
-            src="/assets/img/cartoon-ganesha-mouse-bg.jpg"
+            src={assetUrl("/assets/img/cartoon-ganesha-mouse-bg.jpg")}
             alt="Cartoon Lord Ganesha playing with mouse companion Mooshika"
             loading="eager"
             decoding="async"

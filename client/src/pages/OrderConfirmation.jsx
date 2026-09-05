@@ -46,19 +46,29 @@ export default function OrderConfirmation() {
               <div style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: 8,
-                padding: "8px 20px",
-                background: "rgba(223, 183, 108, 0.12)",
-                border: "1px solid rgba(223, 183, 108, 0.35)",
+                gap: 10,
+                padding: "10px 24px",
+                background: "#FFF8EC",
+                border: "1.5px solid #D4AF37",
                 borderRadius: 999,
-                margin: "0 auto 20px",
+                margin: "0 auto 24px",
                 fontSize: 15,
                 fontWeight: 600,
-                color: "#DFB76C",
-                letterSpacing: "0.5px"
+                boxShadow: "0 4px 14px rgba(212, 175, 55, 0.15)"
               }}>
-                <span>Order Reference:</span>
-                <span style={{ fontFamily: "monospace", color: "#FFF", fontSize: 16, fontWeight: 700 }}>{effective.orderId}</span>
+                <span style={{ color: "#7A5310", fontWeight: 700 }}>Order Reference:</span>
+                <span style={{
+                  fontFamily: "monospace",
+                  color: "#0A2E2B",
+                  fontSize: 16,
+                  fontWeight: 800,
+                  background: "rgba(212, 175, 55, 0.2)",
+                  padding: "3px 10px",
+                  borderRadius: 6,
+                  letterSpacing: "0.5px"
+                }}>
+                  {effective.orderId}
+                </span>
               </div>
             )}
             <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 560, margin: "0 auto 26px" }}>
@@ -68,7 +78,9 @@ export default function OrderConfirmation() {
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <Link className="btn btn-gold" to="/track">📦 Track Your Order Live →</Link>
-              <Link className="btn btn-ghost" to="/#kits">Continue shopping</Link>
+              <Link className="btn btn-line" to="/#kits" style={{ background: "#FFFFFF", borderColor: "#B88E44", color: "#0A2E2B", fontWeight: 700 }}>
+                Continue shopping
+              </Link>
               <a
                 className="btn btn-line"
                 href={waLink(config.whatsapp, "Namaste Sonic Prints, I have a question about the Ganesh Festival Collection 2026.")}
@@ -77,8 +89,8 @@ export default function OrderConfirmation() {
                 Chat with us
               </a>
             </div>
-            <p style={{ marginTop: 28, fontFamily: "var(--serif)", fontSize: 24, color: "var(--gold-600)" }}>
-              गणपति बाप्पा मोर्या
+            <p style={{ marginTop: 28, fontFamily: "var(--serif)", fontSize: 24, fontWeight: 700, color: "#8C651F", letterSpacing: "0.04em" }}>
+              Ganpati Bappa Morya!
             </p>
           </div>
         </div>

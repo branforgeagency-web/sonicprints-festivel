@@ -13,9 +13,11 @@
     "sitemap": "npm run sitemap --prefix client",
     "submit-sitemap": "node scripts/submit-sitemap.js",
     "build": "npm run build --prefix client",
+    "upload:gcp": "node scripts/upload-to-gcp.js",
     "start": "npm start --prefix server"
   },
   "devDependencies": {
+    "@google-cloud/storage": "^8.0.1",
     "concurrently": "^8.2.2"
   }
 }

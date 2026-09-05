@@ -3,6 +3,7 @@ import useHashScroll from "../hooks/useHashScroll.js";
 import { useSite } from "../context/SiteContext.jsx";
 import SEOHead from "../components/SEOHead.jsx";
 import { FAQ_ITEMS } from "../data/content.js";
+import { assetUrl } from "../utils/assetHelper.js";
 import Hero from "./home/Hero.jsx";
 import KitsSection from "./home/KitsSection.jsx";
 import AudiencesSection from "./home/AudiencesSection.jsx";
@@ -14,6 +15,9 @@ import FaqSection from "./home/FaqSection.jsx";
 import ContactCta from "./home/ContactCta.jsx";
 
 const BASE_URL = import.meta.env.VITE_SITE_URL || "https://sonicprints.shop";
+const LOGO_URL = assetUrl("/assets/img/hero-banner.jpg").startsWith("http")
+  ? assetUrl("/assets/img/hero-banner.jpg")
+  : `${BASE_URL}/assets/img/hero-banner.jpg`;
 
 export default function Home() {
   const { loading } = useSite();
@@ -30,7 +34,7 @@ export default function Home() {
         "url": BASE_URL,
         "logo": {
           "@type": "ImageObject",
-          "url": `${BASE_URL}/assets/img/hero-banner.jpg`
+          "url": LOGO_URL
         },
         "description": "Premium 100% Eco-Friendly Ganesh Festival Kits, Clay Idols, Kids Activity Boxes & Motorized Rotating Chakra Mandap Backdrops for 2026.",
         "sameAs": [

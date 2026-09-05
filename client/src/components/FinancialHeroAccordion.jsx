@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { assetUrl } from "../utils/assetHelper.js";
 
 const DEFAULT_PANELS = [
   {
@@ -156,7 +157,7 @@ export default function FinancialHeroAccordion({
               >
                 {/* Full Cover Background Image */}
                 <img
-                  src={panel.img}
+                  src={assetUrl(panel.img)}
                   alt={panel.title}
                   className="fa-panel-img"
                   loading={idx === 0 ? "eager" : "lazy"}
