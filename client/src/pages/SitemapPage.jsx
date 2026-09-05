@@ -83,10 +83,21 @@ export default function SitemapPage() {
               <p style={{ margin: "0 0 16px", fontSize: 14, color: "#5C7370" }}>
                 Complete design stories, Vedic traditions, and setup guides for all six festival products on one dedicated page:
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
-                <div style={{ background: "#FAF7F2", border: "1px solid rgba(184,142,68,0.2)", borderRadius: 12, padding: "16px 18px" }}>
-                  <Link to="/blog" style={{ fontSize: 15, fontWeight: 700, color: "#0A2E2B", textDecoration: "none", display: "block", marginBottom: 4 }}>
-                    The 6 Products Blog &amp; Story Guide →
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+                <div style={{ background: "#FAF7F2", border: "1.5px solid rgba(184,142,68,0.3)", borderRadius: 12, padding: "18px 20px" }}>
+                  <Link to="/ganesh-chaturthi-2026-celebration-ideas" style={{ fontSize: 15.5, fontWeight: 700, color: "#0A2E2B", textDecoration: "none", display: "block", marginBottom: 4 }}>
+                    Planning Ganesh Chaturthi 2026? Here Are 6 Ideas to Try →
+                  </Link>
+                  <span style={{ fontSize: 12, color: "#8C651F", fontWeight: 600, display: "block" }}>
+                    Flagship 2026 Celebration Guide
+                  </span>
+                  <p style={{ fontSize: 12.5, color: "#5C7370", margin: "6px 0 0", lineHeight: 1.4 }}>
+                    From festive home setups and kids&apos; activities to décor, gifting and office celebrations, find ideas to make Ganesh Chaturthi 2026 memorable.
+                  </p>
+                </div>
+                <div style={{ background: "#FAF7F2", border: "1px solid rgba(184,142,68,0.2)", borderRadius: 12, padding: "18px 20px" }}>
+                  <Link to="/blog" style={{ fontSize: 15.5, fontWeight: 700, color: "#0A2E2B", textDecoration: "none", display: "block", marginBottom: 4 }}>
+                    Festival Collection Stories &amp; 6 Kits →
                   </Link>
                   <span style={{ fontSize: 12, color: "#8C651F", fontWeight: 600, display: "block" }}>
                     Complete 2026 Collection Feature

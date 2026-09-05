@@ -9,6 +9,7 @@ import "./styles/admin.css";
 import "./styles/hero-3d-carousel.css";
 import "./styles/insight-gallery.css";
 import "./styles/financial-accordion.css";
+import "./styles/blog.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

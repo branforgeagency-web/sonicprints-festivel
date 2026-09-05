@@ -76,18 +76,18 @@ export default function Footer() {
           </LinkColumn>
 
           {/* Blog Title Column */}
-          <LinkColumn title="Blog" href="/blog">
+          <LinkColumn title="Blog" href="/ganesh-chaturthi-2026-celebration-ideas">
             <motion.span style={{ display: "block" }} {...stagger(0)}>
-              <Link to="/blog" style={{ color: "#F3D085", fontWeight: 700 }}>
-                Festival Collection Stories →
+              <Link to="/ganesh-chaturthi-2026-celebration-ideas" style={{ color: "#F3D085", fontWeight: 700 }}>
+                Planning Ganesh Chaturthi 2026? →
               </Link>
             </motion.span>
             <p className="about" style={{ marginTop: 8, fontSize: "13px", lineHeight: "1.6" }}>
-              Explore the craftsmanship, sacred clay traditions, and ritual guides behind all six festival collections.
+              6 celebration ideas for festive home setups, kids&apos; activities, visual décor, gifting and office celebrations.
             </p>
             <motion.span style={{ display: "block", marginTop: 10 }} {...stagger(1)}>
-              <Link to="/blog" style={{ color: "var(--gold-400)", fontSize: "13px", fontWeight: 600 }}>
-                Browse All 6 Products →
+              <Link to="/ganesh-chaturthi-2026-celebration-ideas" style={{ color: "var(--gold-400)", fontSize: "13px", fontWeight: 600 }}>
+                Read Full Celebration Guide →
               </Link>
             </motion.span>
           </LinkColumn>

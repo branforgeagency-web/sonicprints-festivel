@@ -13,6 +13,7 @@ import OrderConfirmation from "./pages/OrderConfirmation.jsx";
 import TrackOrders from "./pages/TrackOrders.jsx";
 import SitemapPage from "./pages/SitemapPage.jsx";
 import BlogList from "./pages/BlogList.jsx";
+import CelebrationIdeasBlog from "./pages/CelebrationIdeasBlog.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 /* The admin panel is a separate audience — load it on demand so shoppers
@@ -59,10 +60,12 @@ export default function App() {
               <Route path="/track" element={<TrackOrders />} />
               <Route path="/my-orders" element={<Navigate to="/track" replace />} />
               <Route path="/orders" element={<Navigate to="/track" replace />} />
-              <Route path="/blog" element={<BlogList />} />
-              <Route path="/blog/:slug" element={<LegacyBlogRedirect />} />
-              <Route path="/blogs" element={<LegacyBlogRedirect />} />
-              <Route path="/blogs/:slug" element={<LegacyBlogRedirect />} />
+              <Route path="/blog" element={<CelebrationIdeasBlog />} />
+              <Route path="/ganesh-chaturthi-2026-celebration-ideas" element={<CelebrationIdeasBlog />} />
+              <Route path="/blog/ganesh-chaturthi-2026-celebration-ideas" element={<Navigate to="/ganesh-chaturthi-2026-celebration-ideas" replace />} />
+              <Route path="/blog/:slug" element={<CelebrationIdeasBlog />} />
+              <Route path="/blogs" element={<Navigate to="/ganesh-chaturthi-2026-celebration-ideas" replace />} />
+              <Route path="/blogs/:slug" element={<CelebrationIdeasBlog />} />
               <Route path="/sitemap" element={<SitemapPage />} />
 
               {/* Legacy URL Custom 301 Client-Side Redirects */}

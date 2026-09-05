@@ -2,6 +2,19 @@
 
 export const BLOG_POSTS = [
   {
+    slug: "ganesh-chaturthi-2026-celebration-ideas",
+    url: "/ganesh-chaturthi-2026-celebration-ideas",
+    badge: "Celebration Guide 2026",
+    title: "Planning Ganesh Chaturthi 2026? Don't Miss These Celebration Ideas",
+    metaTitle: "Planning Ganesh Chaturthi 2026? Here Are 6 Ideas to Try",
+    metaDescription: "From festive home setups and kids' activities to décor, gifting and office celebrations, find ideas to make Ganesh Chaturthi 2026 memorable. Explore more.",
+    excerpt: "From festive home setups and kids' activities to décor, gifting and office celebrations, find ideas to make Ganesh Chaturthi 2026 memorable.",
+    category: "Festival Guide",
+    readTime: "5 min read",
+    date: "August 2026",
+    coverImg: "/assets/img/blog/blog_1.jpeg"
+  },
+  {
     slug: "shubharambh-mini",
     productSlug: "shubharambh-mini",
     productName: "Shubharambh Mini",

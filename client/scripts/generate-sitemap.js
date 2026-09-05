@@ -9,6 +9,7 @@ const BASE_URL = process.env.VITE_SITE_URL || "https://sonicprints.shop";
 
 const STATIC_PAGES = [
   { path: "/", priority: "1.0", changefreq: "daily" },
+  { path: "/ganesh-chaturthi-2026-celebration-ideas", priority: "0.85", changefreq: "weekly" },
   { path: "/bulk", priority: "0.9", changefreq: "weekly" },
   { path: "/blog", priority: "0.8", changefreq: "weekly" },
   { path: "/track", priority: "0.8", changefreq: "daily" },
