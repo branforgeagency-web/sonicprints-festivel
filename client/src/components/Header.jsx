@@ -179,6 +179,12 @@ export default function Header() {
               Bulk &amp; Dealers
             </Link>
             <Link
+              to="/blog"
+              className={location.pathname === "/blog" || location.pathname.startsWith("/blog") || location.pathname === "/ganesh-chaturthi-2026-celebration-ideas" ? "on active" : ""}
+            >
+              Blogs
+            </Link>
+            <Link
               to="/track"
               className={location.pathname === "/track" ? "on active" : ""}
               style={{ color: "#B88E44", fontWeight: 600 }}
@@ -266,6 +272,17 @@ export default function Header() {
                       <div className="mob-item-left">
                         <span className="mob-item-icon">🏢</span>
                         <span className="mob-item-text">Bulk &amp; Corporate Orders</span>
+                      </div>
+                      <span className="mob-arr">→</span>
+                    </Link>
+                    <Link
+                      to="/blog"
+                      className={`mob-item${location.pathname === "/blog" || location.pathname.startsWith("/blog") || location.pathname === "/ganesh-chaturthi-2026-celebration-ideas" ? " on active" : ""}`}
+                      onClick={() => setMobOpen(false)}
+                    >
+                      <div className="mob-item-left">
+                        <span className="mob-item-icon">📖</span>
+                        <span className="mob-item-text">Celebration Blogs &amp; Ideas</span>
                       </div>
                       <span className="mob-arr">→</span>
                     </Link>
