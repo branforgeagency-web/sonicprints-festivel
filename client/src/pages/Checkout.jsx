@@ -82,7 +82,7 @@ export default function Checkout() {
   const [coordinates, setCoordinates] = useState(null);
   const [mapUrl, setMapUrl] = useState("");
   const [mapOpen, setMapOpen] = useState(false);
-  const [payMethod, setPayMethod] = useState("online");
+  const [payMethod, setPayMethod] = useState("whatsapp");
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -350,13 +350,6 @@ export default function Checkout() {
 
                 <h3 style={{ fontSize: 22, margin: "14px 0 4px" }}>Payment Method</h3>
                 <div className="paybox">
-                  <label className={`pay${payMethod === "online" ? " on" : ""}`}>
-                    <input type="radio" name="pay" checked={payMethod === "online"} onChange={() => setPayMethod("online")} />
-                    <span style={{ flex: 1 }}>
-                      <b>Pay Online via Cashfree Payments</b>
-                      <span>Fast &amp; 100% secure instant checkout via UPI (GPay / PhonePe / Paytm), Credit &amp; Debit Cards, NetBanking &amp; Wallets.</span>
-                    </span>
-                  </label>
                   <label className={`pay${payMethod === "whatsapp" ? " on" : ""}`}>
                     <input type="radio" name="pay" checked={payMethod === "whatsapp"} onChange={() => setPayMethod("whatsapp")} />
                     <span style={{ flex: 1 }}>
