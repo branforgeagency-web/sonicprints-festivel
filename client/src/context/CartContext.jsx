@@ -82,12 +82,13 @@ export function CartProvider({ children }) {
 
   const addToCart = useCallback(
     (id, opts = {}) => {
-      const p = productById(id);
+      const p = typeof id === "object" && id ? id : productById(id);
       if (!p) return;
+      const prodId = p.id || p._id || id;
       const variant = p.variants?.length ? opts.variant || p.variants[0].id : null;
       const design = p.designs?.length ? opts.design || p.designs[0].id : null;
       const qty = Math.max(1, parseInt(opts.qty, 10) || 1);
-      const k = keyOf(id, variant, design);
+      const k = keyOf(prodId, variant, design);
 
       setCart((prev) => {
         const idx = prev.findIndex((it) => keyOf(it.id, it.variant, it.design) === k);
@@ -96,21 +97,17 @@ export function CartProvider({ children }) {
           next[idx] = { ...next[idx], qty: next[idx].qty + qty };
           return next;
         }
-        return [...prev, { id, variant, design, qty }];
+        return [...prev, { id: prodId, variant, design, qty }];
       });
 
       // Let the shopper know exactly which size/design was added, since a
       // quick "+" tap on the homepage/product cards defaults to the first
       // option rather than making them choose one.
       const bits = [];
-      if (p.designs?.length) {
-        const d = findDesign(p, design);
-        if (d) bits.push(d.name);
-      }
-      if (p.variants?.length) {
-        const v = findVariant(p, variant);
-        if (v) bits.push(v.name);
-      }
+      const d = p.designs?.length ? findDesign(p, design) : null;
+      const v = p.variants?.length ? findVariant(p, variant) : null;
+      if (d) bits.push(d.name);
+      if (v) bits.push(v.name);
       const label = bits.join(" · ");
       toast(`Added — ${p.name}${label ? ` (${label})` : ""}${qty > 1 ? ` × ${qty}` : ""}`);
       const linePrice = (v ? v.price : p.price) * qty;

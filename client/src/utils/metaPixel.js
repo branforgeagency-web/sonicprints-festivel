@@ -8,13 +8,18 @@
  */
 
 function trackMetaEvent(eventName, payload) {
-  if (typeof window !== "undefined" && typeof window.fbq === "function") {
-    window.fbq("track", eventName, payload);
-    if (import.meta.env?.DEV) {
+  try {
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("track", eventName, payload);
       console.log(`[Meta Pixel] fbq('track', '${eventName}')`, payload);
+    } else if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", eventName, payload);
+      console.log(`[Meta Pixel] fbq('track', '${eventName}')`, payload);
+    } else {
+      console.warn(`[Meta Pixel] window.fbq unavailable. Event skipped: ${eventName}`, payload);
     }
-  } else if (import.meta.env?.DEV) {
-    console.warn(`[Meta Pixel] window.fbq unavailable. Event skipped: ${eventName}`, payload);
+  } catch (err) {
+    console.error(`[Meta Pixel] Error tracking '${eventName}':`, err);
   }
 }
 

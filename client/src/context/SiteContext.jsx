@@ -77,7 +77,7 @@ export function SiteProvider({ children }) {
     load();
   }, [load]);
 
-  const productById = useCallback((id) => products.find((p) => p.id === id), [products]);
+  const productById = useCallback((id) => products.find((p) => p.id === id || p._id === id), [products]);
   const productBySlug = useCallback((slug) => products.find((p) => p.slug === slug), [products]);
 
   const value = useMemo(
