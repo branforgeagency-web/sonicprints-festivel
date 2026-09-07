@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
 import { useSite, money, imgUrl } from "../context/SiteContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
 import { placeOrder, createCashfreeOrder, verifyCashfreePayment, createRazorpayOrder, verifyRazorpayPayment, cancelAbandonedPayment } from "../api/client.js";
 import { openWhatsApp } from "../utils/whatsapp.js";
+import { initiateCheckout } from "../utils/metaPixel.js";
 import { BUYER_TYPES } from "../data/content.js";
 import useReveal from "../hooks/useReveal.js";
 import Magnetic from "../components/fx/Magnetic.jsx";
@@ -41,9 +42,9 @@ export function saveCustomerOrder(orderId, phone, name) {
   }
 }
 
-function rememberOrderConfirmation(name, paid, orderId) {
+function rememberOrderConfirmation(name, paid, orderId, order) {
   try {
-    sessionStorage.setItem(ORDER_CONFIRMATION_KEY, JSON.stringify({ name, paid, orderId }));
+    sessionStorage.setItem(ORDER_CONFIRMATION_KEY, JSON.stringify({ name, paid, orderId, order }));
   } catch {
     // sessionStorage can be unavailable (private browsing etc.)
   }
@@ -91,6 +92,12 @@ export default function Checkout() {
   const razorpayReady = !!config.razorpayKeyId;
   const onlineReady = cashfreeReady || razorpayReady;
   const needForFree = (config.freeShipAbove || 1499) - cartSubtotal;
+
+  useEffect(() => {
+    if (cart && cart.length > 0) {
+      initiateCheckout(cart, total);
+    }
+  }, [cart, total]);
 
   function setField(name, value) {
     setForm((f) => ({ ...f, [name]: value }));
@@ -194,23 +201,26 @@ export default function Checkout() {
 
             try {
               const verifyRes = await verifyCashfreePayment({ orderId: order._id, cashfreeOrderId });
+              const confirmedOrder = verifyRes?.paid
+                ? (verifyRes.order || { ...order, paymentStatus: "paid" })
+                : order;
               if (verifyRes?.paid) {
                 clearCart();
-                rememberOrderConfirmation(form.name, true, displayOrderId);
-                navigate("/order-confirmation", { state: { name: form.name, paid: true, orderId: displayOrderId } });
+                rememberOrderConfirmation(form.name, true, displayOrderId, confirmedOrder);
+                navigate("/order-confirmation", { state: { name: form.name, paid: true, orderId: displayOrderId, order: confirmedOrder } });
                 return;
               } else {
                 toast("Payment status pending — we will verify your payment.");
                 clearCart();
-                rememberOrderConfirmation(form.name, false, displayOrderId);
-                navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId } });
+                rememberOrderConfirmation(form.name, false, displayOrderId, order);
+                navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId, order } });
                 return;
               }
             } catch (vErr) {
               toast("Payment verification error — order recorded.");
               clearCart();
-              rememberOrderConfirmation(form.name, false, displayOrderId);
-              navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId } });
+              rememberOrderConfirmation(form.name, false, displayOrderId, order);
+              navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId, order } });
               return;
             }
           } catch (cfErr) {
@@ -223,8 +233,8 @@ export default function Checkout() {
       } else {
         openWhatsApp(config.whatsapp, whatsappText);
         clearCart();
-        rememberOrderConfirmation(form.name, false, displayOrderId);
-        navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId } });
+        rememberOrderConfirmation(form.name, false, displayOrderId, order);
+        navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId, order } });
       }
     } catch (err) {
       toast(err?.response?.data?.message || "Could not place the order — please try again");

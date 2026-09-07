@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useSite, imgUrl } from "./SiteContext.jsx";
 import { useToast } from "./ToastContext.jsx";
+import { addToCart as trackAddToCart } from "../utils/metaPixel.js";
 
 const CartContext = createContext(null);
 const STORAGE_KEY = "sonicprints_cart_v1";
@@ -112,6 +113,8 @@ export function CartProvider({ children }) {
       }
       const label = bits.join(" · ");
       toast(`Added — ${p.name}${label ? ` (${label})` : ""}${qty > 1 ? ` × ${qty}` : ""}`);
+      const linePrice = (v ? v.price : p.price) * qty;
+      trackAddToCart(p, linePrice);
     },
     [productById, toast, findDesign, findVariant]
   );

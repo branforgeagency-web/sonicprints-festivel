@@ -12,6 +12,7 @@ import { useProductTransition } from "../components/fx/ProductTransition.jsx";
 import { EASE_SILK } from "../anim/tokens.js";
 import useMotionProfile from "../anim/useMotionProfile.js";
 import SEOHead from "../components/SEOHead.jsx";
+import { viewContent } from "../utils/metaPixel.js";
 
 // Category fallback image keys
 const STORE_IMAGE = { chakra: "display-chakra", kids: "display-kids", diy: "display-kids" };
@@ -72,6 +73,12 @@ export default function ProductPage() {
     if (loading || !product) return;
     registerTarget(galRef.current);
   }, [loading, product, registerTarget]);
+
+  useEffect(() => {
+    if (product) {
+      viewContent(product);
+    }
+  }, [product]);
 
   const variant = useMemo(() => product?.variants?.find((v) => v.id === variantId), [product, variantId]);
   const design = useMemo(() => product?.designs?.find((d) => d.id === designId), [product, designId]);

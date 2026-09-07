@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Link, useLocation, Navigate } from "react-router-dom";
 import { useSite } from "../context/SiteContext.jsx";
 import { waLink } from "../utils/whatsapp.js";
+import { purchase } from "../utils/metaPixel.js";
 import SEOHead from "../components/SEOHead.jsx";
 
 const ORDER_CONFIRMATION_KEY = "sonicprints_last_order_v1";
@@ -22,6 +24,24 @@ export default function OrderConfirmation() {
   // again from history) still shows the confirmation instead of bouncing home.
   const remembered = !state?.name ? readRememberedOrder() : null;
   const effective = state?.name ? state : remembered;
+
+  useEffect(() => {
+    const order = effective?.order;
+    if (!order) return;
+
+    const orderKey = effective.orderId || order.orderId || order._id || "sp-order";
+    const storageKey = `sp_pixel_purchased_${orderKey}`;
+
+    // Prevent duplicate Purchase events when the page is refreshed
+    if (sessionStorage.getItem(storageKey)) return;
+
+    purchase(order);
+    try {
+      sessionStorage.setItem(storageKey, "true");
+    } catch {
+      // Ignore storage errors in private browsing
+    }
+  }, [effective]);
 
   if (!effective?.name) return <Navigate to="/" replace />;
   const { name, paid } = effective;

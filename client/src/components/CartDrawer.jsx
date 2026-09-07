@@ -3,6 +3,7 @@ import { useCart } from "../context/CartContext.jsx";
 import { useSite, money } from "../context/SiteContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
 import { openWhatsApp } from "../utils/whatsapp.js";
+import { initiateCheckout } from "../utils/metaPixel.js";
 
 export default function CartDrawer() {
   const {
@@ -18,6 +19,7 @@ export default function CartDrawer() {
 
   function goCheckout() {
     if (!cart.length) { toast("Your cart is empty"); return; }
+    initiateCheckout(cart, total);
     closeCart();
     navigate("/checkout");
   }
