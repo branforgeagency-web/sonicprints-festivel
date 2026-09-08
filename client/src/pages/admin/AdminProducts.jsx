@@ -23,6 +23,11 @@ export default function AdminProducts() {
     setProducts((prev) => prev.map((x) => (x._id === p._id ? updated : x)));
   }
 
+  async function toggleAvailable(p) {
+    const updated = await adminUpdateProduct(p._id, { isAvailable: !p.isAvailable });
+    setProducts((prev) => prev.map((x) => (x._id === p._id ? updated : x)));
+  }
+
   async function remove(p) {
     if (!window.confirm(`Delete "${p.name}"? This action cannot be undone.`)) return;
     await adminDeleteProduct(p._id);
@@ -89,17 +94,30 @@ export default function AdminProducts() {
                       {p.variants?.length ? <span style={{ fontSize: 11.5, color: "#8FA7A3", display: "block" }}>+{p.variants.length} sizes</span> : ""}
                     </td>
                     <td>
-                      <label style={{ display: "inline-flex", alignItems: "center", gap: 8, cursor: "pointer", userSelect: "none" }}>
-                        <input
-                          type="checkbox"
-                          checked={!!p.active}
-                          onChange={() => toggleActive(p)}
-                          style={{ width: 16, height: 16, accentColor: "#DFB76C" }}
-                        />
-                        <span className={`admin-badge ${p.active ? "badge-confirmed" : "badge-cancelled"}`}>
-                          {p.active ? "● Live On Store" : "Hidden"}
-                        </span>
-                      </label>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                        <label style={{ display: "inline-flex", alignItems: "center", gap: 8, cursor: "pointer", userSelect: "none" }}>
+                          <input
+                            type="checkbox"
+                            checked={!!p.active}
+                            onChange={() => toggleActive(p)}
+                            style={{ width: 16, height: 16, accentColor: "#DFB76C" }}
+                          />
+                          <span className={`admin-badge ${p.active ? "badge-confirmed" : "badge-cancelled"}`}>
+                            {p.active ? "● Live On Store" : "Hidden"}
+                          </span>
+                        </label>
+                        <label style={{ display: "inline-flex", alignItems: "center", gap: 8, cursor: "pointer", userSelect: "none" }}>
+                          <input
+                            type="checkbox"
+                            checked={p.isAvailable !== false}
+                            onChange={() => toggleAvailable(p)}
+                            style={{ width: 16, height: 16, accentColor: "#10B981" }}
+                          />
+                          <span className={`admin-badge ${p.isAvailable !== false ? "badge-paid" : "badge-cancelled"}`}>
+                            {p.isAvailable !== false ? "Available" : "Unavailable"}
+                          </span>
+                        </label>
+                      </div>
                     </td>
                     <td>
                       <div style={{ display: "flex", gap: 8 }}>

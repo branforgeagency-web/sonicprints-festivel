@@ -53,6 +53,7 @@ export default function AdminProductEdit() {
       price: Number(product.price),
       img: product.img,
       active: product.active,
+      isAvailable: product.isAvailable !== false,
       order: Number(product.order)
     };
     try {
@@ -152,6 +153,18 @@ export default function AdminProductEdit() {
               />
               <label htmlFor="active" style={{ margin: 0, color: "#FFF", fontSize: 14, cursor: "pointer" }}>
                 Visible &amp; active on storefront
+              </label>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 12 }}>
+              <input
+                type="checkbox"
+                checked={product.isAvailable !== false}
+                onChange={(e) => setField("isAvailable", e.target.checked)}
+                id="isAvailable"
+                style={{ width: 18, height: 18, accentColor: "#10B981", margin: 0 }}
+              />
+              <label htmlFor="isAvailable" style={{ margin: 0, color: "#FFF", fontSize: 14, cursor: "pointer" }}>
+                Available for Order (In Stock)
               </label>
             </div>
           </div>

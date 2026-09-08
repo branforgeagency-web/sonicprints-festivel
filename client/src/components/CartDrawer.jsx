@@ -8,7 +8,8 @@ import { initiateCheckout } from "../utils/metaPixel.js";
 export default function CartDrawer() {
   const {
     cart, drawerOpen, closeCart, setQty, removeAt,
-    cartSubtotal, shipping, unitPrice, lineLabel, lineImage
+    cartSubtotal, shipping, unitPrice, lineLabel, lineImage,
+    isProductAvailable
   } = useCart();
   const { config, productById } = useSite();
   const toast = useToast();
@@ -17,8 +18,17 @@ export default function CartDrawer() {
   const total = cartSubtotal + shipping;
   const needForFree = (config.freeShipAbove || 1499) - cartSubtotal;
 
+  const hasUnavailable = cart.some((it) => {
+    const p = productById(it.id);
+    return p && !isProductAvailable(p);
+  });
+
   function goCheckout() {
     if (!cart.length) { toast("Your cart is empty"); return; }
+    if (hasUnavailable) {
+      toast("Please remove unavailable items before checkout. Only Bal Ganesh is available.");
+      return;
+    }
     initiateCheckout(cart, total);
     closeCart();
     navigate("/checkout");
@@ -26,6 +36,10 @@ export default function CartDrawer() {
 
   function orderOnWhatsApp() {
     if (!cart.length) { toast("Your cart is empty"); return; }
+    if (hasUnavailable) {
+      toast("Please remove unavailable items. Only Bal Ganesh is available.");
+      return;
+    }
     const lines = ["*SONIC PRINTS — ORDER REQUEST*", "Ganesh Festival Collection 2026", ""];
     lines.push("*Items*");
     cart.forEach((it) => {
@@ -62,11 +76,15 @@ export default function CartDrawer() {
               if (!p) return null;
               const lbl = lineLabel(it);
               const up = unitPrice(it.id, it.variant);
+              const isAvail = isProductAvailable(p);
               return (
                 <div className="crow" key={i}>
                   <img src={lineImage(it)} alt={p.name} loading="lazy" decoding="async" />
                   <div>
-                    <b>{p.name}</b>
+                    <b>
+                      {p.name}
+                      {!isAvail && <span style={{ color: "#e11d48", fontSize: 11, fontWeight: 700, marginLeft: 6 }}>· Unavailable</span>}
+                    </b>
                     {lbl && <span className="v">{lbl}</span>}
                     <span className="v">{money(up)} each</span>
                     <div className="qty">
@@ -91,8 +109,15 @@ export default function CartDrawer() {
           <p className="note-s" style={{ margin: "0 0 12px" }}>
             {cart.length ? (needForFree > 0 ? `Add ${money(needForFree)} more for free delivery.` : "You have free delivery ✓") : ""}
           </p>
-          <button className="btn btn-gold btn-wide btn-lg" onClick={goCheckout}>Proceed to checkout</button>
-          <button className="btn btn-line btn-wide" style={{ marginTop: 9 }} onClick={orderOnWhatsApp}>
+          {hasUnavailable && (
+            <p className="note-s" style={{ color: "#e11d48", fontWeight: 600, margin: "0 0 10px", textAlign: "center" }}>
+              ⚠️ Please remove unavailable items. Only Bal Ganesh is available.
+            </p>
+          )}
+          <button className="btn btn-gold btn-wide btn-lg" disabled={hasUnavailable} onClick={goCheckout}>
+            {hasUnavailable ? "Unavailable items in cart" : "Proceed to checkout"}
+          </button>
+          <button className="btn btn-line btn-wide" style={{ marginTop: 9 }} disabled={hasUnavailable} onClick={orderOnWhatsApp}>
             Order on WhatsApp instead
           </button>
           <p className="note-s">Our team confirms stock, price and delivery date before dispatch.</p>

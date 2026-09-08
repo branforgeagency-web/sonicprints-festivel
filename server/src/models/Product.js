@@ -43,6 +43,7 @@ const ProductSchema = new mongoose.Schema(
     price: { type: Number, required: true }, // base / "from" price
     img: { type: String, required: true }, // base image key (matches /assets/img/<img>.jpg)
     active: { type: Boolean, default: true },
+    isAvailable: { type: Boolean, default: false },
     order: { type: Number, default: 0 },
 
     variants: { type: [VariantSchema], default: [] },

@@ -19,6 +19,11 @@ function keyOf(id, v, d) {
   return [id, v || "", d || ""].join("|");
 }
 
+export function isProductAvailable(product) {
+  if (!product) return false;
+  return product.isAvailable !== false && (product.id === "kids" || product.slug === "bal-ganesh-kids-kit");
+}
+
 export function CartProvider({ children }) {
   const { config, productById } = useSite();
   const toast = useToast();
@@ -28,6 +33,18 @@ export function CartProvider({ children }) {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
   }, [cart]);
+
+  // Clean up any unavailable products from stored cart
+  useEffect(() => {
+    setCart((prev) => {
+      const filtered = prev.filter((it) => {
+        const p = productById(it.id);
+        if (!p) return true;
+        return isProductAvailable(p);
+      });
+      return filtered.length !== prev.length ? filtered : prev;
+    });
+  }, [productById]);
 
   const findVariant = useCallback((product, vid) => {
     if (!product?.variants?.length) return null;
@@ -84,6 +101,10 @@ export function CartProvider({ children }) {
     (id, opts = {}) => {
       const p = typeof id === "object" && id ? id : productById(id);
       if (!p) return;
+      if (!isProductAvailable(p)) {
+        toast(`${p.name} is currently unavailable. Only the Bal Ganesh kit is available.`);
+        return;
+      }
       const prodId = p.id || p._id || id;
       const variant = p.variants?.length ? opts.variant || p.variants[0].id : null;
       const design = p.designs?.length ? opts.design || p.designs[0].id : null;
@@ -168,7 +189,8 @@ export function CartProvider({ children }) {
       shipping,
       unitPrice,
       lineLabel,
-      lineImage
+      lineImage,
+      isProductAvailable
     }),
     [cart, drawerOpen, openCart, closeCart, addToCart, setQty, removeAt, clearCart, cartCount, cartSubtotal, shipping, unitPrice, lineLabel, lineImage]
   );

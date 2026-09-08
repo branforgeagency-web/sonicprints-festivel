@@ -1525,6 +1525,17 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
   background: linear-gradient(135deg, #ec4899, #be185d);
 }
 
+.kcm-badge-unavailable {
+  background: linear-gradient(135deg, #475569, #334155) !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.kri-unavailable-tag {
+  color: #e11d48;
+  font-weight: 700;
+}
+
 .kcm-content {
   padding: 24px;
   display: flex;
@@ -1661,6 +1672,70 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
 .kcm-btn-primary:hover {
   background: var(--gold-500, #b45309);
   color: #ffffff;
+}
+
+.kcm-btn-disabled,
+.kcm-btn:disabled {
+  background: #f1f5f9 !important;
+  color: #94a3b8 !important;
+  border: 1.5px solid #e2e8f0 !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.btn-disabled,
+.btn:disabled {
+  background: #f1f5f9 !important;
+  color: #94a3b8 !important;
+  border-color: #cbd5e1 !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.pdp-unavailable-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 16px 0 20px;
+  color: #9f1239;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pdp-unavailable-alert a {
+  color: #be123c;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.pdp-alert-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.zoomtag-unavailable {
+  background: #475569 !important;
+  color: #f8fafc !important;
+}
+
+.is-unavailable .kcm-img,
+.is-unavailable .kbh-img,
+.is-unavailable .kri-img {
+  filter: grayscale(18%);
+  opacity: 0.92;
+}
+
+.unavailable-buyrow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 /* Bento Hero Spotlight View */

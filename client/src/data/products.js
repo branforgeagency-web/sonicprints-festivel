@@ -17,6 +17,7 @@ export const FALLBACK_PRODUCTS = [
     kitWho: "Hostels · PGs · Bachelors · Small shops · Offices · Return gifts",
     bestFor: "Hostels · PGs · Bachelors · Small shops · Offices · Return gifts",
     price: 299,
+    isAvailable: false,
     img: "mini",
     order: 0,
     highlights: [
@@ -64,6 +65,7 @@ export const FALLBACK_PRODUCTS = [
     kitWho: "Employee gifting · Client appreciation · Dealer & partner gifting",
     bestFor: "Employee gifting · Client appreciation · Dealer & partner gifting",
     price: 499,
+    isAvailable: false,
     img: "employee",
     order: 1,
     highlights: [
@@ -113,6 +115,7 @@ export const FALLBACK_PRODUCTS = [
     kitWho: "Children 5–12 · Schools · Apartment communities · Birthday return gifts",
     bestFor: "Children 5–12 · Schools · Apartment communities · Birthday return gifts",
     price: 699,
+    isAvailable: true,
     img: "kids",
     order: 2,
     highlights: [
@@ -227,6 +230,7 @@ export const FALLBACK_PRODUCTS = [
     kitWho: "Households · Apartments · Shops & showrooms · Association halls",
     bestFor: "Households · Apartments · Shops & showrooms · Association halls",
     price: 699,
+    isAvailable: false,
     img: "mandap",
     order: 3,
     variants: [
@@ -289,6 +293,7 @@ export const FALLBACK_PRODUCTS = [
     kitWho: "Homes · Societies · Shops & showrooms · Events & pandals",
     bestFor: "Homes · Societies · Shops & showrooms · Events & pandals",
     price: 999,
+    isAvailable: false,
     img: "chakra-classic",
     order: 4,
     variants: [

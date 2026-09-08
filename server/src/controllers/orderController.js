@@ -40,8 +40,12 @@ async function priceCart(rawItems) {
     if (!product) {
       product = productsData.find((p) => p.id === raw.productId);
     }
-    if (!product) {
-      const err = new Error(`Product "${raw.productId}" is not available`);
+    if (!product || product.isAvailable === false || product.id !== "kids") {
+      const err = new Error(
+        product
+          ? `Product "${product.name}" is currently unavailable. Only the Bal Ganesh kit is available for order.`
+          : `Product "${raw.productId}" is not available`
+      );
       err.status = 400;
       throw err;
     }

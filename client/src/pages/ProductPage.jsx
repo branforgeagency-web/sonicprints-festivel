@@ -165,11 +165,15 @@ export default function ProductPage() {
   ];
   const mainImg = thumbs[activeThumb].src;
 
+  const isAvailable = product?.isAvailable !== false && product?.id === "kids";
+
   function handleAdd() {
+    if (!isAvailable) return;
     addToCart(product.id, { variant: variantId, design: designId, qty });
   }
 
   function handleBuyNow() {
+    if (!isAvailable) return;
     addToCart(product.id, { variant: variantId, design: designId, qty });
     navigate("/checkout");
   }
@@ -202,7 +206,7 @@ export default function ProductPage() {
           "price": unitPrice,
           "priceValidUntil": "2026-09-30",
           "itemCondition": "https://schema.org/NewCondition",
-          "availability": "https://schema.org/InStock",
+          "availability": isAvailable ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
           "seller": {
             "@type": "Organization",
             "name": "Sonic Prints"
@@ -300,6 +304,7 @@ export default function ProductPage() {
                 />
               </AnimatePresence>
               {product.badge && <span className="zoomtag">{product.badge}</span>}
+              {!isAvailable && <span className="zoomtag zoomtag-unavailable">Unavailable</span>}
             </motion.div>
           </div>
         </div>
@@ -312,10 +317,27 @@ export default function ProductPage() {
           variants={{ hidden: {}, show: { transition: { staggerChildren: reduced ? 0 : 0.07, delayChildren: reduced ? 0 : 0.12 } } }}
         >
           <motion.span className="sku-badge" variants={FADE_IN}>SKU: {product.sku || "GLAJ11171"}</motion.span>
-          <motion.div className="sub" variants={FADE_IN}>{product.subtitle}</motion.div>
+          <motion.div className="sub" variants={FADE_IN}>
+            {product.subtitle}
+            {!isAvailable && <span className="kri-unavailable-tag"> · Currently Unavailable</span>}
+          </motion.div>
           <motion.h1 variants={FADE_IN}>{product.name}</motion.h1>
           {product.tag && <motion.p className="tag" variants={FADE_IN}>“{product.tag}”</motion.p>}
           <motion.p className="short" variants={FADE_IN}>{product.shortDescription}</motion.p>
+
+          {!isAvailable && (
+            <motion.div className="pdp-unavailable-alert" variants={FADE_IN} role="alert">
+              <span className="pdp-alert-icon">⚠️</span>
+              <div className="pdp-alert-body">
+                <strong>Currently Unavailable for Online Orders</strong>
+                <p>
+                  This kit is currently sold out and unavailable to purchase. Only the{" "}
+                  <Link to="/kit/bal-ganesh-kids-kit">Bal Ganesh Kids Kit</Link> is currently available for order.
+                </p>
+              </div>
+            </motion.div>
+          )}
+
           <motion.div className="priceline" variants={FADE_IN}>
             <span className="now">{money(unitPrice)}</span>
             <span className="inc">inclusive of taxes · delivery calculated at checkout</span>
@@ -349,27 +371,38 @@ export default function ProductPage() {
             </motion.div>
           )}
 
-          <motion.div className="buyrow" variants={FADE_IN}>
-            <div className="qbig">
-              <button aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={qty}
-                  initial={reduced ? false : { opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.18 }}
-                >
-                  {qty}
-                </motion.span>
-              </AnimatePresence>
-              <button aria-label="Increase quantity" onClick={() => setQty((q) => q + 1)}>+</button>
-            </div>
-            <button className="btn btn-gold btn-lg" style={{ flex: 1 }} onClick={handleAdd}>
-              <Icon name="cart" size={20} /> Add to cart
-            </button>
-            <button className="btn btn-lg" onClick={handleBuyNow}>Buy now</button>
-          </motion.div>
+          {isAvailable ? (
+            <motion.div className="buyrow" variants={FADE_IN}>
+              <div className="qbig">
+                <button aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={qty}
+                    initial={reduced ? false : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    {qty}
+                  </motion.span>
+                </AnimatePresence>
+                <button aria-label="Increase quantity" onClick={() => setQty((q) => q + 1)}>+</button>
+              </div>
+              <button className="btn btn-gold btn-lg" style={{ flex: 1 }} onClick={handleAdd}>
+                <Icon name="cart" size={20} /> Add to cart
+              </button>
+              <button className="btn btn-lg" onClick={handleBuyNow}>Buy now</button>
+            </motion.div>
+          ) : (
+            <motion.div className="buyrow unavailable-buyrow" variants={FADE_IN}>
+              <button className="btn btn-disabled btn-lg" disabled style={{ flex: 1 }} aria-disabled="true">
+                Currently Unavailable
+              </button>
+              <Link to="/kit/bal-ganesh-kids-kit" className="btn btn-gold btn-lg" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>
+                Shop Bal Ganesh Kit →
+              </Link>
+            </motion.div>
+          )}
 
           {cart.some((it) => it.id === product.id) && (
             <div className="pdp-in-cart-note">

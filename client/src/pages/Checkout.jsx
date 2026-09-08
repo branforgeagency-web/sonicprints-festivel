@@ -73,7 +73,7 @@ function loadRazorpayScript() {
 }
 
 export default function Checkout() {
-  const { cart, cartSubtotal, shipping, unitPrice, lineLabel, clearCart, setQty, removeAt } = useCart();
+  const { cart, cartSubtotal, shipping, unitPrice, lineLabel, clearCart, setQty, removeAt, isProductAvailable } = useCart();
   const { config, productById } = useSite();
   const toast = useToast();
   const navigate = useNavigate();
@@ -92,6 +92,11 @@ export default function Checkout() {
   const razorpayReady = !!config.razorpayKeyId;
   const onlineReady = cashfreeReady || razorpayReady;
   const needForFree = (config.freeShipAbove || 1499) - cartSubtotal;
+
+  const hasUnavailable = cart.some((it) => {
+    const p = productById(it.id);
+    return p && !isProductAvailable(p);
+  });
 
   useEffect(() => {
     if (cart && cart.length > 0) {
@@ -133,6 +138,10 @@ export default function Checkout() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (!cart.length) { toast("Your cart is empty"); return; }
+    if (hasUnavailable) {
+      toast("Your cart contains unavailable products. Only the Bal Ganesh Kit is available.");
+      return;
+    }
 
     const fieldErrors = validate();
     if (Object.keys(fieldErrors).length) {
@@ -389,8 +398,8 @@ export default function Checkout() {
                 </div>
 
                 <Magnetic className="fx-block" strength={0.22} cap={5} style={{ marginTop: 8 }}>
-                  <button className="btn btn-gold btn-lg btn-wide" type="submit" disabled={submitting}>
-                    {submitting ? "Placing order…" : "Place order"}
+                  <button className="btn btn-gold btn-lg btn-wide" type="submit" disabled={submitting || hasUnavailable}>
+                    {submitting ? "Placing order…" : hasUnavailable ? "Unavailable items in cart" : "Place order"}
                   </button>
                 </Magnetic>
                 <p className="note-s">
@@ -404,6 +413,11 @@ export default function Checkout() {
           <div className="sum">
             <div className="panel">
               <h2 style={{ fontSize: 24, marginBottom: 14 }}>Order summary</h2>
+              {hasUnavailable && (
+                <div style={{ background: "#fff1f2", border: "1px solid #fecdd3", color: "#9f1239", padding: "10px 14px", borderRadius: 8, fontSize: 13, marginBottom: 14, lineHeight: 1.5 }}>
+                  ⚠️ Some items in your cart are currently unavailable. Only the Bal Ganesh Kit can be ordered. Please remove unavailable items.
+                </div>
+              )}
               <div>
                 {!cart.length ? (
                   <p style={{ color: "var(--muted)", padding: "14px 0" }}>
@@ -413,12 +427,16 @@ export default function Checkout() {
                   cart.map((it, i) => {
                     const p = productById(it.id);
                     if (!p) return null;
+                    const isAvail = isProductAvailable(p);
                     const lbl = lineLabel(it);
                     return (
                       <div className="sumrow" key={i}>
                         <img src={imgUrl(p.img, "sm")} alt={p.name || ""} loading="lazy" decoding="async" />
                         <div>
-                          <b>{p.name}</b>
+                          <b>
+                            {p.name}
+                            {!isAvail && <span style={{ color: "#e11d48", fontSize: 11, fontWeight: 700, marginLeft: 6 }}>· Unavailable</span>}
+                          </b>
                           {lbl && <span style={{ display: "block", fontSize: 12, color: "var(--muted)", marginBottom: 4 }}>{lbl}</span>}
                           <div className="sumrow-qty-controls">
                             <button
@@ -440,14 +458,15 @@ export default function Checkout() {
                             >
                               +
                             </button>
-                            {/* <button
+                            <button
                               type="button"
                               className="sumrow-remove-btn"
                               onClick={() => removeAt(i)}
                               title="Remove item"
+                              style={{ color: "#e11d48", fontSize: 11, marginLeft: 8, background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
                             >
                               Remove
-                            </button> */}
+                            </button>
                           </div>
                         </div>
                         <strong style={{ fontFamily: "var(--serif)", fontSize: 17, color: "var(--teal-700)" }}>

@@ -22,6 +22,7 @@ export default function KitsSection() {
       img: imgUrl(p.img),
       price: money(p.price),
       slug: p.slug,
+      isAvailable: p.isAvailable !== false && p.id === "kids",
       slideNum: String(i + 1).padStart(2, "0")
     }));
   }, [products]);

@@ -19,6 +19,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
   const priceLabel = product.variants?.length ? `From ${money(product.price)}` : money(product.price);
   const priceSub = product.variants?.length ? "Starting price" : "All inclusive";
   const isKids = KIDS_PRODUCT_IDS.includes(product.id);
+  const isAvailable = product.isAvailable !== false && product.id === "kids";
 
   // Check if this item is in the cart
   const cartIndex = cart.findIndex((it) => it.id === product.id);
@@ -35,7 +36,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
   if (variant === "table") {
     return (
       <motion.article
-        className={`kit-row-item${isKids ? " is-kids" : ""}${revealClass ? ` ${revealClass}` : ""}`}
+        className={`kit-row-item${isKids ? " is-kids" : ""}${!isAvailable ? " is-unavailable" : ""}${revealClass ? ` ${revealClass}` : ""}`}
         variants={reduced ? REDUCED : VARIANTS.cardIn}
         transition={{ duration: 0.4, ease: EASE_SILK }}
       >
@@ -56,7 +57,10 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
         </Link>
         <div className="kri-info">
           <div className="kri-head">
-            <span className="kri-subtitle">{product.subtitle}</span>
+            <span className="kri-subtitle">
+              {product.subtitle}
+              {!isAvailable && <span className="kri-unavailable-tag"> · Unavailable</span>}
+            </span>
             <h4 className="kri-title">
               <Link to={`/kit/${product.slug}`} onClick={openProduct}>
                 {product.name}
@@ -74,34 +78,45 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
           <Link to={`/kit/${product.slug}`} onClick={openProduct} className="kcm-btn kcm-btn-outline">
             View
           </Link>
-          {cartQty > 0 ? (
-            <div className="qty-stepper-btn qty-stepper-sm" role="group" aria-label={`Adjust ${product.name} quantity`}>
+          {isAvailable ? (
+            cartQty > 0 ? (
+              <div className="qty-stepper-btn qty-stepper-sm" role="group" aria-label={`Adjust ${product.name} quantity`}>
+                <button
+                  type="button"
+                  className="qsb-btn"
+                  onClick={() => setQty(cartIndex, -1)}
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <span className="qsb-count">{cartQty} in cart</span>
+                <button
+                  type="button"
+                  className="qsb-btn"
+                  onClick={() => setQty(cartIndex, 1)}
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            ) : (
               <button
                 type="button"
-                className="qsb-btn"
-                onClick={() => setQty(cartIndex, -1)}
-                aria-label="Decrease quantity"
+                onClick={() => addToCart(product.id, { qty: 1 })}
+                className="kcm-btn kcm-btn-primary"
+                aria-label={`Add ${product.name} to cart`}
               >
-                −
+                <Icon name="cart" size={14} /> Add
               </button>
-              <span className="qsb-count">{cartQty} in cart</span>
-              <button
-                type="button"
-                className="qsb-btn"
-                onClick={() => setQty(cartIndex, 1)}
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-            </div>
+            )
           ) : (
             <button
               type="button"
-              onClick={() => addToCart(product.id, { qty: 1 })}
-              className="kcm-btn kcm-btn-primary"
-              aria-label={`Add ${product.name} to cart`}
+              disabled
+              className="kcm-btn kcm-btn-disabled"
+              aria-disabled="true"
             >
-              <Icon name="cart" size={14} /> Add
+              Unavailable
             </button>
           )}
         </div>
@@ -113,7 +128,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
   if (variant === "hero") {
     return (
       <motion.article
-        className={`kit-bento-hero${isKids ? " is-kids" : ""}${revealClass ? ` ${revealClass}` : ""}`}
+        className={`kit-bento-hero${isKids ? " is-kids" : ""}${!isAvailable ? " is-unavailable" : ""}${revealClass ? ` ${revealClass}` : ""}`}
         variants={reduced ? REDUCED : VARIANTS.cardIn}
         transition={{ duration: 0.6, ease: EASE_SILK }}
         whileHover={reduced ? undefined : { y: -6 }}
@@ -133,15 +148,19 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
             className="kbh-img"
           />
           <div className="kcm-badges">
-            <span className="kcm-badge kcm-badge-featured">🌟 Featured Kit</span>
-            {product.badge && <span className="kcm-badge">{product.badge}</span>}
+            {!isAvailable && <span className="kcm-badge kcm-badge-unavailable">Unavailable</span>}
+            {isAvailable && <span className="kcm-badge kcm-badge-featured">🌟 Featured Kit</span>}
+            {isAvailable && product.badge && <span className="kcm-badge">{product.badge}</span>}
             {isKids && <span className="kcm-badge kcm-badge-kids">✨ Bappa Approved</span>}
           </div>
         </Link>
 
         <div className="kbh-content">
           <div className="kbh-header">
-            <span className="kcm-subtitle">{product.subtitle}</span>
+            <span className="kcm-subtitle">
+              {product.subtitle}
+              {!isAvailable && <span className="kri-unavailable-tag"> · Unavailable</span>}
+            </span>
             <h3 className="kbh-title">
               <Link to={`/kit/${product.slug}`} onClick={openProduct}>
                 {product.name}
@@ -172,34 +191,45 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
               <Link to={`/kit/${product.slug}`} onClick={openProduct} className="kcm-btn kcm-btn-outline">
                 Explore Kit <Icon name="arrow" size={14} />
               </Link>
-              {cartQty > 0 ? (
-                <div className="qty-stepper-btn" role="group" aria-label={`Adjust ${product.name} quantity`}>
+              {isAvailable ? (
+                cartQty > 0 ? (
+                  <div className="qty-stepper-btn" role="group" aria-label={`Adjust ${product.name} quantity`}>
+                    <button
+                      type="button"
+                      className="qsb-btn"
+                      onClick={() => setQty(cartIndex, -1)}
+                      aria-label="Decrease quantity"
+                    >
+                      −
+                    </button>
+                    <span className="qsb-count">{cartQty} in cart</span>
+                    <button
+                      type="button"
+                      className="qsb-btn"
+                      onClick={() => setQty(cartIndex, 1)}
+                      aria-label="Increase quantity"
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
                   <button
                     type="button"
-                    className="qsb-btn"
-                    onClick={() => setQty(cartIndex, -1)}
-                    aria-label="Decrease quantity"
+                    onClick={() => addToCart(product.id, { qty: 1 })}
+                    className="kcm-btn kcm-btn-primary"
+                    aria-label={`Add ${product.name} to cart`}
                   >
-                    −
+                    <Icon name="cart" size={15} /> Add to Cart
                   </button>
-                  <span className="qsb-count">{cartQty} in cart</span>
-                  <button
-                    type="button"
-                    className="qsb-btn"
-                    onClick={() => setQty(cartIndex, 1)}
-                    aria-label="Increase quantity"
-                  >
-                    +
-                  </button>
-                </div>
+                )
               ) : (
                 <button
                   type="button"
-                  onClick={() => addToCart(product.id, { qty: 1 })}
-                  className="kcm-btn kcm-btn-primary"
-                  aria-label={`Add ${product.name} to cart`}
+                  disabled
+                  className="kcm-btn kcm-btn-disabled"
+                  aria-disabled="true"
                 >
-                  <Icon name="cart" size={15} /> Add to Cart
+                  Unavailable
                 </button>
               )}
             </div>
@@ -212,7 +242,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
   /* --- Variant 3: Default Bento Tile View --- */
   return (
     <motion.article
-      className={`kit-card-modern${isKids ? " is-kids" : ""}${revealClass ? ` ${revealClass}` : ""}`}
+      className={`kit-card-modern${isKids ? " is-kids" : ""}${!isAvailable ? " is-unavailable" : ""}${revealClass ? ` ${revealClass}` : ""}`}
       variants={reduced ? REDUCED : VARIANTS.cardIn}
       transition={{ duration: 0.6, ease: EASE_SILK }}
       whileHover={reduced ? undefined : { y: -8 }}
@@ -235,14 +265,18 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
           className="kcm-img"
         />
         <div className="kcm-badges">
-          {product.badge && <span className="kcm-badge">{product.badge}</span>}
+          {!isAvailable && <span className="kcm-badge kcm-badge-unavailable">Unavailable</span>}
+          {isAvailable && product.badge && <span className="kcm-badge">{product.badge}</span>}
           {isKids && <span className="kcm-badge kcm-badge-kids">✨ Bappa Approved</span>}
         </div>
       </Link>
 
       {/* Content Body */}
       <div className="kcm-content">
-        <div className="kcm-subtitle">{product.subtitle}</div>
+        <div className="kcm-subtitle">
+          {product.subtitle}
+          {!isAvailable && <span className="kri-unavailable-tag"> · Unavailable</span>}
+        </div>
         <h3 className="kcm-title">
           <Link to={`/kit/${product.slug}`} onClick={openProduct}>
             {product.name}
@@ -282,35 +316,47 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
             >
               View
             </Link>
-            {cartQty > 0 ? (
-              <div className="qty-stepper-btn" role="group" aria-label={`Adjust ${product.name} quantity`}>
+            {isAvailable ? (
+              cartQty > 0 ? (
+                <div className="qty-stepper-btn" role="group" aria-label={`Adjust ${product.name} quantity`}>
+                  <button
+                    type="button"
+                    className="qsb-btn"
+                    onClick={() => setQty(cartIndex, -1)}
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <span className="qsb-count">{cartQty} in cart</span>
+                  <button
+                    type="button"
+                    className="qsb-btn"
+                    onClick={() => setQty(cartIndex, 1)}
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+              ) : (
                 <button
                   type="button"
-                  className="qsb-btn"
-                  onClick={() => setQty(cartIndex, -1)}
-                  aria-label="Decrease quantity"
+                  onClick={() => addToCart(product.id, { qty: 1 })}
+                  className="kcm-btn kcm-btn-primary"
+                  aria-label={`Add ${product.name} to cart`}
+                  title="Add to cart"
                 >
-                  −
+                  <Icon name="cart" size={15} /> Add to Cart
                 </button>
-                <span className="qsb-count">{cartQty} in cart</span>
-                <button
-                  type="button"
-                  className="qsb-btn"
-                  onClick={() => setQty(cartIndex, 1)}
-                  aria-label="Increase quantity"
-                >
-                  +
-                </button>
-              </div>
+              )
             ) : (
               <button
                 type="button"
-                onClick={() => addToCart(product.id, { qty: 1 })}
-                className="kcm-btn kcm-btn-primary"
-                aria-label={`Add ${product.name} to cart`}
-                title="Add to cart"
+                disabled
+                className="kcm-btn kcm-btn-disabled"
+                aria-disabled="true"
+                title="Currently unavailable"
               >
-                <Icon name="cart" size={15} /> Add to Cart
+                Unavailable
               </button>
             )}
           </div>

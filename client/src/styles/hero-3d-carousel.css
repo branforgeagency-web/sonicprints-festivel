@@ -664,3 +664,20 @@
     animation: none !important;
   }
 }
+
+.hero-3d-unavailable-chip {
+  color: #f87171 !important;
+  font-weight: 700;
+}
+
+.hero-3d-shop-btn-unavailable {
+  background: rgba(255, 255, 255, 0.72) !important;
+  color: #475569 !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.hero-3d-card-unavailable .hero-3d-card-img {
+  filter: grayscale(18%);
+  opacity: 0.9;
+}
+

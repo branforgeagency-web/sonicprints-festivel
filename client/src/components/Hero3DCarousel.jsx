@@ -402,17 +402,20 @@ export default function Hero3DCarousel({
                     <div className="hero-3d-card-info">
                       <span className="hero-3d-card-category">
                         {item.category || "Collection"} {item.price ? ` · ${item.price}` : ""}
+                        {item.isAvailable === false && (
+                          <span className="hero-3d-unavailable-chip"> · Unavailable</span>
+                        )}
                       </span>
                       <h3 className="hero-3d-card-title">{item.title}</h3>
                     </div>
 
                     <div className="hero-3d-card-badge" aria-label={`Slide number ${item.slideNum || String(idx + 1).padStart(2, "0")}`}>
-                      {item.slideNum || String(idx + 1).padStart(2, "0")}
+                      {item.isAvailable === false ? "✕" : (item.slideNum || String(idx + 1).padStart(2, "0"))}
                     </div>
                   </div>
 
-                  <span className="hero-3d-shop-btn-bottom">
-                    Shop Now →
+                  <span className={`hero-3d-shop-btn-bottom${item.isAvailable === false ? " hero-3d-shop-btn-unavailable" : ""}`}>
+                    {item.isAvailable === false ? "Unavailable · View Details →" : "Shop Now →"}
                   </span>
                 </div>
               </>
@@ -421,7 +424,7 @@ export default function Hero3DCarousel({
             return (
               <div
                 key={item.id || idx}
-                className={`hero-3d-card ${isActive ? "hero-3d-card-active" : ""}`}
+                className={`hero-3d-card ${isActive ? "hero-3d-card-active" : ""}${item.isAvailable === false ? " hero-3d-card-unavailable" : ""}`}
                 style={style}
                 onClick={() => handleCardClick(item, idx, isActive)}
                 role="link"
