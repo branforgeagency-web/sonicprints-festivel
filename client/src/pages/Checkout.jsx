@@ -231,10 +231,29 @@ export default function Checkout() {
           }
         }
       } else {
+        // Open WhatsApp so user can send the prefilled order message
         openWhatsApp(config.whatsapp, whatsappText);
-        clearCart();
+
+        // Save order confirmation data
         rememberOrderConfirmation(form.name, false, displayOrderId, order);
-        navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId, order } });
+
+        // When the user returns to the browser tab after sending on WhatsApp,
+        // navigate to the order confirmation page and clear the cart.
+        const handleReturnFromWhatsApp = () => {
+          window.removeEventListener("focus", handleReturnFromWhatsApp);
+          clearCart();
+          navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId, order } });
+        };
+
+        window.addEventListener("focus", handleReturnFromWhatsApp);
+
+        // Fallback: in case window focus doesn't trigger (e.g. some mobile browsers),
+        // transition after user has had time to interact with WhatsApp
+        setTimeout(() => {
+          window.removeEventListener("focus", handleReturnFromWhatsApp);
+          clearCart();
+          navigate("/order-confirmation", { state: { name: form.name, paid: false, orderId: displayOrderId, order } });
+        }, 1500);
       }
     } catch (err) {
       toast(err?.response?.data?.message || "Could not place the order — please try again");

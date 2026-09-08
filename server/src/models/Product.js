@@ -58,6 +58,7 @@ const ProductSchema = new mongoose.Schema(
     whyHeadline: { type: String, default: "" },
 
     contents: { type: [String], default: [] }, // "inside the box" numbered items
+    insideTheBox: { type: mongoose.Schema.Types.Mixed, default: null },
     specs: { type: [SpecRowSchema], default: [] },
     bulkPricing: { type: [PriceTierSchema], default: [] },
 

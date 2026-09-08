@@ -88,7 +88,7 @@ export default function Bulk() {
       "url": "https://sonicprints.shop"
     },
     "serviceType": "Corporate Gift Supplier",
-    "description": "Bulk supply of eco-friendly clay Ganesh idols, customized corporate puja boxes, school DIY activity kits, and retail dealer display stands for Ganesh Chaturthi 2026.",
+    "description": "Bulk supply of eco-friendly clay Ganesh idols, customized corporate puja boxes, school Bal Ganesh activity kits, and retail dealer display stands for Ganesh Chaturthi 2026.",
     "areaServed": {
       "@type": "Country",
       "name": "India"
@@ -98,7 +98,7 @@ export default function Bulk() {
       "priceCurrency": "INR",
       "lowPrice": "185",
       "highPrice": "1999",
-      "offerCount": "6"
+      "offerCount": "5"
     }
   };
 
@@ -106,7 +106,7 @@ export default function Bulk() {
     <div className="page luxury-bulk-page light-gold-theme">
       <SEOHead
         title="Corporate Ganesh Festival Gifting & Bulk Puja Kits Wholesale 2026 | Sonic Prints"
-        description="Direct factory rates on corporate Ganesh gifts, branded employee puja boxes, school DIY kits, and dealer displays for Ganesh Chaturthi 2026. Request rate card & samples."
+        description="Direct factory rates on corporate Ganesh gifts, branded employee puja boxes, school kids kits, and dealer displays for Ganesh Chaturthi 2026. Request rate card & samples."
         keywords="Corporate Ganesh gifting, bulk ganesh idols, wholesale ganesh puja kit, employee festival gift box, ganesh return gifts wholesale, dealer ganesh display stand, custom logo ganesh kit"
         canonical="/bulk"
         schema={bulkSchema}
@@ -138,7 +138,7 @@ export default function Bulk() {
           </h1>
 
           <p className="phead-desc" style={{ color: "#4A615D" }}>
-            Six signature kits, direct factory pricing, and one seamless supply chain.
+            Five signature kits, direct factory pricing, and one seamless supply chain.
             Whether gifting 500 corporate boxes, stocking a retail counter, or organising a school activity —
             we provide same-day rate cards and physical samples before you commit.
           </p>

@@ -32,21 +32,11 @@ const SIX_PRODUCTS = [
     slug: "bal-ganesh-kids-kit",
     name: "Bal Ganesh Kids Kit",
     subtitle: "Story & Craft Activity Box",
-    price: 349,
+    price: 699,
     badge: "Kids Favourite",
     img: "/assets/img/kids.jpg",
     desc: "Connecting young hearts to living culture through tactile clay moulding, illustrated stories, and eco certificates.",
     tags: ["Storybook", "Organic Clay", "Eco Certificate"]
-  },
-  {
-    slug: "make-your-own-ganesha",
-    name: "Make Your Own Ganesha",
-    subtitle: "DIY River Clay Sculpting",
-    price: 499,
-    badge: "100% Eco Visarjan",
-    img: "/assets/img/diy.jpg",
-    desc: "Hand-sculpt your own Bappa with pure river clay, wooden carving tools, and organic seed ball for balcony visarjan.",
-    tags: ["River Terracotta", "Wooden Tools", "Seed Visarjan"]
   },
   {
     slug: "gruha-ganapathi-mandap",
@@ -86,8 +76,8 @@ export default function BlogList() {
   return (
     <div className="page blog-minimal-page">
       <SEOHead
-        title="Festival Collection | 6 Sacred Kits | Sonic Prints 2026"
-        description="Discover our six curated Ganesh Festival 2026 collections — crafted with natural clay, sacred samagri, and authentic South Indian devotion."
+        title="Festival Collection | Sacred Kits | Sonic Prints 2026"
+        description="Discover our curated Ganesh Festival 2026 collections — crafted with natural clay, sacred samagri, and authentic South Indian devotion."
         canonical="/blog"
       />
 
@@ -101,15 +91,15 @@ export default function BlogList() {
             transition={{ duration: 0.5, ease: EASE_SILK }}
           >
             <span className="bm-eyebrow">✦ 2026 FESTIVAL COLLECTION</span>
-            <h1 className="bm-title">Six Kits. Crafted for Celebration.</h1>
+            <h1 className="bm-title">Five Kits. Crafted for Celebration.</h1>
             <p className="bm-subtitle">
-              One design system, six complete experiences — crafted with 100% natural clay, sealed prasadam, and sacred tradition.
+              One design system, five complete experiences — crafted with 100% natural clay, sealed prasadam, and sacred tradition.
             </p>
           </motion.div>
         </div>
       </header>
 
-      {/* 6 Products Clean Grid */}
+      {/* 5 Products Clean Grid */}
       <section className="bm-grid-section">
         <div className="wrap">
           <div className="bm-grid">

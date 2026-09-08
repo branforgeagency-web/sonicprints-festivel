@@ -97,13 +97,13 @@ export default function SitemapPage() {
                 </div>
                 <div style={{ background: "#FAF7F2", border: "1px solid rgba(184,142,68,0.2)", borderRadius: 12, padding: "18px 20px" }}>
                   <Link to="/blog" style={{ fontSize: 15.5, fontWeight: 700, color: "#0A2E2B", textDecoration: "none", display: "block", marginBottom: 4 }}>
-                    Festival Collection Stories &amp; 6 Kits →
+                    Festival Collection Stories &amp; Kits →
                   </Link>
                   <span style={{ fontSize: 12, color: "#8C651F", fontWeight: 600, display: "block" }}>
                     Complete 2026 Collection Feature
                   </span>
                   <p style={{ fontSize: 12.5, color: "#5C7370", margin: "6px 0 0", lineHeight: 1.4 }}>
-                    Shubharambh Mini, Employee Puja Box, Bal Ganesh Kids Kit, Make Your Own Ganesha, Gruha Ganapathi Mandap, and Rotating Chakra.
+                    Shubharambh Mini, Employee Puja Box, Bal Ganesh Kids Kit, Gruha Ganapathi Mandap, and Rotating Chakra.
                   </p>
                 </div>
               </div>

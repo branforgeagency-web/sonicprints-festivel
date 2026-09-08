@@ -64,7 +64,12 @@
     },
     {
       "source": "/diy",
-      "destination": "/kit/make-your-own-ganesha",
+      "destination": "/kit/bal-ganesh-kids-kit",
+      "permanent": true
+    },
+    {
+      "source": "/kit/make-your-own-ganesha",
+      "destination": "/kit/bal-ganesh-kids-kit",
       "permanent": true
     },
     {

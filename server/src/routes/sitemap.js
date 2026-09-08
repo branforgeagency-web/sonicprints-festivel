@@ -13,7 +13,6 @@ const FALLBACK_SLUGS = [
   "shubharambh-mini",
   "employee-puja-box",
   "bal-ganesh-kids-kit",
-  "make-your-own-ganesha",
   "gruha-ganapathi-mandap",
   "rotating-chakra-backdrop"
 ];

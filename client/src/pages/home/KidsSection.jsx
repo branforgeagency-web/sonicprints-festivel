@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { KIDS_JOURNEY } from "../../data/content.js";
 import { money, useSite, imgUrl } from "../../context/SiteContext.jsx";
+import { useCart } from "../../context/CartContext.jsx";
 import { Reveal, RevealGroup } from "../../components/fx/Reveal.jsx";
 import SplitText from "../../components/fx/SplitText.jsx";
 import Icon from "../../components/Icon.jsx";
@@ -13,10 +14,16 @@ const STEP_ICONS = ["📖", "🎁", "🎨", "✨", "🪔"];
 
 export default function KidsSection() {
   const { reduced } = useMotionProfile();
-  const { addToCart } = useSite();
+  const { products } = useSite();
+  const { cart, addToCart, setQty, removeAt } = useCart();
   const [activeStep, setActiveStep] = useState(0);
 
+  const balGaneshPrice = products?.find((p) => p.id === "kids")?.price || 699;
   const currentStep = KIDS_JOURNEY[activeStep] || KIDS_JOURNEY[0];
+
+  const kidsCartIndex = cart.findIndex((it) => it.id === "kids");
+  const kidsCartItem = kidsCartIndex >= 0 ? cart[kidsCartIndex] : null;
+  const kidsCartQty = kidsCartItem ? kidsCartItem.qty : 0;
 
   return (
     <section className="sec sec-kids-modern" id="kids">
@@ -135,14 +142,14 @@ export default function KidsSection() {
           </AnimatePresence>
         </div>
 
-        {/* Featured Kids Kits Showcase (No Boxed Cards) */}
+        {/* Featured Kids Kit Showcase */}
         <Reveal variant="fadeUp" delay={0.2} style={{ marginTop: 48 }}>
           <div className="kids-showcase-stream">
             <div className="kids-showcase-heading">
-              <span>🎁 Featured Kids &amp; DIY Activity Kits</span>
+              <span>🎁 Featured Kids Festival Activity Kit</span>
             </div>
 
-            {/* Product 1: Bal Ganesh */}
+            {/* Bal Ganesh Kit */}
             <div className="kids-feature-row">
               <div className="kfr-info">
                 <div className="kfr-meta">
@@ -162,56 +169,118 @@ export default function KidsSection() {
 
               <div className="kfr-action-block">
                 <div className="kfr-price-wrap">
-                  <b className="kfr-price">{money(349)}</b>
+                  <b className="kfr-price">{money(balGaneshPrice)}</b>
                   <span className="kfr-price-sub">All inclusive</span>
                 </div>
                 <div className="kpc-btn-group">
                   <Link to="/kit/bal-ganesh-kids-kit" className="btn btn-line btn-sm">
                     <Icon name="eye" size={15} /> View Details
                   </Link>
-                  <button
-                    onClick={() => addToCart("kids", { qty: 1 })}
-                    className="btn btn-gold btn-sm"
-                  >
-                    <Icon name="cart" size={15} /> Add to Cart
-                  </button>
+                  {kidsCartQty > 0 ? (
+                    <div className="qty-stepper-btn" role="group" aria-label="Adjust Bal Ganesh Kit quantity in cart">
+                      <button
+                        type="button"
+                        className="qsb-btn"
+                        onClick={() => setQty(kidsCartIndex, -1)}
+                        aria-label="Decrease quantity"
+                        title="Decrease quantity"
+                      >
+                        −
+                      </button>
+                      <span className="qsb-count" title="Quantity in cart">
+                        {kidsCartQty} in cart
+                      </span>
+                      <button
+                        type="button"
+                        className="qsb-btn"
+                        onClick={() => setQty(kidsCartIndex, 1)}
+                        aria-label="Increase quantity"
+                        title="Increase quantity"
+                      >
+                        +
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => addToCart("kids", { qty: 1 })}
+                      className="btn btn-gold btn-sm"
+                    >
+                      <Icon name="cart" size={15} /> Add to Cart
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Product 2: Make Your Own Ganesha (DIY) */}
-            <div className="kids-feature-row">
-              <div className="kfr-info">
-                <div className="kfr-meta">
-                  <span className="kfr-tag kfr-tag-diy">🎨 DIY Hands-on Craft</span>
-                  <span className="kfr-sub">DIY Festival Activity Kit</span>
+            {/* Bal Ganesh - What is inside the box (21 Items) */}
+            <div className="kids-inside-box-wrapper">
+              <div className="kids-inside-box-banner">
+                <div className="kids-inside-banner-left">
+                  <div className="eyebrow">📦 What's Inside The Box (21 Items)</div>
+                  <h4>A Festival They Won't Just Watch. They'll Experience It.</h4>
+                  <p>Everything carefully curated for hands-on crafting, learning, and celebration.</p>
                 </div>
-                <h3 className="kfr-title">Make Your Own Ganesha</h3>
-                <p className="kfr-text">
-                  Natural clay, reusable food-grade mould, paints, toran, rangoli stencil &amp; guided eco visarjan.
-                </p>
-                <div className="kpc-highlights">
-                  <span className="kpc-pill">✦ Eco Clay</span>
-                  <span className="kpc-pill">✦ Reusable Mould</span>
-                  <span className="kpc-pill">✦ Paints &amp; Stencil</span>
-                </div>
+                <Link to="/kit/bal-ganesh-kids-kit" className="btn btn-line btn-sm">
+                  Explore Full Kit <Icon name="arrow" />
+                </Link>
               </div>
 
-              <div className="kfr-action-block">
-                <div className="kfr-price-wrap">
-                  <b className="kfr-price">{money(499)}</b>
-                  <span className="kfr-price-sub">All inclusive</span>
+              {/* 6 Key Highlights Badges */}
+              <div className="box-badges-row" style={{ margin: "16px 0 24px" }}>
+                <span className="box-badge-pill"><span>🕉️</span> Bala Vinayak Idol</span>
+                <span className="box-badge-pill"><span>📖</span> Story &amp; Activity</span>
+                <span className="box-badge-pill"><span>🏷️</span> Sticker &amp; Labels</span>
+                <span className="box-badge-pill"><span>🪔</span> Family Puja Guide</span>
+                <span className="box-badge-pill"><span>📜</span> Certificate</span>
+                <span className="box-badge-pill"><span>🌿</span> Eco-friendly</span>
+              </div>
+
+              {/* 2 Main Categories */}
+              <div className="box-categories-grid">
+                {/* Column 1: Build & Decorate Bappa (11 Items) */}
+                <div className="box-category-card">
+                  <div className="box-category-head box-category-head-orange">
+                    <h3 className="box-category-title">
+                      <span>🛠️</span> BUILD &amp; DECORATE BAPPA
+                    </h3>
+                    <span className="box-category-badge">11 Items Included</span>
+                  </div>
+                  <ul className="box-items-list">
+                    <li className="box-item-row"><span className="box-item-num">1</span><span className="box-item-icon">🕉️</span><span className="box-item-name">Bal Ganesh Clay Idol (2.5 - 3 inch natural Clay)</span></li>
+                    <li className="box-item-row"><span className="box-item-num">2</span><span className="box-item-icon">🏛️</span><span className="box-item-name">Mandap Backdrop</span></li>
+                    <li className="box-item-row"><span className="box-item-num">3</span><span className="box-item-icon">🪑</span><span className="box-item-name">Mandap Base</span></li>
+                    <li className="box-item-row"><span className="box-item-num">4</span><span className="box-item-icon">🌸</span><span className="box-item-name">Mini Rangoli Sticker</span></li>
+                    <li className="box-item-row"><span className="box-item-num">5</span><span className="box-item-icon">🏮</span><span className="box-item-name">DIY Paper Toran</span></li>
+                    <li className="box-item-row"><span className="box-item-num">6</span><span className="box-item-icon">🔴</span><span className="box-item-name">Kungumam</span></li>
+                    <li className="box-item-row"><span className="box-item-num">7</span><span className="box-item-icon">🟡</span><span className="box-item-name">Turmeric</span></li>
+                    <li className="box-item-row"><span className="box-item-num">8</span><span className="box-item-icon">🧵</span><span className="box-item-name">Thread</span></li>
+                    <li className="box-item-row"><span className="box-item-num">9</span><span className="box-item-icon">🪡</span><span className="box-item-name">Needle</span></li>
+                    <li className="box-item-row"><span className="box-item-num">10</span><span className="box-item-icon">🪔</span><span className="box-item-name">Agarbathi</span></li>
+                    <li className="box-item-row"><span className="box-item-num">11</span><span className="box-item-icon">📜</span><span className="box-item-name">21 Names Of Ganesha Card</span></li>
+                  </ul>
                 </div>
-                <div className="kpc-btn-group">
-                  <Link to="/kit/make-your-own-ganesha" className="btn btn-line btn-sm">
-                    <Icon name="eye" size={15} /> View Details
-                  </Link>
-                  <button
-                    onClick={() => addToCart("diy", { qty: 1 })}
-                    className="btn btn-gold btn-sm"
-                  >
-                    <Icon name="cart" size={15} /> Add to Cart
-                  </button>
+
+                {/* Column 2: Learn • Create • Celebrate (10 Items) */}
+                <div className="box-category-card">
+                  <div className="box-category-head box-category-head-gold">
+                    <h3 className="box-category-title">
+                      <span>🎨</span> LEARN • CREATE • CELEBRATE
+                    </h3>
+                    <span className="box-category-badge">10 Items Included</span>
+                  </div>
+                  <ul className="box-items-list">
+                    <li className="box-item-row"><span className="box-item-num">1</span><span className="box-item-icon">📖</span><span className="box-item-name">Bal Ganesh Story Book</span></li>
+                    <li className="box-item-row"><span className="box-item-num">2</span><span className="box-item-icon">🪔</span><span className="box-item-name">My Little Puja Guide</span></li>
+                    <li className="box-item-row"><span className="box-item-num">3</span><span className="box-item-icon">🎨</span><span className="box-item-name">Colouring &amp; Activity Book</span></li>
+                    <li className="box-item-row"><span className="box-item-num">4</span><span className="box-item-icon">🖍️</span><span className="box-item-name">Colour Sketch Pen</span></li>
+                    <li className="box-item-row"><span className="box-item-num">5</span><span className="box-item-icon">🖌️</span><span className="box-item-name">Colour Paint with brush</span></li>
+                    <li className="box-item-row"><span className="box-item-num">6</span><span className="box-item-icon">✨</span><span className="box-item-name">Ganesh Sticker Sheet (No 1)</span></li>
+                    <li className="box-item-row"><span className="box-item-num">7</span><span className="box-item-icon">✨</span><span className="box-item-name">Ganesh Sticker Sheet (No 2)</span></li>
+                    <li className="box-item-row"><span className="box-item-num">8</span><span className="box-item-icon">🏷️</span><span className="box-item-name">Labels For Book &amp; Notes</span></li>
+                    <li className="box-item-row"><span className="box-item-num">9</span><span className="box-item-icon">🙏</span><span className="box-item-name">Family Sankalp Card</span></li>
+                    <li className="box-item-row"><span className="box-item-num">10</span><span className="box-item-icon">🏅</span><span className="box-item-name">Little Ganesha Certificate</span></li>
+                  </ul>
                 </div>
               </div>
             </div>

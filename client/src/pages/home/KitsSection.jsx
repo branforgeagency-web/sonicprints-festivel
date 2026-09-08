@@ -38,11 +38,11 @@ export default function KitsSection() {
           </Reveal>
           <SplitText
             as="h2"
-            text={"Six Kits. Every Kind of Celebration."}
+            text={"Five Kits. Every Kind of Celebration."}
             shimmer={["Kits."]}
           />
           <Reveal variant="fadeUp" delay={0.18} as="p" duration={0.7}>
-            One design system, six audiences — a hostel room, corporate floor, classroom, child&apos;s afternoon,
+            One design system, every kind of celebration — a hostel room, corporate floor, classroom, child&apos;s afternoon,
             living room, or retail counter. Crafted with 100% natural clay &amp; sealed prasadam.
           </Reveal>
 

@@ -60,7 +60,7 @@ export default function OrderConfirmation() {
               <svg viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
             </div>
             <h1 style={{ fontSize: "clamp(32px,4vw,50px)", marginBottom: 12 }}>
-              {paid ? "Payment received" : "Order sent"}
+              {paid ? "Payment received — Order placed" : "Order placed"}
             </h1>
             {effective?.orderId && (
               <div style={{
@@ -93,8 +93,8 @@ export default function OrderConfirmation() {
             )}
             <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 560, margin: "0 auto 26px" }}>
               {paid
-                ? `Thank you, ${name}. Your payment is confirmed and our team will WhatsApp you the delivery schedule shortly.`
-                : `Thank you, ${name}. Your order has opened in WhatsApp — press send there and our team will confirm availability, price and the delivery date on the same chat.`}
+                ? `Thank you, ${name}. Your payment is confirmed and your order is placed. Our team will WhatsApp you the delivery schedule shortly.`
+                : `Thank you, ${name}. Your order has been placed! After sending the message in WhatsApp, our team will confirm your order details and delivery timeline.`}
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <Link className="btn btn-gold" to="/track">📦 Track Your Order Live →</Link>

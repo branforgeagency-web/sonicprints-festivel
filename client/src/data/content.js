@@ -25,11 +25,11 @@ export const AUDIENCES = [
     icon: "school",
     title: "Schools",
     line: "A festival the classroom can actually do",
-    text: "Bal Ganesh and Make-Your-Own kits with your school name printed on the labels and the certificate. Workshop-ready packs with a teacher's run sheet.",
+    text: "Bal Ganesh kits with your school name printed on the labels and the certificate. Workshop-ready packs with a teacher's run sheet.",
     bullets: [
       "School name & logo on labels and certificates",
       "Workshop run sheet for teachers",
-      "Age-graded 5–12 and 6–14 packs",
+      "Age-graded 5–12 packs",
       "Bulk packs from 50 units"
     ]
   },
@@ -53,7 +53,7 @@ export const AUDIENCES = [
     bullets: [
       "MRP printed, retail-ready packaging",
       "Free branded display stand at qualifying volume",
-      "Fast-moving ₹299 / ₹349 price points",
+      "Fast-moving ₹299 / ₹699 price points",
       "Replenishment within 48 hours in serviced cities"
     ]
   },
@@ -120,12 +120,12 @@ export const DEALER_CARDS = [
   {
     img: "display-main",
     title: "The Collection Stand",
-    text: "All six kits on one branded unit — arch header, tiered shelves, price rails and a base plinth."
+    text: "All five kits on one branded unit — arch header, tiered shelves, price rails and a base plinth."
   },
   {
     img: "display-kids",
     title: "The Kids Counter",
-    text: "Bal Ganesh and Make Your Own facing out — the fastest-moving unit in stationery and gift stores."
+    text: "Bal Ganesh facing out — the fastest-moving unit in stationery and gift stores."
   },
   {
     img: "display-chakra",
@@ -135,7 +135,7 @@ export const DEALER_CARDS = [
 ];
 
 export const HOW_STEPS = [
-  { title: "Choose your kits", text: "Pick from six ready collections, or tell us your audience and budget and we will build the mix." },
+  { title: "Choose your kits", text: "Pick from five ready collections, or tell us your audience and budget and we will build the mix." },
   { title: "Approve a sample", text: "We send photographs — or a physical sample for bulk orders — before a single box is packed." },
   { title: "Share your branding", text: "Logo, greeting message, employee or school names. We print sleeves, cards and certificates." },
   { title: "We pack and deliver", text: "Packed, quality-checked and dispatched to reach you before Ganesh Chaturthi." }
@@ -148,7 +148,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Are the idols eco-friendly?",
-    a: "Yes. Every idol in the collection is natural unbaked clay with non-toxic, water-soluble colouring — no plaster of Paris and no thermocol. All kits carry home-visarjan instructions, and the Make Your Own Ganesha kit includes a guided eco visarjan step."
+    a: "Yes. Every idol in the collection is natural unbaked clay with non-toxic, water-soluble colouring — no plaster of Paris and no thermocol. All kits carry home-visarjan instructions, and the Bal Ganesh kit includes an illustrated eco visarjan guide."
   },
   {
     q: "Can we print our company or school branding?",
@@ -175,15 +175,15 @@ export const BULK_SEGMENTS = [
     icon: "office",
     line: "Employee gifting that goes home and gets remembered",
     text: "Branded outer sleeves, a QR video greeting from your MD, employee name personalisation and named delivery slots. The idol and devotional items stay respectfully unbranded.",
-    recommended: "Employee Puja Box · Shubharambh Mini · Make Your Own Ganesha"
+    recommended: "Employee Puja Box · Shubharambh Mini · Gruha Ganapathi"
   },
   {
     id: "schools",
     name: "Schools",
     icon: "school",
     line: "A festival the classroom can actually do",
-    text: "Bal Ganesh and Make-Your-Own kits with your school name printed on the labels and the certificate. Workshop-ready packs with a teacher's run sheet.",
-    recommended: "Bal Ganesh · Make Your Own Ganesha · Shubharambh Mini"
+    text: "Bal Ganesh kits with your school name printed on the labels and the certificate. Workshop-ready packs with a teacher's run sheet.",
+    recommended: "Bal Ganesh · Shubharambh Mini"
   },
   {
     id: "colleges",
@@ -199,7 +199,7 @@ export const BULK_SEGMENTS = [
     icon: "shop",
     line: "Shelf-ready SKUs with a display that sells for you",
     text: "MRP-printed retail boxes, barcode-ready, plus a branded Sonic Prints display stand that turns two square feet of your shop into a festival counter.",
-    recommended: "Shubharambh Mini · Bal Ganesh · Make Your Own Ganesha"
+    recommended: "Shubharambh Mini · Bal Ganesh"
   },
   {
     id: "dealers",
@@ -220,7 +220,7 @@ export const BULK_SEGMENTS = [
 ];
 
 export const BULK_KIT_OPTIONS = [
-  "Shubharambh Mini", "Employee Puja Box", "Bal Ganesh", "Make Your Own Ganesha",
+  "Shubharambh Mini", "Employee Puja Box", "Bal Ganesh",
   "Gruha Ganapathi", "Motorized Rotating Chakra"
 ];
 
@@ -237,8 +237,7 @@ export const BULK_BRANDING_OPTIONS = [
 export const VOLUME_RATE_TABLE = [
   { kit: "Shubharambh Mini", mrp: 299, t1: 269, t2: 239, t3: 209, t4: 185 },
   { kit: "Employee Puja Box", mrp: 499, t1: 449, t2: 419, t3: 399, t4: 379 },
-  { kit: "Bal Ganesh", mrp: 349, t1: 319, t2: 289, t3: 259, t4: 239 },
-  { kit: "Make Your Own Ganesha", mrp: 499, t1: 459, t2: 429, t3: 389, t4: 359 },
+  { kit: "Bal Ganesh", mrp: 699, t1: 649, t2: 599, t3: 549, t4: 499 },
   { kit: "Gruha Ganapathi", mrp: 699, t1: 649, t2: 599, t3: 549, t4: 499 },
   { kit: "Motorized Rotating Chakra", mrp: 999, t1: 949, t2: 899, t3: 849, t4: 799 }
 ];

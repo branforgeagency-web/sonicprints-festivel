@@ -8,10 +8,10 @@ import { useProductTransition } from "./fx/ProductTransition.jsx";
 import { VARIANTS, REDUCED, EASE_SILK } from "../anim/tokens.js";
 import useMotionProfile from "../anim/useMotionProfile.js";
 
-const KIDS_PRODUCT_IDS = ["kids", "diy"];
+const KIDS_PRODUCT_IDS = ["kids"];
 
 export default function KitCard({ product, revealClass = "", index = 0, variant = "tile" }) {
-  const { addToCart } = useCart();
+  const { cart, addToCart, setQty } = useCart();
   const { begin } = useProductTransition();
   const { reduced } = useMotionProfile();
   const imgRef = useRef(null);
@@ -19,6 +19,11 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
   const priceLabel = product.variants?.length ? `From ${money(product.price)}` : money(product.price);
   const priceSub = product.variants?.length ? "Starting price" : "All inclusive";
   const isKids = KIDS_PRODUCT_IDS.includes(product.id);
+
+  // Check if this item is in the cart
+  const cartIndex = cart.findIndex((it) => it.id === product.id);
+  const cartItem = cartIndex >= 0 ? cart[cartIndex] : null;
+  const cartQty = cartItem ? cartItem.qty : 0;
 
   function openProduct() {
     begin(imgRef.current, product.name);
@@ -69,13 +74,36 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
           <Link to={`/kit/${product.slug}`} onClick={openProduct} className="kcm-btn kcm-btn-outline">
             View
           </Link>
-          <button
-            onClick={() => addToCart(product.id, { qty: 1 })}
-            className="kcm-btn kcm-btn-primary"
-            aria-label={`Add ${product.name} to cart`}
-          >
-            <Icon name="cart" size={14} /> Add
-          </button>
+          {cartQty > 0 ? (
+            <div className="qty-stepper-btn qty-stepper-sm" role="group" aria-label={`Adjust ${product.name} quantity`}>
+              <button
+                type="button"
+                className="qsb-btn"
+                onClick={() => setQty(cartIndex, -1)}
+                aria-label="Decrease quantity"
+              >
+                −
+              </button>
+              <span className="qsb-count">{cartQty} in cart</span>
+              <button
+                type="button"
+                className="qsb-btn"
+                onClick={() => setQty(cartIndex, 1)}
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => addToCart(product.id, { qty: 1 })}
+              className="kcm-btn kcm-btn-primary"
+              aria-label={`Add ${product.name} to cart`}
+            >
+              <Icon name="cart" size={14} /> Add
+            </button>
+          )}
         </div>
       </motion.article>
     );
@@ -144,13 +172,36 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
               <Link to={`/kit/${product.slug}`} onClick={openProduct} className="kcm-btn kcm-btn-outline">
                 Explore Kit <Icon name="arrow" size={14} />
               </Link>
-              <button
-                onClick={() => addToCart(product.id, { qty: 1 })}
-                className="kcm-btn kcm-btn-primary"
-                aria-label={`Add ${product.name} to cart`}
-              >
-                <Icon name="cart" size={15} /> Add to Cart
-              </button>
+              {cartQty > 0 ? (
+                <div className="qty-stepper-btn" role="group" aria-label={`Adjust ${product.name} quantity`}>
+                  <button
+                    type="button"
+                    className="qsb-btn"
+                    onClick={() => setQty(cartIndex, -1)}
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <span className="qsb-count">{cartQty} in cart</span>
+                  <button
+                    type="button"
+                    className="qsb-btn"
+                    onClick={() => setQty(cartIndex, 1)}
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => addToCart(product.id, { qty: 1 })}
+                  className="kcm-btn kcm-btn-primary"
+                  aria-label={`Add ${product.name} to cart`}
+                >
+                  <Icon name="cart" size={15} /> Add to Cart
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -231,14 +282,37 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
             >
               View
             </Link>
-            <button
-              onClick={() => addToCart(product.id, { qty: 1 })}
-              className="kcm-btn kcm-btn-primary"
-              aria-label={`Add ${product.name} to cart`}
-              title="Add to cart"
-            >
-              <Icon name="cart" size={15} /> Add to Cart
-            </button>
+            {cartQty > 0 ? (
+              <div className="qty-stepper-btn" role="group" aria-label={`Adjust ${product.name} quantity`}>
+                <button
+                  type="button"
+                  className="qsb-btn"
+                  onClick={() => setQty(cartIndex, -1)}
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <span className="qsb-count">{cartQty} in cart</span>
+                <button
+                  type="button"
+                  className="qsb-btn"
+                  onClick={() => setQty(cartIndex, 1)}
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => addToCart(product.id, { qty: 1 })}
+                className="kcm-btn kcm-btn-primary"
+                aria-label={`Add ${product.name} to cart`}
+                title="Add to cart"
+              >
+                <Icon name="cart" size={15} /> Add to Cart
+              </button>
+            )}
           </div>
         </div>
       </div>

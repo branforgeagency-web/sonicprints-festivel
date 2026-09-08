@@ -600,6 +600,8 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
 .citem i{width:25px;height:25px;flex:0 0 25px;border-radius:8px;display:grid;place-items:center;font-style:normal;
   font-size:11.5px;font-weight:800;background:linear-gradient(140deg,var(--gold-400),var(--gold-600));color:#fff}
 .citem span{font-size:14px;color:var(--body);line-height:1.42}
+.citem .citem-icon{font-size:18px;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.citem .citem-text{font-size:14px;color:var(--body);line-height:1.42}
 .tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .tbl th{background:var(--teal-700);color:#fff;text-align:left;padding:13px 16px;font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;font-weight:700}
 .tbl td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:14.4px;vertical-align:top}
@@ -4069,4 +4071,302 @@ footer .about{font-size:14px;line-height:1.7;max-width:330px;margin:14px 0 0}
   .bm-card-actions {
     grid-template-columns: 1fr;
   }
+}
+
+/* ============================================================
+   Inside The Box Showcase Component (Bal Ganesh & All Kits)
+   ============================================================ */
+.box-inside-sec {
+  background: linear-gradient(180deg, #FAF7F2 0%, #FFFDF9 100%);
+  border-top: 1.5px solid rgba(184, 142, 68, 0.22);
+  border-bottom: 1.5px solid rgba(184, 142, 68, 0.22);
+  padding: 56px 0 64px;
+  position: relative;
+}
+
+.box-inside-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 28px;
+}
+
+.box-inside-title {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.5vw, 38px);
+  color: #0A2E2B;
+  font-weight: 800;
+  margin: 8px 0 10px;
+  line-height: 1.2;
+}
+
+.box-inside-tagline {
+  font-family: var(--serif);
+  font-size: clamp(16px, 2.2vw, 21px);
+  color: #8C651F;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.box-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 24px auto 36px;
+  max-width: 860px;
+}
+
+.box-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(184, 142, 68, 0.28);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0A2E2B;
+  box-shadow: 0 2px 8px rgba(10, 46, 43, 0.04);
+}
+
+.box-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin-top: 12px;
+}
+
+.box-category-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  border: 1.5px solid rgba(184, 142, 68, 0.26);
+  box-shadow: 0 8px 30px rgba(10, 46, 43, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.box-category-head {
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1.5px solid rgba(184, 142, 68, 0.18);
+}
+
+.box-category-head-orange {
+  background: linear-gradient(135deg, #DE6B26 0%, #C45214 100%);
+  color: #FFFFFF;
+}
+
+.box-category-head-gold {
+  background: linear-gradient(135deg, #B88E44 0%, #8C651F 100%);
+  color: #FFFFFF;
+}
+
+.box-category-title {
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+}
+
+.box-category-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+}
+
+.box-items-list {
+  padding: 16px 18px 20px;
+  list-style: none;
+  margin: 0;
+  display: grid;
+  gap: 9px;
+}
+
+.box-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #FAF8F5;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.box-item-row:hover {
+  background: #F5EFE4;
+  border-color: rgba(184, 142, 68, 0.35);
+  transform: translateX(3px);
+}
+
+.box-item-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #0A2E2B;
+  color: #FAF7F0;
+  font-size: 11px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.box-item-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.box-item-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1A3835;
+  line-height: 1.35;
+}
+
+/* Kids Section inline Inside The Box card */
+.kids-inside-box-wrapper {
+  margin-top: 32px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  border: 1.5px solid rgba(184, 142, 68, 0.28);
+  padding: 28px 28px 32px;
+  box-shadow: 0 6px 24px rgba(10, 46, 43, 0.04);
+}
+
+.kids-inside-box-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1.5px dashed rgba(184, 142, 68, 0.25);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.kids-inside-banner-left h4 {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: #0A2E2B;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+
+.kids-inside-banner-left p {
+  margin: 0;
+  font-size: 14.5px;
+  color: #8C651F;
+  font-weight: 700;
+  font-family: var(--serif);
+}
+
+@media (max-width: 640px) {
+  .kids-inside-box-wrapper {
+    padding: 20px 16px 24px;
+  }
+  .box-categories-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Interactive Quantity Stepper Buttons (+ 1 -)
+   ============================================================ */
+.qty-stepper-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #FFF9EE;
+  border: 1.5px solid #C49746;
+  border-radius: 999px;
+  padding: 3px 6px;
+  box-shadow: 0 2px 8px rgba(196, 151, 70, 0.16);
+  user-select: none;
+  animation: qsbPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes qsbPop {
+  0% { transform: scale(0.92); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.qty-stepper-sm {
+  padding: 2px 4px;
+}
+
+.qsb-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #C49746;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.qty-stepper-sm .qsb-btn {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+}
+
+.qsb-btn:hover {
+  background: #0A2E2B;
+  color: #F9DE9E;
+  transform: scale(1.08);
+}
+
+.qsb-btn:active {
+  transform: scale(0.92);
+}
+
+.qsb-count {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0A2E2B;
+  padding: 0 8px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.qty-stepper-sm .qsb-count {
+  font-size: 12px;
+  padding: 0 5px;
+}
+
+/* PDP in-cart note */
+.pdp-in-cart-note {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0A2E2B;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #E8F5E9;
+  border: 1px solid #A5D6A7;
+  padding: 6px 14px;
+  border-radius: 999px;
 }

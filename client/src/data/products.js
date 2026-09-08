@@ -112,7 +112,7 @@ export const FALLBACK_PRODUCTS = [
       "Story, colouring, stickers, school name labels, a little puja guide and a certificate — a festival a child experiences instead of watching.",
     kitWho: "Children 5–12 · Schools · Apartment communities · Birthday return gifts",
     bestFor: "Children 5–12 · Schools · Apartment communities · Birthday return gifts",
-    price: 349,
+    price: 699,
     img: "kids",
     order: 2,
     highlights: [
@@ -126,11 +126,77 @@ export const FALLBACK_PRODUCTS = [
       "It ends with a Little Ganesha Certificate with their name on it. That certificate stays on the fridge long after visarjan."
     ],
     contents: [
-      "Bal Ganesh clay idol (2.5–3 inch natural clay)", "Bal Ganesh Story Book", "Colouring & Activity Book",
-      "Colour pencils / crayons (6 colours)", "Ganesh sticker sheet", "School name labels", "Mini rangoli sticker",
-      "DIY paper toran", "My Little Puja Guide", "21 Names of Ganesha card", "Family Sankalp card",
-      "Little Ganesha certificate"
+      "Bal Ganesh Clay Idol (2.5 - 3 inch natural Clay)",
+      "Mandap Backdrop",
+      "Mandap Base",
+      "Mini Rangoli Sticker",
+      "DIY Paper Toran",
+      "Kungumam",
+      "Turmeric",
+      "Thread",
+      "Needle",
+      "Agarbathi",
+      "21 Names Of Ganesha Card",
+      "Bal Ganesh Story Book",
+      "My Little Puja Guide",
+      "Colouring & Activity Book",
+      "Colour Sketch Pen",
+      "Colour Paint with brush",
+      "Ganesh Sticker Sheet (No 1)",
+      "Ganesh Sticker Sheet (No 2)",
+      "Labels For Book & Notes",
+      "Family Sankalp Card",
+      "Little Ganesha Certificate"
     ],
+    insideTheBox: {
+      title: "Inside The Box",
+      tagline: "A Festival They Won't Just Watch. They'll Experience It.",
+      badges: [
+        { label: "Bala Vinayak Idol", icon: "🕉️" },
+        { label: "Story & Activity", icon: "📖" },
+        { label: "Sticker & Labels", icon: "🏷️" },
+        { label: "Family Puja Guide", icon: "🪔" },
+        { label: "Certificate", icon: "📜" },
+        { label: "Eco-friendly", icon: "🌿" }
+      ],
+      sections: [
+        {
+          title: "BUILD & DECORATE BAPPA",
+          badge: "Craft & Puja Setup",
+          icon: "🛠️",
+          items: [
+            { num: 1, name: "Bal Ganesh Clay Idol (2.5 - 3 inch natural Clay)", icon: "🕉️" },
+            { num: 2, name: "Mandap Backdrop", icon: "🏛️" },
+            { num: 3, name: "Mandap Base", icon: "🪑" },
+            { num: 4, name: "Mini Rangoli Sticker", icon: "🌸" },
+            { num: 5, name: "DIY Paper Toran", icon: "🏮" },
+            { num: 6, name: "Kungumam", icon: "🔴" },
+            { num: 7, name: "Turmeric", icon: "🟡" },
+            { num: 8, name: "Thread", icon: "🧵" },
+            { num: 9, name: "Needle", icon: "🪡" },
+            { num: 10, name: "Agarbathi", icon: "🪔" },
+            { num: 11, name: "21 Names Of Ganesha Card", icon: "📜" }
+          ]
+        },
+        {
+          title: "LEARN • CREATE • CELEBRATE",
+          badge: "Story & Creative Journey",
+          icon: "🎨",
+          items: [
+            { num: 1, name: "Bal Ganesh Story Book", icon: "📖" },
+            { num: 2, name: "My Little Puja Guide", icon: "🪔" },
+            { num: 3, name: "Colouring & Activity Book", icon: "🎨" },
+            { num: 4, name: "Colour Sketch Pen", icon: "🖍️" },
+            { num: 5, name: "Colour Paint with brush", icon: "🖌️" },
+            { num: 6, name: "Ganesh Sticker Sheet (No 1)", icon: "✨" },
+            { num: 7, name: "Ganesh Sticker Sheet (No 2)", icon: "✨" },
+            { num: 8, name: "Labels For Book & Notes", icon: "🏷️" },
+            { num: 9, name: "Family Sankalp Card", icon: "🙏" },
+            { num: 10, name: "Little Ganesha Certificate", icon: "🏅" }
+          ]
+        }
+      ]
+    },
     specs: [
       { label: "Age group", value: "5–12 years, with light adult supervision" },
       { label: "Idol", value: "Natural clay, 2.5–3 inch" },
@@ -140,70 +206,11 @@ export const FALLBACK_PRODUCTS = [
       { label: "School packs", value: "From 50 units with printed school branding" }
     ],
     bulkPricing: [
-      { range: "25 – 99 units", price: 319, savingsLabel: "₹30 off" },
-      { range: "100 – 499 units", price: 289, savingsLabel: "₹60 off" },
-      { range: "500 – 1,999 units", price: 259, savingsLabel: "₹90 off" },
-      { range: "2,000 + units", price: 239, savingsLabel: "₹110 off" }
+      { range: "25 – 99 units", price: 649, savingsLabel: "₹50 off" },
+      { range: "100 – 499 units", price: 599, savingsLabel: "₹100 off" },
+      { range: "500 – 1,999 units", price: 549, savingsLabel: "₹150 off" },
+      { range: "2,000 + units", price: 499, savingsLabel: "₹200 off" }
     ]
-  },
-  {
-    id: "diy",
-    slug: "make-your-own-ganesha",
-    name: "Make Your Own Ganesha",
-    subtitle: "DIY Kids Festival Activity Kit",
-    badge: "DIY Experience",
-    tag: "Create · Decorate · Pray",
-    whyHeadline: "Create · Decorate · Pray",
-    shortDescription:
-      "Natural clay, a reusable mould, child-safe colours and a six-step journey — the child makes Bappa, decorates him, prays and does an eco visarjan.",
-    kitDescription:
-      "Natural clay, a reusable mould, child-safe colours and a six-step journey — the child makes Bappa, decorates him, prays and does an eco visarjan.",
-    kitWho: "Children 6–14 · Schools & workshops · Eco campaigns · Family activity",
-    bestFor: "Children 6–14 · Schools & workshops · Eco campaigns · Family activity",
-    price: 499,
-    img: "diy",
-    order: 3,
-    highlights: [
-      { title: "Natural Clay", text: "Non-toxic and kid-safe, dissolves clean" },
-      { title: "Reusable Mould", text: "Use it again every year" },
-      { title: "DIY Activity Fun", text: "Builds creativity and fine motor skills" },
-      { title: "Family Puja Experience", text: "Bond, learn and celebrate together" }
-    ],
-    ledeParagraphs: [
-      "There is a moment when a child realises they made the Ganesha they are praying to. That moment is the entire product.",
-      "Natural clay, a reusable mould so it can be done again next year, child-safe colours, a paper toran and rangoli stencil for the little pandal, and a guided eco visarjan that turns the ending into a lesson instead of a loss."
-    ],
-    contents: [
-      "Natural clay", "Reusable Ganesh mould", "Child-safe colours", "Paint brush", "Decorative stickers",
-      "Paper toran", "Mini rangoli stencil", "Activity booklet", "Puja guide", "Certificate of achievement",
-      "QR tutorial card"
-    ],
-    specs: [
-      { label: "Age group", value: "6–14 years, light adult supervision" },
-      { label: "Clay", value: "Natural, non-toxic, water soluble" },
-      { label: "Mould", value: "Reusable food-grade mould" },
-      { label: "Colours", value: "Child-safe water colours + brush" },
-      { label: "Activity time", value: "60–90 minutes across the day" },
-      { label: "Workshops", value: "School & society workshop packs from 50 units" }
-    ],
-    bulkPricing: [
-      { range: "25 – 99 units", price: 459, savingsLabel: "₹40 off" },
-      { range: "100 – 499 units", price: 429, savingsLabel: "₹70 off" },
-      { range: "500 – 1,999 units", price: 389, savingsLabel: "₹110 off" },
-      { range: "2,000 + units", price: 359, savingsLabel: "₹140 off" }
-    ],
-    processSteps: {
-      eyebrow: "The six-step journey",
-      headline: "Make it. Decorate it. Pray with it.",
-      steps: [
-        { title: "Make Ganesha", text: "Press the natural clay into the reusable mould." },
-        { title: "Decorate Ganesha", text: "Child-safe colours, brush and decorative stickers." },
-        { title: "Build Mini Pandal", text: "Paper toran and rangoli stencil set the stage." },
-        { title: "Perform Puja", text: "The illustrated puja guide walks them through it." },
-        { title: "Eco Visarjan", text: "A clean, guided immersion at home." },
-        { title: "Get Your Certificate", text: "Proud Little Creator — with their name on it." }
-      ]
-    }
   },
   {
     id: "mandap",
@@ -221,7 +228,7 @@ export const FALLBACK_PRODUCTS = [
     bestFor: "Households · Apartments · Shops & showrooms · Association halls",
     price: 699,
     img: "mandap",
-    order: 4,
+    order: 3,
     variants: [
       { id: "mini", name: "Mini Mandap", price: 699, note: "Ideal for apartments & small spaces · Up to 12 inch idols" },
       { id: "family", name: "Family Mandap", price: 1299, note: "Perfect for homes & family pujas · Up to 18 inch idols" },
@@ -283,7 +290,7 @@ export const FALLBACK_PRODUCTS = [
     bestFor: "Homes · Societies · Shops & showrooms · Events & pandals",
     price: 999,
     img: "chakra-classic",
-    order: 5,
+    order: 4,
     variants: [
       { id: "mini", name: "Mini", price: 999, note: "For home mandaps and small idols" },
       { id: "family", name: "Family", price: 1499, note: "For family mandaps and shop counters" },

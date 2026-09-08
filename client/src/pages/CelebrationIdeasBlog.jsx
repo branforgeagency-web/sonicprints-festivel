@@ -35,21 +35,11 @@ const SIX_PRODUCTS = [
     slug: "bal-ganesh-kids-kit",
     name: "Bal Ganesh Kids Kit",
     subtitle: "Story & Craft Activity Box",
-    price: 349,
+    price: 699,
     badge: "Kids Favourite",
     img: "/assets/img/kids.jpg",
     desc: "Connecting young hearts to living culture through tactile clay moulding, illustrated stories, and eco certificates.",
     tags: ["Storybook", "Organic Clay", "Eco Certificate"]
-  },
-  {
-    slug: "make-your-own-ganesha",
-    name: "Make Your Own Ganesha",
-    subtitle: "DIY River Clay Sculpting",
-    price: 499,
-    badge: "100% Eco Visarjan",
-    img: "/assets/img/diy.jpg",
-    desc: "Hand-sculpt your own Bappa with pure river clay, wooden carving tools, and organic seed ball for balcony visarjan.",
-    tags: ["River Terracotta", "Wooden Tools", "Seed Visarjan"]
   },
   {
     slug: "gruha-ganapathi-mandap",
@@ -423,7 +413,7 @@ export default function CelebrationIdeasBlog() {
           </motion.article>
 
           {/* ================================================================
-              CHAPTER 2: Kids Activities (Bal Ganesh & Make Your Own Ganesha)
+              CHAPTER 2: Kids Activities (Bal Ganesh Kids Kit)
               ================================================================ */}
           <motion.article
             id="idea-2"
@@ -473,19 +463,19 @@ export default function CelebrationIdeasBlog() {
             <div style={{ marginTop: 24, marginBottom: 28 }}>
               <Tilt max={3} lift={2}>
                 <div className="blog-suite-panoramic-frame">
-                  <Link to="/kit/bal-ganesh-kids-kit" className="blog-image-link" title="Explore Bal Ganesh & Make Your Own Ganesha">
+                  <Link to="/kit/bal-ganesh-kids-kit" className="blog-image-link" title="Explore Bal Ganesh Kids Activity Kit">
                     <span className="blog-floating-badge">HANDS-ON MEMORIES</span>
                     <img
                       src={assetUrl("/assets/img/blog/blog_3.jpeg")}
-                      alt="Let Little Hands Create Big Festival Memories - Bal Ganesh, Make Your Own Ganesha"
+                      alt="Let Little Hands Create Big Festival Memories - Bal Ganesh Kids Kit"
                       loading="lazy"
                     />
                     <span className="blog-floating-badge-bottom">100% Eco Balcony Visarjan</span>
                   </Link>
                   <div className="blog-suite-caption">
-                    <span className="blog-suite-caption-name">Bal Ganesh &amp; DIY Sculpting Kits</span>
+                    <span className="blog-suite-caption-name">Bal Ganesh Kids Activity Kit</span>
                     <Link to="/kit/bal-ganesh-kids-kit" className="blog-suite-caption-link">
-                      Explore Kids Kits →
+                      Explore Kids Kit →
                     </Link>
                   </div>
                 </div>
@@ -514,11 +504,11 @@ export default function CelebrationIdeasBlog() {
                 </div>
                 <div className="blog-suite-pill">
                   <span className="blog-suite-pill-icon">🏺</span>
-                  <span className="blog-suite-pill-title">River Clay DIY</span>
+                  <span className="blog-suite-pill-title">Natural Clay Idol</span>
                 </div>
                 <div className="blog-suite-pill">
                   <span className="blog-suite-pill-icon">🌱</span>
-                  <span className="blog-suite-pill-title">Seed Visarjan</span>
+                  <span className="blog-suite-pill-title">Eco Visarjan</span>
                 </div>
                 <div className="blog-suite-pill">
                   <span className="blog-suite-pill-icon">🏅</span>
@@ -531,10 +521,7 @@ export default function CelebrationIdeasBlog() {
             <div className="blog-suite-lower">
               <div className="blog-prose blog-suite-lower-prose">
                 <p>
-                  For parents looking for an activity-led festival experience, Sonic Prints' <strong>Bal Ganesh</strong> brings children into the celebration through engaging and creative participation.
-                </p>
-                <p>
-                  For families looking for something more hands-on, <strong>Make Your Own Ganesha</strong> adds another creative dimension by turning festival time into an opportunity to sculpt pure river clay together.
+                  For parents looking for an activity-led festival experience, Sonic Prints' <strong>Bal Ganesh</strong> brings children into the celebration through engaging and creative participation—giving them stories to read, art to colour, and rituals to lead with love.
                 </p>
               </div>
 
@@ -544,21 +531,21 @@ export default function CelebrationIdeasBlog() {
               </div>
             </div>
 
-            {/* Dual Product Spotlight Cards in Suite */}
+            {/* Product Spotlight Card in Suite */}
             <div className="blog-suite-dual-spotlight">
-              <div className="blog-suite-mini-spotlight">
+              <div className="blog-suite-mini-spotlight" style={{ maxWidth: 520, margin: "0 auto" }}>
                 <div>
                   <div className="blog-suite-spotlight-tag-row">
                     <span className="blog-suite-spotlight-tag">Kids Favourite</span>
-                    <span className="blog-suite-spotlight-badge">Ages 4-12</span>
+                    <span className="blog-suite-spotlight-badge">Ages 5-12</span>
                   </div>
                   <h3 className="blog-spotlight-title">Bal Ganesh Activity Kit</h3>
-                  <p className="blog-spotlight-desc">Storybook, unbaked clay moulding &amp; eco badge.</p>
+                  <p className="blog-spotlight-desc">Storybook, colouring &amp; activity book, natural clay idol, stickers, toran &amp; little Ganesha certificate.</p>
                 </div>
                 <div className="blog-suite-mini-spotlight-actions">
                   <div className="blog-suite-price-box">
                     <span className="blog-suite-price-label">Activity Kit</span>
-                    <span className="blog-spotlight-price">{money(349)}</span>
+                    <span className="blog-spotlight-price">{money(699)}</span>
                   </div>
                   <div style={{ display: "flex", gap: "8px" }}>
                     <Link to="/kit/bal-ganesh-kids-kit" className="blog-btn-cta">
@@ -568,35 +555,6 @@ export default function CelebrationIdeasBlog() {
                       type="button"
                       className="blog-btn-quick-add"
                       onClick={() => handleQuickAdd("bal-ganesh-kids-kit")}
-                    >
-                      + Add
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="blog-suite-mini-spotlight">
-                <div>
-                  <div className="blog-suite-spotlight-tag-row">
-                    <span className="blog-suite-spotlight-tag">100% Eco Visarjan</span>
-                    <span className="blog-suite-spotlight-badge">Hands-on River Clay</span>
-                  </div>
-                  <h3 className="blog-spotlight-title">Make Your Own Ganesha</h3>
-                  <p className="blog-spotlight-desc">River clay, wooden carving tools &amp; plantable seed ball.</p>
-                </div>
-                <div className="blog-suite-mini-spotlight-actions">
-                  <div className="blog-suite-price-box">
-                    <span className="blog-suite-price-label">Complete DIY Kit</span>
-                    <span className="blog-spotlight-price">{money(499)}</span>
-                  </div>
-                  <div style={{ display: "flex", gap: "8px" }}>
-                    <Link to="/kit/make-your-own-ganesha" className="blog-btn-cta blog-btn-cta-gold">
-                      DIY Kit →
-                    </Link>
-                    <button
-                      type="button"
-                      className="blog-btn-quick-add"
-                      onClick={() => handleQuickAdd("make-your-own-ganesha")}
                     >
                       + Add
                     </button>
@@ -1225,7 +1183,7 @@ export default function CelebrationIdeasBlog() {
                     <p className="blog-solution-a">Add an active clay moulding, storytelling and eco visarjan activity they can proudly share.</p>
                   </div>
                   <Link to="/kit/bal-ganesh-kids-kit" className="blog-solution-btn">
-                    Bal Ganesh &amp; DIY ({money(349)}) →
+                    Bal Ganesh Kit ({money(699)}) →
                   </Link>
                 </div>
 
@@ -1251,8 +1209,8 @@ export default function CelebrationIdeasBlog() {
 
                 <div className="blog-solution-item">
                   <div className="blog-solution-item-left">
-                    <div className="blog-solution-q">🏢 Planning for employees?</div>
-                    <p className="blog-solution-a">Look for solutions that simplify gifting, packaging, custom branding and bulk coordination.</p>
+                    <div className="blog-solution-q">🏢 Planning corporate or employee gifting?</div>
+                    <p className="blog-solution-a">Give a meaningful, culturally respectful gift that travels home to family altars with custom video greetings.</p>
                   </div>
                   <Link to="/kit/employee-puja-box" className="blog-solution-btn">
                     Employee Puja Box ({money(499)}) →
@@ -1340,7 +1298,7 @@ export default function CelebrationIdeasBlog() {
           >
             <h3>Celebrate Your Way with Sonic Prints</h3>
             <p>
-              From creating a festive corner with Gruha Ganapathi and engaging children with Bal Ganesh and Make Your Own Ganesha, to adding visual impact with the Motorized Rotating Chakra, choosing Shubharambh Mini for festive gifting or planning employee celebrations with the Employee Puja Box—Sonic Prints brings together different ways to celebrate.
+              From creating a festive corner with Gruha Ganapathi and engaging children with Bal Ganesh, to adding visual impact with the Motorized Rotating Chakra, choosing Shubharambh Mini for festive gifting or planning employee celebrations with the Employee Puja Box—Sonic Prints brings together different ways to celebrate.
             </p>
             <Link to="/" className="blog-btn-grand">
               ✦ Explore the Ganesh Chaturthi 2026 Collection ✦
@@ -1348,7 +1306,7 @@ export default function CelebrationIdeasBlog() {
           </motion.section>
 
           {/* ================================================================
-              FEATURED 6 FESTIVAL KITS GRID
+              FEATURED FESTIVAL KITS GRID
               ================================================================ */}
           <section className="blog-product-showcase">
             <h3 className="blog-showcase-title">Featured Festival Kits (2026 Collection)</h3>

@@ -86,7 +86,7 @@ It honors employees' spiritual and family values while reflecting your company's
     slug: "bal-ganesh-kids-kit",
     productSlug: "bal-ganesh-kids-kit",
     productName: "Bal Ganesh Kids Kit",
-    price: 349,
+    price: 699,
     badge: "Kids Favourite",
     title: "Bal Ganesh Kids Kit: Inspiring the Next Generation Through Festive Craft",
     excerpt: "A complete hands-on journey for children — illustrated storybook, eco-friendly clay sculpting, stickers, crown-making, and junior eco-ambassador certificate.",
@@ -112,38 +112,6 @@ The Bal Ganesh Kids Kit was engineered in collaboration with child educators and
       {
         heading: "Ideal For",
         body: `Children aged 4–14, primary school workshops, apartment association kids competitions, and family festive crafting.`
-      }
-    ]
-  },
-  {
-    slug: "make-your-own-ganesha",
-    productSlug: "make-your-own-ganesha",
-    productName: "Make Your Own Ganesha",
-    price: 499,
-    badge: "Eco-Friendly DIY",
-    title: "Make Your Own Ganesha: Hand-Sculpted Devotion & 100% Eco Visarjan",
-    excerpt: "Sculpt Lord Ganesha with your own hands using pure river clay, wooden sculpting tools, seed-infused base, and organic plant pigments.",
-    category: "DIY & Eco Visarjan",
-    readTime: "4 min read",
-    date: "August 2026",
-    coverImg: assetUrl("/assets/img/diy.jpg"),
-    sections: [
-      {
-        heading: "The Spiritual Joy of Creating Your Own Deity",
-        body: `Vedic shastras declare that crafting an earthen idol with one's own hands generates profound spiritual merit and meditative peace. Every touch of clay is an act of prayer, contemplation, and mindful devotion.
-
-No previous sculpting experience is necessary. With our guided proportion template, anyone can shape a graceful, expressive idol in 30 minutes.`
-      },
-      {
-        heading: "What's Inside the Kit",
-        body: `• **Purified River Clay (Terracotta)**: Mined naturally, filtered, and sun-dried — completely free from chemicals or artificial binders.
-• **Handcrafted Wooden Sculpting Tools**: 3 smooth bamboo and wood tools for carving delicate details like eyes, ears, trunk, and modak.
-• **Organic Herbal Colours**: Water-soluble plant pigments (haldi yellow, kumkum red, and natural mineral white).
-• **Seed Ball for Green Visarjan**: When immersed in water, the clay dissolves into fertile soil, releasing Tulsi or flowering plant seeds into your garden pot.`
-      },
-      {
-        heading: "Ideal For",
-        body: `Eco-conscious households, DIY enthusiasts, art circles, college students, and apartment garden celebrations.`
       }
     ]
   },

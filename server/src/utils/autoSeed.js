@@ -7,27 +7,24 @@ import productsData from "../../seed/productsData.js";
 
 export async function autoSeed() {
   try {
-    const count = await Product.countDocuments();
-    if (count === 0) {
-      console.log("[autoSeed] Products collection is empty. Seeding initial catalog...");
-      for (const p of productsData) {
-        await Product.findOneAndUpdate({ id: p.id }, p, {
-          upsert: true,
-          new: true,
-          setDefaultsOnInsert: true
-        });
-      }
-      console.log(`[autoSeed] ${productsData.length} products seeded successfully.`);
+    for (const p of productsData) {
+      await Product.findOneAndUpdate({ id: p.id }, { $set: p }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+      });
     }
+    await Product.deleteMany({ id: { $nin: productsData.map((p) => p.id) } });
+    console.log(`[autoSeed] ${productsData.length} products synced successfully.`);
 
     const cfg = await SiteConfig.findById("site-config");
     if (!cfg) {
       console.log("[autoSeed] Creating initial site config...");
       await SiteConfig.create({
         _id: "site-config",
-        whatsapp: process.env.SITE_WHATSAPP || "+91 93845 56755",
-        phone: process.env.SITE_PHONE || "+91 93845 56755",
-        phoneHref: process.env.SITE_PHONE_HREF || "+91 93845 56755",
+        whatsapp: process.env.SITE_WHATSAPP || "+91 63850 54514",
+        phone: process.env.SITE_PHONE || "+91 63850 54514",
+        phoneHref: process.env.SITE_PHONE_HREF || "+91 63850 54514",
         email: process.env.SITE_EMAIL || "branforgeagency@gmail.com",
         city: process.env.SITE_CITY || "Coimbatore, Tamil Nadu",
         address: process.env.SITE_ADDRESS || "Sonic Prints, Coimbatore, Tamil Nadu, India",

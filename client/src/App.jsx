@@ -81,7 +81,8 @@ export default function App() {
               <Route path="/kids" element={<Navigate to="/kit/bal-ganesh-kids-kit" replace />} />
               <Route path="/mini" element={<Navigate to="/kit/shubharambh-mini" replace />} />
               <Route path="/employee" element={<Navigate to="/kit/employee-puja-box" replace />} />
-              <Route path="/diy" element={<Navigate to="/kit/make-your-own-ganesha" replace />} />
+              <Route path="/diy" element={<Navigate to="/kit/bal-ganesh-kids-kit" replace />} />
+              <Route path="/kit/make-your-own-ganesha" element={<Navigate to="/kit/bal-ganesh-kids-kit" replace />} />
               <Route path="/mandap" element={<Navigate to="/kit/gruha-ganapathi-mandap" replace />} />
               <Route path="/chakra" element={<Navigate to="/kit/rotating-chakra-backdrop" replace />} />
 

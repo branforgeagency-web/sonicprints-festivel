@@ -21,7 +21,6 @@ const PRODUCTS = [
   { slug: "shubharambh-mini", title: "Shubharambh Mini Eco-Friendly Clay Ganesh Puja Kit", img: "/assets/img/mini.jpg", priority: "0.9", changefreq: "weekly" },
   { slug: "employee-puja-box", title: "Employee Puja Box Shubharambh Corporate Ganesh Kit", img: "/assets/img/employee.jpg", priority: "0.9", changefreq: "weekly" },
   { slug: "bal-ganesh-kids-kit", title: "Bal Ganesh Kids Kit Devotional Story & Craft Box", img: "/assets/img/kids.jpg", priority: "0.9", changefreq: "weekly" },
-  { slug: "make-your-own-ganesha", title: "Make Your Own Ganesha DIY Clay Idol Modelling Kit", img: "/assets/img/diy.jpg", priority: "0.9", changefreq: "weekly" },
   { slug: "gruha-ganapathi-mandap", title: "Gruha Ganapathi Instant 10-Minute Mandap Temple Arch", img: "/assets/img/mandap.jpg", priority: "0.9", changefreq: "weekly" },
   { slug: "rotating-chakra-backdrop", title: "Rotating Chakra Motorized LED Mandap Backdrop", img: "/assets/img/chakra-classic.jpg", priority: "0.9", changefreq: "weekly" },
 ];

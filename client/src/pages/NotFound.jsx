@@ -10,7 +10,6 @@ export default function NotFound() {
     { title: "Shubharambh Mini", path: "/kit/shubharambh-mini", desc: "Complete Puja Kit in a Box" },
     { title: "Employee Puja Box", path: "/kit/employee-puja-box", desc: "Shubharambh Corporate Edition" },
     { title: "Bal Ganesh Kit", path: "/kit/bal-ganesh-kids-kit", desc: "My First Ganesh Chaturthi Kit" },
-    { title: "Make Your Own Ganesha", path: "/kit/make-your-own-ganesha", desc: "DIY Kids Activity Kit" },
     { title: "Gruha Ganapathi Mandap", path: "/kit/gruha-ganapathi-mandap", desc: "Instant Flat-Pack Mandap" },
     { title: "Motorized Rotating Chakra", path: "/kit/rotating-chakra-backdrop", desc: "Moving Mandap Backdrop" }
   ];

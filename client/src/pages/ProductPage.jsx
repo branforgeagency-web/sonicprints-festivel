@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { getProductBySlug } from "../api/client.js";
+import { FALLBACK_PRODUCTS } from "../data/products.js";
 import { imgUrl, money, useSite } from "../context/SiteContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
 import useReveal from "../hooks/useReveal.js";
@@ -15,7 +16,7 @@ import SEOHead from "../components/SEOHead.jsx";
 import { viewContent } from "../utils/metaPixel.js";
 
 // Category fallback image keys
-const STORE_IMAGE = { chakra: "display-chakra", kids: "display-kids", diy: "display-kids" };
+const STORE_IMAGE = { chakra: "display-chakra", kids: "display-kids" };
 const FADE_IN = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_SILK } } };
 
 const ASSURE_BULLETS = [
@@ -25,6 +26,45 @@ const ASSURE_BULLETS = [
   { title: "Custom branding available", text: "on sleeves, cards and certificates — never on the idol." }
 ];
 
+const ITEM_ICON_MAP = [
+  { regex: /idol|vinayak|clay idol/i, icon: "🕉️" },
+  { regex: /backdrop|mandap/i, icon: "🏛️" },
+  { regex: /base|platform/i, icon: "🪑" },
+  { regex: /rangoli/i, icon: "🌸" },
+  { regex: /toran|garland/i, icon: "🏮" },
+  { regex: /kungumam|kumkum/i, icon: "🔴" },
+  { regex: /turmeric|haldi|pasupu/i, icon: "🟡" },
+  { regex: /thread/i, icon: "🧵" },
+  { regex: /needle/i, icon: "🪡" },
+  { regex: /agarbathi|agarbatti|dhoop|sambrani/i, icon: "🪔" },
+  { regex: /diya|deepam/i, icon: "🪔" },
+  { regex: /21 names|katha/i, icon: "📜" },
+  { regex: /story book/i, icon: "📖" },
+  { regex: /puja guide|guide|booklet/i, icon: "🪔" },
+  { regex: /colouring|activity book/i, icon: "🎨" },
+  { regex: /sketch pen|pen/i, icon: "🖍️" },
+  { regex: /paint|brush/i, icon: "🖌️" },
+  { regex: /sticker/i, icon: "✨" },
+  { regex: /label|labels/i, icon: "🏷️" },
+  { regex: /sankalp|blessing/i, icon: "🙏" },
+  { regex: /certificate/i, icon: "🏅" },
+  { regex: /akshata/i, icon: "🌾" },
+  { regex: /cotton wicks|wicks/i, icon: "🕯️" },
+  { regex: /cloth|vastram/i, icon: "🧣" },
+  { regex: /prasadam|modak|sweets/i, icon: "🍬" },
+  { regex: /motor/i, icon: "⚙️" },
+  { regex: /led|lighting/i, icon: "💡" },
+  { regex: /adapter|power/i, icon: "🔌" },
+  { regex: /pillar|canopy|panel/i, icon: "🪵" },
+  { regex: /chakra|ring|disc/i, icon: "☸️" }
+];
+
+function getItemIcon(itemText) {
+  if (!itemText) return "✨";
+  const match = ITEM_ICON_MAP.find((m) => m.regex.test(itemText));
+  return match ? match.icon : "✨";
+}
+
 export default function ProductPage() {
   const { config } = useSite();
   const { slug } = useParams();
@@ -33,7 +73,7 @@ export default function ProductPage() {
   const [crossSell, setCrossSell] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
   const navigate = useNavigate();
   const { registerTarget } = useProductTransition();
   const { reduced } = useMotionProfile();
@@ -54,6 +94,15 @@ export default function ProductPage() {
       .then((data) => {
         if (cancelled) return;
         const { crossSellProducts, ...p } = data;
+        const fallback = FALLBACK_PRODUCTS.find((f) => f.slug === slug || f.id === p.id);
+        if (fallback) {
+          if (!p.insideTheBox && fallback.insideTheBox) {
+            p.insideTheBox = fallback.insideTheBox;
+          }
+          if ((!p.contents || !p.contents.length) && fallback.contents?.length) {
+            p.contents = fallback.contents;
+          }
+        }
         setProduct(p);
         setCrossSell(crossSellProducts || []);
         setVariantId(p.variants?.length ? p.variants[0].id : null);
@@ -321,6 +370,12 @@ export default function ProductPage() {
             </button>
             <button className="btn btn-lg" onClick={handleBuyNow}>Buy now</button>
           </motion.div>
+
+          {cart.some((it) => it.id === product.id) && (
+            <div className="pdp-in-cart-note">
+              <span>✓ Already in your cart ({cart.filter((it) => it.id === product.id).reduce((s, it) => s + it.qty, 0)} added)</span>
+            </div>
+          )}
           
           <Link to="/bulk" className="btn btn-line btn-wide">
             Need 25 or more? Get bulk pricing <Icon name="arrow" />
@@ -341,6 +396,76 @@ export default function ProductPage() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Inside The Box Section */}
+      {product.insideTheBox ? (
+        <section className="box-inside-sec" style={{ background: "#FAF7F0" }}>
+          <div className="wrap">
+            <div className="box-inside-header">
+              <div className="eyebrow center">📦 Complete 21-Piece Kit</div>
+              <h2 className="box-inside-title">{product.insideTheBox.title}</h2>
+              {product.insideTheBox.tagline && (
+                <p className="box-inside-tagline">“{product.insideTheBox.tagline}”</p>
+              )}
+            </div>
+
+            {/* Badges Bar */}
+            {!!product.insideTheBox.badges?.length && (
+              <div className="box-badges-row">
+                {product.insideTheBox.badges.map((b, idx) => (
+                  <span key={idx} className="box-badge-pill">
+                    <span>{b.icon}</span> {b.label}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Two Column Categories Grid */}
+            <div className="box-categories-grid">
+              {product.insideTheBox.sections?.map((sec, sIdx) => (
+                <div key={sec.title || sIdx} className="box-category-card">
+                  <div className={`box-category-head ${sIdx === 0 ? "box-category-head-orange" : "box-category-head-gold"}`}>
+                    <h3 className="box-category-title">
+                      <span>{sec.icon}</span> {sec.title}
+                    </h3>
+                    <span className="box-category-badge">{sec.badge || `${sec.items?.length || 0} Items`}</span>
+                  </div>
+                  <ul className="box-items-list">
+                    {sec.items?.map((item, iIdx) => (
+                      <li key={iIdx} className="box-item-row">
+                        <span className="box-item-num">{item.num || iIdx + 1}</span>
+                        <span className="box-item-icon">{item.icon || "✨"}</span>
+                        <span className="box-item-name">{item.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : !!product.contents?.length ? (
+        <section className="pd-sec" style={{ background: "#FAF7F0", borderBottom: "1px solid var(--line)" }}>
+          <div className="wrap">
+            <div className="sec-head">
+              <div className="eyebrow">Everything included</div>
+              <h2>Inside the box ({product.contents.length} items)</h2>
+              <p>Hand-packed with care so you can begin the puja without missing a single item.</p>
+            </div>
+            <div className="contents">
+              {product.contents.map((item, idx) => (
+                <div key={idx} className="citem">
+                  <i>{idx + 1}</i>
+                  <span className="citem-icon" style={{ fontSize: 18, lineHeight: 1, flexShrink: 0 }}>
+                    {getItemIcon(item)}
+                  </span>
+                  <span className="citem-text">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* About The Product & Product-Specific Advantages Section */}
       <section className="pd-sec" style={{ background: "#ffffff", padding: "60px 0" }}>
@@ -481,10 +606,10 @@ export default function ProductPage() {
               <div className="support-footer-info">
                 <h4>SONIC PRINTS PRIVATE LIMITED</h4>
                 <p>{config?.address || "Sonic Prints, Coimbatore, Tamil Nadu, India"} · Country of Origin: INDIA</p>
-                <p style={{ marginTop: 4 }}>Customer Support: Call / WhatsApp: {config?.whatsapp || "+91 93845 56755"} (10:00 AM – 6:00 PM IST Mon–Sat)</p>
+                <p style={{ marginTop: 4 }}>Customer Support: Call / WhatsApp: {config?.whatsapp || "+91 63850 54514"} (10:00 AM – 6:00 PM IST Mon–Sat)</p>
               </div>
 
-              <a href={`https://wa.me/${(config?.whatsapp || "+91 93845 56755").replace(/[^0-9]/g, "")}`} target="_blank" rel="noopener noreferrer" className="support-action-btn">
+              <a href={`https://wa.me/${(config?.whatsapp || "+91 63850 54514").replace(/[^0-9]/g, "")}`} target="_blank" rel="noopener noreferrer" className="support-action-btn">
                 💬 Contact Support
               </a>
             </div>

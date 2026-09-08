@@ -14,7 +14,7 @@ const SONIC_6_PANELS = [
     id: "schools",
     title: "Schools",
     subtitle: "A festival the classroom can actually do",
-    description: "Bal Ganesh and Make-Your-Own kits with your school name printed on the labels and the certificate. Workshop-ready packs with a teacher's run sheet.",
+    description: "Bal Ganesh kits with your school name printed on the labels and the certificate. Workshop-ready packs with a teacher's run sheet.",
     img: imgUrl("ganesha_school"),
     overlayClass: "fa-overlay-business"
   },
