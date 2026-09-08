@@ -100,7 +100,7 @@ export default function SEOHead({
             "url": BASE_URL,
             "logo": {
               "@type": "ImageObject",
-              "url": DEFAULT_BANNER
+              "url": `${BASE_URL}/favicon-512.png`
             },
             "sameAs": [
               "https://www.instagram.com/sonicprints.in"

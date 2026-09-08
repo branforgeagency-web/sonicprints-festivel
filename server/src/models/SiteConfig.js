@@ -7,7 +7,7 @@ const SiteConfigSchema = new mongoose.Schema(
     whatsapp: { type: String, default: "+91 63850 54514" },
     phone: { type: String, default: "+91 63850 54514" },
     phoneHref: { type: String, default: "+91 63850 54514" },
-    email: { type: String, default: "branforgeagency@gmail.com" },
+    email: { type: String, default: "hello@sonicprints.in" },
     city: { type: String, default: "Coimbatore, Tamil Nadu" },
     address: { type: String, default: "Sonic Prints, Coimbatore, Tamil Nadu, India" },
     instagram: { type: String, default: "https://www.instagram.com/sonicprints.in" },

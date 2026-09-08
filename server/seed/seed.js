@@ -23,7 +23,7 @@ async function run() {
       whatsapp: process.env.SITE_WHATSAPP || "+91 63850 54514",
       phone: process.env.SITE_PHONE || "+91 63850 54514",
       phoneHref: process.env.SITE_PHONE_HREF || "+91 63850 54514",
-      email: process.env.SITE_EMAIL || "branforgeagency@gmail.com",
+      email: process.env.SITE_EMAIL || "hello@sonicprints.in",
       city: process.env.SITE_CITY || "Coimbatore, Tamil Nadu",
       address: process.env.SITE_ADDRESS || "Sonic Prints, Coimbatore, Tamil Nadu, India",
       instagram: process.env.SITE_INSTAGRAM || "https://www.instagram.com/sonicprints.in",

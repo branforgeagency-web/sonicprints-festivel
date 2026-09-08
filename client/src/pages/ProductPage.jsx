@@ -563,7 +563,7 @@ export default function ProductPage() {
 
                   <div className="policy-subhead">Order Cancellation &amp; Process:</div>
                   <p>
-                    In case you wish to cancel an order, please email us at <strong>{config?.email || "branforgeagency@gmail.com"}</strong> within 12 hours of placing your order. Same-day / fixed-time categories cannot be cancelled once dispatched.
+                    In case you wish to cancel an order, please email us at <strong>{config?.email || "hello@sonicprints.in"}</strong> within 12 hours of placing your order. Same-day / fixed-time categories cannot be cancelled once dispatched.
                   </p>
 
                   <div className="policy-subhead">Return Freight / Shipping Costs:</div>

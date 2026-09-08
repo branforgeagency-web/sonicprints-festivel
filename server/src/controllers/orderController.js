@@ -6,6 +6,7 @@ import productsData from "../../seed/productsData.js";
 import { getRazorpayInstance } from "../utils/razorpay.js";
 import { createCashfreeOrderSession, fetchCashfreeOrderStatus } from "../utils/cashfree.js";
 import crypto from "crypto";
+import { sendOrderNotification } from "../utils/mailer.js";
 
 async function getConfig() {
   let cfg = await SiteConfig.findById("site-config").lean();
@@ -119,6 +120,11 @@ export async function createOrder(req, res, next) {
       paymentStatus: "pending"
     });
 
+    // Send order details email to hello@sonicprints.in (and customer confirmation)
+    sendOrderNotification(order, cfg).catch((e) =>
+      console.error("[orders] Email notification error:", e.message)
+    );
+
     const whatsappText = buildWhatsAppOrderText(order, cfg);
     res.status(201).json({ order, whatsappText, whatsappNumber: cfg.whatsapp });
   } catch (err) {
@@ -225,6 +231,9 @@ export async function verifyCashfreePayment(req, res, next) {
         order.cashfreePaymentId = cfOrder.order_payments[0].payment_id || String(targetCashfreeId);
       }
       await order.save();
+      sendOrderNotification(order, await getConfig()).catch((e) =>
+        console.error("[orders] Cashfree payment email notification error:", e.message)
+      );
       return res.json({ message: "Payment verified successfully", paid: true, order });
     } else {
       order.paymentStatus = "failed";
@@ -297,6 +306,9 @@ export async function verifyRazorpayPayment(req, res, next) {
     order.razorpayPaymentId = razorpay_payment_id;
     order.status = "confirmed";
     await order.save();
+    sendOrderNotification(order, await getConfig()).catch((e) =>
+      console.error("[orders] Razorpay payment email notification error:", e.message)
+    );
     res.json({ message: "Payment verified", order });
   } catch (err) {
     next(err);

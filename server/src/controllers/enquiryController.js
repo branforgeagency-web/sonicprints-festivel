@@ -1,4 +1,5 @@
 import Enquiry from "../models/Enquiry.js";
+import { sendEnquiryNotification } from "../utils/mailer.js";
 
 export async function createEnquiry(req, res, next) {
   try {
@@ -21,6 +22,11 @@ export async function createEnquiry(req, res, next) {
       brandingRequired: req.body.brandingRequired || "",
       note: req.body.note || ""
     });
+
+    // Dispatch bulk lead email notification to hello@sonicprints.in
+    sendEnquiryNotification(enquiry).catch((e) =>
+      console.error("[enquiries] Email notification error:", e.message)
+    );
 
     const whatsappText = buildWhatsAppEnquiryText(enquiry);
     res.status(201).json({ enquiry, whatsappText });

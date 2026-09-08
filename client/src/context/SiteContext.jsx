@@ -11,7 +11,7 @@ const DEFAULT_CONFIG = {
   whatsapp: "+91 63850 54514",
   phone: "+91 63850 54514",
   phoneHref: "+91 63850 54514",
-  email: "branforgeagency@gmail.com",
+  email: "hello@sonicprints.in",
   city: "Coimbatore, Tamil Nadu",
   address: "Sonic Prints, Coimbatore, Tamil Nadu, India",
   instagram: "https://www.instagram.com/sonicprints.in",

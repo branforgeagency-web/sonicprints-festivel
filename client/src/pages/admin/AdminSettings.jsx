@@ -6,7 +6,7 @@ const FIELDS = [
   ["whatsapp", "WhatsApp Number (digits with country code, no +)", "+91 63850 54514"],
   ["phone", "Storefront Display Phone Number", "+91 63850 54514"],
   ["phoneHref", "Tel: Link Dial String", "+91 63850 54514"],
-  ["email", "Official Contact Email", "branforgeagency@gmail.com"],
+  ["email", "Official Contact Email", "hello@sonicprints.in"],
   ["city", "City & Region (Footer)", "Coimbatore, Tamil Nadu"],
   ["address", "Full Headquarters Address", "Sonic Prints, Coimbatore, Tamil Nadu, India"],
   ["instagram", "Instagram Profile URL", "https://www.instagram.com/sonicprints.in"],
