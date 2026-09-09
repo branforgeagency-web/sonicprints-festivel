@@ -5,5 +5,5 @@ Disallow: /admin/
 Disallow: /api/
 
 # Primary Search Engine Sitemaps
-Sitemap: https://sonicprints.shop/sitemap.xml
+Sitemap: https://www.sonicprints.in/sitemap.xml
 

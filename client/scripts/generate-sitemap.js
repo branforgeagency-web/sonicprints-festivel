@@ -5,7 +5,8 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const BASE_URL = process.env.VITE_SITE_URL || "https://sonicprints.shop";
+const BASE_URL = process.env.VITE_SITE_URL || "https://www.sonicprints.in";
+const GCS_IMAGE_BASE = "https://storage.googleapis.com/sonicprints-assets";
 
 const STATIC_PAGES = [
   { path: "/", priority: "1.0", changefreq: "daily" },
@@ -50,7 +51,7 @@ export function generateSitemapXml() {
     xml += `    <priority>${escapeXml(page.priority)}</priority>\n`;
     if (page.path === "/") {
       xml += `    <image:image>\n`;
-      xml += `      <image:loc>${escapeXml(BASE_URL + "/assets/img/hero-banner.jpg")}</image:loc>\n`;
+      xml += `      <image:loc>${escapeXml(GCS_IMAGE_BASE + "/assets/img/hero-banner.jpg")}</image:loc>\n`;
       xml += `      <image:title>${escapeXml("Sonic Prints Eco-Friendly Ganesh Festival Collection 2026")}</image:title>\n`;
       xml += `    </image:image>\n`;
     }
@@ -65,7 +66,7 @@ export function generateSitemapXml() {
     xml += `    <changefreq>${escapeXml(prod.changefreq)}</changefreq>\n`;
     xml += `    <priority>${escapeXml(prod.priority)}</priority>\n`;
     xml += `    <image:image>\n`;
-    xml += `      <image:loc>${escapeXml(BASE_URL + prod.img)}</image:loc>\n`;
+    xml += `      <image:loc>${escapeXml(GCS_IMAGE_BASE + prod.img)}</image:loc>\n`;
     xml += `      <image:title>${escapeXml(prod.title)}</image:title>\n`;
     xml += `    </image:image>\n`;
     xml += `  </url>\n`;

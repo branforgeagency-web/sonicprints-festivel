@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { assetUrl } from "../utils/assetHelper.js";
 
-const BASE_URL = import.meta.env.VITE_SITE_URL || "https://sonicprints.shop";
+const BASE_URL = import.meta.env.VITE_SITE_URL || "https://www.sonicprints.in";
 const DEFAULT_BANNER = assetUrl("/assets/img/hero-banner.jpg").startsWith("http")
   ? assetUrl("/assets/img/hero-banner.jpg")
   : `${BASE_URL}/assets/img/hero-banner.jpg`;
