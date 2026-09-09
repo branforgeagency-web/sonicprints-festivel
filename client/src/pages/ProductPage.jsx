@@ -304,7 +304,7 @@ export default function ProductPage() {
                 />
               </AnimatePresence>
               {product.badge && <span className="zoomtag">{product.badge}</span>}
-              {!isAvailable && <span className="zoomtag zoomtag-unavailable">Unavailable</span>}
+              {!isAvailable && <span className="zoomtag zoomtag-unavailable">Sold Out</span>}
             </motion.div>
           </div>
         </div>
@@ -319,7 +319,7 @@ export default function ProductPage() {
           <motion.span className="sku-badge" variants={FADE_IN}>SKU: {product.sku || "GLAJ11171"}</motion.span>
           <motion.div className="sub" variants={FADE_IN}>
             {product.subtitle}
-            {!isAvailable && <span className="kri-unavailable-tag"> · Currently Unavailable</span>}
+            {!isAvailable && <span className="kri-unavailable-tag"> · Sold Out</span>}
           </motion.div>
           <motion.h1 variants={FADE_IN}>{product.name}</motion.h1>
           {product.tag && <motion.p className="tag" variants={FADE_IN}>“{product.tag}”</motion.p>}
@@ -329,9 +329,9 @@ export default function ProductPage() {
             <motion.div className="pdp-unavailable-alert" variants={FADE_IN} role="alert">
               <span className="pdp-alert-icon">⚠️</span>
               <div className="pdp-alert-body">
-                <strong>Currently Unavailable for Online Orders</strong>
+                <strong>Sold Out for Online Orders</strong>
                 <p>
-                  This kit is currently sold out and unavailable to purchase. Only the{" "}
+                  This kit is currently sold out. Only the{" "}
                   <Link to="/kit/bal-ganesh-kids-kit">Bal Ganesh Kids Kit</Link> is currently available for order.
                 </p>
               </div>
@@ -396,7 +396,7 @@ export default function ProductPage() {
           ) : (
             <motion.div className="buyrow unavailable-buyrow" variants={FADE_IN}>
               <button className="btn btn-disabled btn-lg" disabled style={{ flex: 1 }} aria-disabled="true">
-                Currently Unavailable
+                Sold Out
               </button>
               <Link to="/kit/bal-ganesh-kids-kit" className="btn btn-gold btn-lg" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>
                 Shop Bal Ganesh Kit →

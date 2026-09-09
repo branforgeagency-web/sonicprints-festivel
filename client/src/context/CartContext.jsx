@@ -102,7 +102,7 @@ export function CartProvider({ children }) {
       const p = typeof id === "object" && id ? id : productById(id);
       if (!p) return;
       if (!isProductAvailable(p)) {
-        toast(`${p.name} is currently unavailable. Only the Bal Ganesh kit is available.`);
+        toast(`${p.name} is currently sold out. Only the Bal Ganesh kit is available.`);
         return;
       }
       const prodId = p.id || p._id || id;

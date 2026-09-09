@@ -403,7 +403,7 @@ export default function Hero3DCarousel({
                       <span className="hero-3d-card-category">
                         {item.category || "Collection"} {item.price ? ` · ${item.price}` : ""}
                         {item.isAvailable === false && (
-                          <span className="hero-3d-unavailable-chip"> · Unavailable</span>
+                          <span className="hero-3d-unavailable-chip"> · Sold Out</span>
                         )}
                       </span>
                       <h3 className="hero-3d-card-title">{item.title}</h3>
@@ -415,7 +415,7 @@ export default function Hero3DCarousel({
                   </div>
 
                   <span className={`hero-3d-shop-btn-bottom${item.isAvailable === false ? " hero-3d-shop-btn-unavailable" : ""}`}>
-                    {item.isAvailable === false ? "Unavailable · View Details →" : "Shop Now →"}
+                    {item.isAvailable === false ? "Sold Out · View Details →" : "Shop Now →"}
                   </span>
                 </div>
               </>

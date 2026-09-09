@@ -139,7 +139,7 @@ export default function Checkout() {
     e.preventDefault();
     if (!cart.length) { toast("Your cart is empty"); return; }
     if (hasUnavailable) {
-      toast("Your cart contains unavailable products. Only the Bal Ganesh Kit is available.");
+      toast("Your cart contains sold out products. Only the Bal Ganesh Kit is available.");
       return;
     }
 
@@ -399,7 +399,7 @@ export default function Checkout() {
 
                 <Magnetic className="fx-block" strength={0.22} cap={5} style={{ marginTop: 8 }}>
                   <button className="btn btn-gold btn-lg btn-wide" type="submit" disabled={submitting || hasUnavailable}>
-                    {submitting ? "Placing order…" : hasUnavailable ? "Unavailable items in cart" : "Place order"}
+                    {submitting ? "Placing order…" : hasUnavailable ? "Sold out items in cart" : "Place order"}
                   </button>
                 </Magnetic>
                 <p className="note-s">
@@ -415,7 +415,7 @@ export default function Checkout() {
               <h2 style={{ fontSize: 24, marginBottom: 14 }}>Order summary</h2>
               {hasUnavailable && (
                 <div style={{ background: "#fff1f2", border: "1px solid #fecdd3", color: "#9f1239", padding: "10px 14px", borderRadius: 8, fontSize: 13, marginBottom: 14, lineHeight: 1.5 }}>
-                  ⚠️ Some items in your cart are currently unavailable. Only the Bal Ganesh Kit can be ordered. Please remove unavailable items.
+                  ⚠️ Some items in your cart are currently sold out. Only the Bal Ganesh Kit can be ordered. Please remove sold out items.
                 </div>
               )}
               <div>
@@ -435,7 +435,7 @@ export default function Checkout() {
                         <div>
                           <b>
                             {p.name}
-                            {!isAvail && <span style={{ color: "#e11d48", fontSize: 11, fontWeight: 700, marginLeft: 6 }}>· Unavailable</span>}
+                            {!isAvail && <span style={{ color: "#e11d48", fontSize: 11, fontWeight: 700, marginLeft: 6 }}>· Sold Out</span>}
                           </b>
                           {lbl && <span style={{ display: "block", fontSize: 12, color: "var(--muted)", marginBottom: 4 }}>{lbl}</span>}
                           <div className="sumrow-qty-controls">

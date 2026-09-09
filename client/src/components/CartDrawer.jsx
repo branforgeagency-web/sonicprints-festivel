@@ -26,7 +26,7 @@ export default function CartDrawer() {
   function goCheckout() {
     if (!cart.length) { toast("Your cart is empty"); return; }
     if (hasUnavailable) {
-      toast("Please remove unavailable items before checkout. Only Bal Ganesh is available.");
+      toast("Please remove sold out items before checkout. Only Bal Ganesh is available.");
       return;
     }
     initiateCheckout(cart, total);
@@ -37,7 +37,7 @@ export default function CartDrawer() {
   function orderOnWhatsApp() {
     if (!cart.length) { toast("Your cart is empty"); return; }
     if (hasUnavailable) {
-      toast("Please remove unavailable items. Only Bal Ganesh is available.");
+      toast("Please remove sold out items. Only Bal Ganesh is available.");
       return;
     }
     const lines = ["*SONIC PRINTS — ORDER REQUEST*", "Ganesh Festival Collection 2026", ""];
@@ -83,7 +83,7 @@ export default function CartDrawer() {
                   <div>
                     <b>
                       {p.name}
-                      {!isAvail && <span style={{ color: "#e11d48", fontSize: 11, fontWeight: 700, marginLeft: 6 }}>· Unavailable</span>}
+                      {!isAvail && <span style={{ color: "#e11d48", fontSize: 11, fontWeight: 700, marginLeft: 6 }}>· Sold Out</span>}
                     </b>
                     {lbl && <span className="v">{lbl}</span>}
                     <span className="v">{money(up)} each</span>
@@ -111,11 +111,11 @@ export default function CartDrawer() {
           </p>
           {hasUnavailable && (
             <p className="note-s" style={{ color: "#e11d48", fontWeight: 600, margin: "0 0 10px", textAlign: "center" }}>
-              ⚠️ Please remove unavailable items. Only Bal Ganesh is available.
+              ⚠️ Please remove sold out items. Only Bal Ganesh is available.
             </p>
           )}
           <button className="btn btn-gold btn-wide btn-lg" disabled={hasUnavailable} onClick={goCheckout}>
-            {hasUnavailable ? "Unavailable items in cart" : "Proceed to checkout"}
+            {hasUnavailable ? "Sold out items in cart" : "Proceed to checkout"}
           </button>
           <button className="btn btn-line btn-wide" style={{ marginTop: 9 }} disabled={hasUnavailable} onClick={orderOnWhatsApp}>
             Order on WhatsApp instead

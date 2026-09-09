@@ -114,7 +114,7 @@ export default function AdminProducts() {
                             style={{ width: 16, height: 16, accentColor: "#10B981" }}
                           />
                           <span className={`admin-badge ${p.isAvailable !== false ? "badge-paid" : "badge-cancelled"}`}>
-                            {p.isAvailable !== false ? "Available" : "Unavailable"}
+                            {p.isAvailable !== false ? "Available" : "Sold Out"}
                           </span>
                         </label>
                       </div>

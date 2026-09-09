@@ -59,7 +59,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
           <div className="kri-head">
             <span className="kri-subtitle">
               {product.subtitle}
-              {!isAvailable && <span className="kri-unavailable-tag"> · Unavailable</span>}
+              {!isAvailable && <span className="kri-unavailable-tag"> · Sold Out</span>}
             </span>
             <h4 className="kri-title">
               <Link to={`/kit/${product.slug}`} onClick={openProduct}>
@@ -116,7 +116,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
               className="kcm-btn kcm-btn-disabled"
               aria-disabled="true"
             >
-              Unavailable
+              Sold Out
             </button>
           )}
         </div>
@@ -148,7 +148,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
             className="kbh-img"
           />
           <div className="kcm-badges">
-            {!isAvailable && <span className="kcm-badge kcm-badge-unavailable">Unavailable</span>}
+            {!isAvailable && <span className="kcm-badge kcm-badge-unavailable">Sold Out</span>}
             {isAvailable && <span className="kcm-badge kcm-badge-featured">🌟 Featured Kit</span>}
             {isAvailable && product.badge && <span className="kcm-badge">{product.badge}</span>}
             {isKids && <span className="kcm-badge kcm-badge-kids">✨ Bappa Approved</span>}
@@ -159,7 +159,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
           <div className="kbh-header">
             <span className="kcm-subtitle">
               {product.subtitle}
-              {!isAvailable && <span className="kri-unavailable-tag"> · Unavailable</span>}
+              {!isAvailable && <span className="kri-unavailable-tag"> · Sold Out</span>}
             </span>
             <h3 className="kbh-title">
               <Link to={`/kit/${product.slug}`} onClick={openProduct}>
@@ -229,7 +229,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
                   className="kcm-btn kcm-btn-disabled"
                   aria-disabled="true"
                 >
-                  Unavailable
+                  Sold Out
                 </button>
               )}
             </div>
@@ -265,7 +265,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
           className="kcm-img"
         />
         <div className="kcm-badges">
-          {!isAvailable && <span className="kcm-badge kcm-badge-unavailable">Unavailable</span>}
+          {!isAvailable && <span className="kcm-badge kcm-badge-unavailable">Sold Out</span>}
           {isAvailable && product.badge && <span className="kcm-badge">{product.badge}</span>}
           {isKids && <span className="kcm-badge kcm-badge-kids">✨ Bappa Approved</span>}
         </div>
@@ -275,7 +275,7 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
       <div className="kcm-content">
         <div className="kcm-subtitle">
           {product.subtitle}
-          {!isAvailable && <span className="kri-unavailable-tag"> · Unavailable</span>}
+          {!isAvailable && <span className="kri-unavailable-tag"> · Sold Out</span>}
         </div>
         <h3 className="kcm-title">
           <Link to={`/kit/${product.slug}`} onClick={openProduct}>
@@ -354,9 +354,9 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
                 disabled
                 className="kcm-btn kcm-btn-disabled"
                 aria-disabled="true"
-                title="Currently unavailable"
+                title="Currently sold out"
               >
-                Unavailable
+                Sold Out
               </button>
             )}
           </div>
