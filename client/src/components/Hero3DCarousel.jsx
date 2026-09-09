@@ -51,7 +51,8 @@ export default function Hero3DCarousel({
   headingLine1 = "Edit your",
   headingLine2 = "photos differently.",
   description = "Transform everyday images into polished, expressive visuals with a faster and more playful editing experience.",
-  autoPlayInterval = 2000
+  autoPlay = false,
+  autoPlayInterval = 0
 }) {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -65,10 +66,15 @@ export default function Hero3DCarousel({
 
   const totalCards = items.length;
 
-  // Reset active index to middle if total cards changes
+  // Set initial active slide to the first available product (or index 0)
   useEffect(() => {
-    setActiveIndex(Math.floor(totalCards / 2) || 0);
-  }, [totalCards]);
+    if (!items || !items.length) {
+      setActiveIndex(0);
+      return;
+    }
+    const firstAvailIdx = items.findIndex((it) => it.isAvailable !== false);
+    setActiveIndex(firstAvailIdx >= 0 ? firstAvailIdx : 0);
+  }, [items]);
 
   // Responsive screen size listener
   useEffect(() => {
@@ -110,14 +116,20 @@ export default function Hero3DCarousel({
     setActiveIndex(index);
   }, []);
 
-  // 2-second Autoplay timer
+  // Autoplay timer (only when explicitly enabled and interval > 0)
   const startAutoplay = useCallback(() => {
-    if (isReducedMotion || autoPlayInterval <= 0 || totalCards <= 1) return;
+    if (!autoPlay || isReducedMotion || autoPlayInterval <= 0 || totalCards <= 1) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
+    }
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       nextSlide();
     }, autoPlayInterval);
-  }, [nextSlide, autoPlayInterval, isReducedMotion, totalCards]);
+  }, [autoPlay, nextSlide, autoPlayInterval, isReducedMotion, totalCards]);
 
   useEffect(() => {
     startAutoplay();
@@ -126,10 +138,12 @@ export default function Hero3DCarousel({
     };
   }, [startAutoplay]);
 
-  // Restart timer after manual interaction
+  // Handle manual user interaction
   const handleUserInteraction = (action) => {
     action();
-    startAutoplay();
+    if (autoPlay && autoPlayInterval > 0) {
+      startAutoplay();
+    }
   };
 
   // Keyboard navigation
@@ -145,16 +159,19 @@ export default function Hero3DCarousel({
   const handlePointerDown = (e) => {
     isDragging.current = true;
     hasMoved.current = false;
-    touchStartPos.current = { x: e.clientX || e.touches?.[0]?.clientX || 0, y: e.clientY || e.touches?.[0]?.clientY || 0 };
+    touchStartPos.current = {
+      x: e.clientX ?? e.touches?.[0]?.clientX ?? 0,
+      y: e.clientY ?? e.touches?.[0]?.clientY ?? 0
+    };
   };
 
   const handlePointerMove = (e) => {
     if (!isDragging.current) return;
-    const curX = e.clientX || e.touches?.[0]?.clientX || 0;
-    const curY = e.clientY || e.touches?.[0]?.clientY || 0;
+    const curX = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+    const curY = e.clientY ?? e.touches?.[0]?.clientY ?? 0;
     const dx = Math.abs(curX - touchStartPos.current.x);
     const dy = Math.abs(curY - touchStartPos.current.y);
-    if (dx > 8 || dy > 8) {
+    if (dx > 10 || dy > 10) {
       hasMoved.current = true;
     }
   };
@@ -162,8 +179,8 @@ export default function Hero3DCarousel({
   const handlePointerUp = (e) => {
     if (!isDragging.current) return;
     isDragging.current = false;
-    const endX = e.clientX || e.changedTouches?.[0]?.clientX || 0;
-    const endY = e.clientY || e.changedTouches?.[0]?.clientY || 0;
+    const endX = e.clientX ?? e.changedTouches?.[0]?.clientX ?? touchStartPos.current.x;
+    const endY = e.clientY ?? e.changedTouches?.[0]?.clientY ?? touchStartPos.current.y;
     
     const deltaX = endX - touchStartPos.current.x;
     const deltaY = endY - touchStartPos.current.y;
@@ -176,10 +193,24 @@ export default function Hero3DCarousel({
       } else {
         handleUserInteraction(prevSlide);
       }
-    }
-    setTimeout(() => {
+      setTimeout(() => {
+        hasMoved.current = false;
+      }, 100);
+    } else {
+      // Movement was negligible, so preserve clean click behavior
       hasMoved.current = false;
-    }, 80);
+    }
+  };
+
+  // Support horizontal wheel/trackpad gestures
+  const handleWheel = (e) => {
+    if (Math.abs(e.deltaX) > 35 && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      if (e.deltaX > 0) {
+        handleUserInteraction(nextSlide);
+      } else {
+        handleUserInteraction(prevSlide);
+      }
+    }
   };
 
   const handleCardClick = (item, idx, isActive) => {
@@ -359,16 +390,24 @@ export default function Hero3DCarousel({
         onMouseDown={handlePointerDown}
         onMouseMove={handlePointerMove}
         onMouseUp={handlePointerUp}
+        onMouseLeave={handlePointerUp}
         onTouchStart={handlePointerDown}
         onTouchMove={handlePointerMove}
         onTouchEnd={handlePointerUp}
+        onWheel={handleWheel}
       >
         {/* Desktop Prev Button */}
         <button
           type="button"
           className="hero-3d-arrow-btn hero-3d-arrow-prev"
-          onClick={() => handleUserInteraction(prevSlide)}
-          aria-label="Previous slide"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleUserInteraction(prevSlide);
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          aria-label="Previous product"
+          title="Previous product"
         >
           <svg viewBox="0 0 24 24">
             <polyline points="15 18 9 12 15 6" />
@@ -443,8 +482,14 @@ export default function Hero3DCarousel({
         <button
           type="button"
           className="hero-3d-arrow-btn hero-3d-arrow-next"
-          onClick={() => handleUserInteraction(nextSlide)}
-          aria-label="Next slide"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleUserInteraction(nextSlide);
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          aria-label="Next product"
+          title="Next product"
         >
           <svg viewBox="0 0 24 24">
             <polyline points="9 18 15 12 9 6" />
@@ -459,7 +504,11 @@ export default function Hero3DCarousel({
             key={idx}
             type="button"
             className={`hero-3d-dot ${idx === activeIndex ? "hero-3d-dot-active" : ""}`}
-            onClick={() => handleUserInteraction(() => goToSlide(idx))}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleUserInteraction(() => goToSlide(idx));
+            }}
+            onMouseDown={(e) => e.stopPropagation()}
             role="tab"
             aria-selected={idx === activeIndex}
             aria-label={`Go to slide ${idx + 1}`}
@@ -472,8 +521,13 @@ export default function Hero3DCarousel({
         <button
           type="button"
           className="hero-3d-mobile-arrow"
-          onClick={() => handleUserInteraction(prevSlide)}
-          aria-label="Previous slide"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleUserInteraction(prevSlide);
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          aria-label="Previous product"
         >
           <svg viewBox="0 0 24 24">
             <polyline points="15 18 9 12 15 6" />
@@ -486,7 +540,12 @@ export default function Hero3DCarousel({
               key={idx}
               type="button"
               className={`hero-3d-dot ${idx === activeIndex ? "hero-3d-dot-active" : ""}`}
-              onClick={() => handleUserInteraction(() => goToSlide(idx))}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleUserInteraction(() => goToSlide(idx));
+              }}
+              onMouseDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
               role="tab"
               aria-selected={idx === activeIndex}
               aria-label={`Go to slide ${idx + 1}`}
@@ -497,8 +556,13 @@ export default function Hero3DCarousel({
         <button
           type="button"
           className="hero-3d-mobile-arrow"
-          onClick={() => handleUserInteraction(nextSlide)}
-          aria-label="Next slide"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleUserInteraction(nextSlide);
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          aria-label="Next product"
         >
           <svg viewBox="0 0 24 24">
             <polyline points="9 18 15 12 9 6" />

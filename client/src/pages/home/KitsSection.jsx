@@ -15,14 +15,24 @@ export default function KitsSection() {
   const { reduced } = useMotionProfile();
 
   const carouselItems = useMemo(() => {
-    return (products || []).map((p, i) => ({
+    const list = products || [];
+    // Prioritize available products first, then sort by defined order
+    const sorted = [...list].sort((a, b) => {
+      const aAvail = a.isAvailable !== false && (a.id === "kids" || a.isAvailable === true);
+      const bAvail = b.isAvailable !== false && (b.id === "kids" || b.isAvailable === true);
+      if (aAvail && !bAvail) return -1;
+      if (!aAvail && bAvail) return 1;
+      return (a.order ?? 0) - (b.order ?? 0);
+    });
+
+    return sorted.map((p, i) => ({
       id: p.id,
       title: p.name,
       category: p.subtitle || p.badge || "Festival Kit",
       img: imgUrl(p.img),
       price: money(p.price),
       slug: p.slug,
-      isAvailable: p.isAvailable !== false && p.id === "kids",
+      isAvailable: p.isAvailable !== false && (p.id === "kids" || p.isAvailable === true),
       slideNum: String(i + 1).padStart(2, "0")
     }));
   }, [products]);
@@ -75,7 +85,8 @@ export default function KitsSection() {
               headingLine1=""
               headingLine2=""
               description=""
-              autoPlayInterval={2000}
+              autoPlay={false}
+              autoPlayInterval={0}
             />
           </motion.div>
         )}

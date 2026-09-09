@@ -284,10 +284,17 @@
 .hero-3d-card-active {
   box-shadow: 
     inset 0 1px 2px rgba(255, 255, 255, 0.6),
-    0 30px 60px -12px rgba(124, 58, 237, 0.25),
+    0 30px 60px -12px rgba(217, 119, 6, 0.25),
     0 15px 35px -10px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  border: 1.5px solid rgba(255, 215, 0, 0.75);
   cursor: pointer;
+}
+
+.hero-3d-card:not(.hero-3d-card-active):hover {
+  border-color: rgba(217, 119, 6, 0.65);
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.5),
+    0 25px 50px -10px rgba(217, 119, 6, 0.22);
 }
 
 .hero-3d-card-active:hover {
@@ -295,7 +302,7 @@
     inset 0 1px 2px rgba(255, 255, 255, 0.8),
     0 35px 70px -10px rgba(184, 142, 68, 0.35),
     0 18px 40px -10px rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 215, 0, 0.8);
+  border-color: rgba(255, 215, 0, 0.9);
 }
 
 .hero-3d-card-active:hover .hero-3d-shop-btn-bottom {
@@ -452,27 +459,29 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 25;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1.5px solid rgba(217, 119, 6, 0.35);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: #1e1e24;
   outline: none;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 .hero-3d-arrow-btn:hover {
-  background: rgba(255, 255, 255, 0.95);
-  transform: translateY(-50%) scale(1.08);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 1), 0 12px 28px rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  color: #d97706;
+  border-color: #d97706;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 12px 30px rgba(217, 119, 6, 0.25), 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .hero-3d-arrow-btn:active {
@@ -480,7 +489,7 @@
 }
 
 .hero-3d-arrow-btn:focus-visible {
-  outline: 2px solid #7c3aed;
+  outline: 2px solid #d97706;
   outline-offset: 2px;
 }
 
@@ -493,11 +502,11 @@
 }
 
 .hero-3d-arrow-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2.2;
+  stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -511,19 +520,19 @@
   gap: 8px;
   padding: 8px 16px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(217, 119, 6, 0.2);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 4px 16px rgba(0, 0, 0, 0.04);
-  margin-top: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin-top: 6px;
 }
 
 .hero-3d-dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 999px;
-  background: #cbd5e1;
+  background: rgba(30, 30, 36, 0.2);
   border: none;
   padding: 0;
   cursor: pointer;
@@ -532,16 +541,16 @@
 }
 
 .hero-3d-dot:hover {
-  background: #94a3b8;
+  background: rgba(217, 119, 6, 0.7);
 }
 
 .hero-3d-dot-active {
-  width: 24px;
-  background: linear-gradient(135deg, #7c3aed, #3b82f6);
+  width: 26px;
+  background: linear-gradient(135deg, #d97706, #b45309);
 }
 
 .hero-3d-dot:focus-visible {
-  outline: 2px solid #7c3aed;
+  outline: 2px solid #d97706;
   outline-offset: 2px;
 }
 
@@ -622,26 +631,34 @@
   }
 
   .hero-3d-mobile-arrow {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.94);
+    border: 1.5px solid rgba(217, 119, 6, 0.35);
     backdrop-filter: blur(12px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #1e1e24;
     cursor: pointer;
-    border: none;
     outline: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+
+  .hero-3d-mobile-arrow:hover,
+  .hero-3d-mobile-arrow:active {
+    background: #ffffff;
+    border-color: #d97706;
+    color: #d97706;
+    transform: scale(1.08);
   }
 
   .hero-3d-mobile-arrow svg {
-    width: 18px;
-    height: 18px;
-    stroke-width: 2.2;
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.4;
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
