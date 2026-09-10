@@ -34,6 +34,7 @@ export function imgUrl(key, size) {
   if (!key) return "";
   if (key.startsWith("http://") || key.startsWith("https://") || key.startsWith("data:")) return key;
   if (key.startsWith("/")) return assetUrl(key);
+  if (/\.(jpg|jpeg|png|webp|svg)$/i.test(key)) return assetUrl(`/assets/img/${key}`);
   const cleanKey = key.replace(/\.(jpg|jpeg|png|webp)$/i, "");
   const name = size ? `${cleanKey}-${size}` : cleanKey;
   return assetUrl(`/assets/img/${name}.jpg`);

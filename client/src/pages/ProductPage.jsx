@@ -97,6 +97,15 @@ export default function ProductPage() {
         const { crossSellProducts, ...p } = data;
         const fallback = FALLBACK_PRODUCTS.find((f) => f.slug === slug || f.id === p.id);
         if (fallback) {
+          if (!p.gallery && fallback.gallery) {
+            p.gallery = fallback.gallery;
+          }
+          if (fallback.mrp) {
+            p.mrp = fallback.mrp;
+          }
+          if (p.id === "kids" && fallback.price) {
+            p.price = fallback.price;
+          }
           if (!p.insideTheBox && fallback.insideTheBox) {
             p.insideTheBox = fallback.insideTheBox;
           } else if (p.insideTheBox?.sections && fallback.insideTheBox?.sections) {
@@ -179,12 +188,15 @@ export default function ProductPage() {
   const baseImg = design ? design.img : product.img;
   const storeImg = STORE_IMAGE[product.id] || "display-main";
   const productShotSrc = design ? imgUrl(baseImg, "circ") : imgUrl(baseImg);
-  const thumbs = [
-    { key: "product", label: "Product", src: productShotSrc },
-    { key: "sheet", label: "Details", src: (design && design.sheet) ? imgUrl(design.sheet) : imgUrl(`${product.img}-sheet`) },
-    { key: "store", label: "In store", src: imgUrl(storeImg) }
+  const defaultThumbs = [
+    { key: "product", label: "Kit Box", src: productShotSrc },
+    { key: "sheet", label: "Kit Items", src: (design && design.sheet) ? imgUrl(design.sheet) : imgUrl(`${product.img}-sheet`) },
+    { key: "store", label: "Inside Box", src: imgUrl(storeImg) }
   ];
-  const mainImg = thumbs[activeThumb].src;
+  const thumbs = (product.gallery && product.gallery.length)
+    ? product.gallery.map((g) => ({ ...g, src: imgUrl(g.src) }))
+    : defaultThumbs;
+  const mainImg = thumbs[activeThumb]?.src || thumbs[0]?.src;
 
   const isAvailable = product?.isAvailable !== false && product?.id === "kids";
 
@@ -360,7 +372,19 @@ export default function ProductPage() {
           )}
 
           <motion.div className="priceline" variants={FADE_IN}>
-            <span className="now">{money(unitPrice)}</span>
+            <div className="priceline-main">
+              <span className="now">{money(unitPrice)}</span>
+              {product.mrp && product.mrp > unitPrice && (
+                <span className="mrp-strike" title="Maximum Retail Price">
+                  MRP <span className="strike-val">{money(product.mrp)}</span>
+                </span>
+              )}
+              {product.mrp && product.mrp > unitPrice && (
+                <span className="save-badge">
+                  {Math.round(((product.mrp - unitPrice) / product.mrp) * 100)}% OFF
+                </span>
+              )}
+            </div>
             <span className="inc">inclusive of taxes · delivery calculated at checkout</span>
           </motion.div>
 

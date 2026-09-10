@@ -41,6 +41,7 @@ const ProductSchema = new mongoose.Schema(
     badge: { type: String, default: "" }, // e.g. "Best Seller"
     shortDescription: { type: String, default: "" },
     price: { type: Number, required: true }, // base / "from" price
+    mrp: { type: Number, default: null }, // maximum retail price for strikethrough comparison
     img: { type: String, required: true }, // base image key (matches /assets/img/<img>.jpg)
     active: { type: Boolean, default: true },
     isAvailable: { type: Boolean, default: false },
@@ -48,6 +49,10 @@ const ProductSchema = new mongoose.Schema(
 
     variants: { type: [VariantSchema], default: [] },
     designs: { type: [DesignSchema], default: [] },
+    gallery: {
+      type: [{ key: String, label: String, src: String }],
+      default: []
+    },
 
     highlights: {
       type: [{ title: String, text: String }],

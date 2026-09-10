@@ -18,7 +18,9 @@ export default function KidsSection() {
   const { cart, addToCart, setQty, removeAt } = useCart();
   const [activeStep, setActiveStep] = useState(0);
 
-  const balGaneshPrice = products?.find((p) => p.id === "kids")?.price || 699;
+  const balGaneshProduct = products?.find((p) => p.id === "kids");
+  const balGaneshPrice = balGaneshProduct?.price || 549;
+  const balGaneshMrp = balGaneshProduct?.mrp || 699;
   const currentStep = KIDS_JOURNEY[activeStep] || KIDS_JOURNEY[0];
 
   const kidsCartIndex = cart.findIndex((it) => it.id === "kids");
@@ -169,8 +171,13 @@ export default function KidsSection() {
 
               <div className="kfr-action-block">
                 <div className="kfr-price-wrap">
-                  <b className="kfr-price">{money(balGaneshPrice)}</b>
-                  <span className="kfr-price-sub">All inclusive</span>
+                  <div className="kfr-price-row">
+                    <b className="kfr-price">{money(balGaneshPrice)}</b>
+                    {balGaneshMrp && balGaneshMrp > balGaneshPrice && (
+                      <span className="kfr-mrp-strike">MRP {money(balGaneshMrp)}</span>
+                    )}
+                  </div>
+                  <span className="kfr-price-sub">{balGaneshMrp ? "Special Festival Offer" : "All inclusive"}</span>
                 </div>
                 <div className="kpc-btn-group">
                   <Link to="/kit/bal-ganesh-kids-kit" className="btn btn-line btn-sm">

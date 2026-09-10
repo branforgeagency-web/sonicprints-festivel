@@ -71,8 +71,13 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
         </div>
         <div className="kri-who-pill">{product.kitWho}</div>
         <div className="kri-price-block">
-          <span className="kri-price">{priceLabel}</span>
-          <span className="kri-sub">{priceSub}</span>
+          <div className="kri-price-row">
+            <span className="kri-price">{priceLabel}</span>
+            {product.mrp && product.mrp > product.price && (
+              <span className="kri-mrp-strike">MRP {money(product.mrp)}</span>
+            )}
+          </div>
+          <span className="kri-sub">{product.mrp && product.mrp > product.price ? "Offer Price" : priceSub}</span>
         </div>
         <div className="kri-actions">
           <Link to={`/kit/${product.slug}`} onClick={openProduct} className="kcm-btn kcm-btn-outline">
@@ -184,8 +189,13 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
 
           <div className="kbh-footer">
             <div className="kcm-price-block">
-              <span className="kcm-price-amount">{priceLabel}</span>
-              <span className="kcm-price-label">{priceSub}</span>
+              <div className="kcm-price-row">
+                <span className="kcm-price-amount">{priceLabel}</span>
+                {product.mrp && product.mrp > product.price && (
+                  <span className="kcm-price-mrp">MRP {money(product.mrp)}</span>
+                )}
+              </div>
+              <span className="kcm-price-label">{product.mrp && product.mrp > product.price ? "Special Offer" : priceSub}</span>
             </div>
             <div className="kcm-actions">
               <Link to={`/kit/${product.slug}`} onClick={openProduct} className="kcm-btn kcm-btn-outline">
@@ -303,8 +313,13 @@ export default function KitCard({ product, revealClass = "", index = 0, variant 
         {/* Price & Action Footer */}
         <div className="kcm-footer">
           <div className="kcm-price-block">
-            <span className="kcm-price-amount">{priceLabel}</span>
-            <span className="kcm-price-label">{priceSub}</span>
+            <div className="kcm-price-row">
+              <span className="kcm-price-amount">{priceLabel}</span>
+              {product.mrp && product.mrp > product.price && (
+                <span className="kcm-price-mrp">MRP {money(product.mrp)}</span>
+              )}
+            </div>
+            <span className="kcm-price-label">{product.mrp && product.mrp > product.price ? "Special Offer" : priceSub}</span>
           </div>
 
           <div className="kcm-actions">

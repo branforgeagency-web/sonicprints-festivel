@@ -4,9 +4,16 @@
 const RAW_BASE = import.meta.env.VITE_IMAGE_BASE_URL || "https://storage.googleapis.com/sonicprints-assets";
 export const IMAGE_BASE_URL = RAW_BASE.trim().replace(/\/+$/, "");
 
+const LOCAL_ASSET_PREFIXES = [
+  "/assets/img/bal-ganesh",
+  "/assets/img/kids",
+  "/assets/img/display-kids"
+];
+
 /**
  * Returns the fully qualified URL for an asset path.
  * If path is already an absolute URL (http, https, data:), returns it unchanged.
+ * If the path matches local assets in public folder, returns the local path.
  * If VITE_IMAGE_BASE_URL is configured, prepends it.
  * Otherwise returns the local relative path.
  *
@@ -19,5 +26,8 @@ export function assetUrl(path) {
     return path;
   }
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  if (LOCAL_ASSET_PREFIXES.some((prefix) => cleanPath.startsWith(prefix))) {
+    return cleanPath;
+  }
   return IMAGE_BASE_URL ? `${IMAGE_BASE_URL}${cleanPath}` : cleanPath;
 }

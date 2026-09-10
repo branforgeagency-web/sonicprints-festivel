@@ -121,9 +121,15 @@ const products = [
       "Story, colouring, stickers, school name labels, a little puja guide and a certificate — a festival a child experiences instead of watching.",
     kitWho: "Children 5–12 · Schools · Apartment communities · Birthday return gifts",
     bestFor: "Children 5–12 · Schools · Apartment communities · Birthday return gifts",
-    price: 699,
+    price: 549,
+    mrp: 699,
     isAvailable: true,
-    img: "kids",
+    img: "/assets/img/bal-ganesh-open.png",
+    gallery: [
+      { key: "store", label: "Inside Box", src: "/assets/img/bal-ganesh-open.png" },
+      { key: "product", label: "Kit Box", src: "/assets/img/bal-ganesh-box.png" },
+      { key: "sheet", label: "Kit Items", src: "/assets/img/bal-ganesh-contents.jpg" }
+    ],
     order: 2,
     highlights: [
       { title: "Bala Vinayaka Idol", text: "Cute, eco-friendly natural clay" },
@@ -216,10 +222,10 @@ const products = [
       { label: "School packs", value: "From 50 units with printed school branding" }
     ],
     bulkPricing: [
-      { range: "25 – 99 units", price: 649, savingsLabel: "₹50 off" },
-      { range: "100 – 499 units", price: 599, savingsLabel: "₹100 off" },
-      { range: "500 – 1,999 units", price: 549, savingsLabel: "₹150 off" },
-      { range: "2,000 + units", price: 499, savingsLabel: "₹200 off" }
+      { range: "25 – 99 units", price: 499, savingsLabel: "₹50 off" },
+      { range: "100 – 499 units", price: 449, savingsLabel: "₹100 off" },
+      { range: "500 – 1,999 units", price: 399, savingsLabel: "₹150 off" },
+      { range: "2,000 + units", price: 349, savingsLabel: "₹200 off" }
     ]
   },
   {
