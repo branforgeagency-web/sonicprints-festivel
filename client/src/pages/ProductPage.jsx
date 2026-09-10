@@ -85,6 +85,7 @@ export default function ProductPage() {
   const [qty, setQty] = useState(1);
   const [activeThumb, setActiveThumb] = useState(0);
   const [activePolicyTab, setActivePolicyTab] = useState("returns");
+  const [activeBoxTab, setActiveBoxTab] = useState("all");
 
   useEffect(() => {
     let cancelled = false;
@@ -98,6 +99,8 @@ export default function ProductPage() {
         if (fallback) {
           if (!p.insideTheBox && fallback.insideTheBox) {
             p.insideTheBox = fallback.insideTheBox;
+          } else if (p.insideTheBox?.sections && fallback.insideTheBox?.sections) {
+            p.insideTheBox.sections = fallback.insideTheBox.sections;
           }
           if ((!p.contents || !p.contents.length) && fallback.contents?.length) {
             p.contents = fallback.contents;
@@ -132,6 +135,24 @@ export default function ProductPage() {
   const variant = useMemo(() => product?.variants?.find((v) => v.id === variantId), [product, variantId]);
   const design = useMemo(() => product?.designs?.find((d) => d.id === designId), [product, designId]);
   const unitPrice = variant ? variant.price : product?.price || 0;
+
+  const allBoxItems = useMemo(() => {
+    if (!product?.insideTheBox?.sections) return [];
+    let counter = 1;
+    return product.insideTheBox.sections.flatMap((sec, sIdx) =>
+      (sec.items || []).map((it) => ({
+        ...it,
+        globalNum: counter++,
+        sectionType: sIdx === 0 ? "craft" : "activity",
+        sectionTitle: sec.title
+      }))
+    );
+  }, [product]);
+
+  const displayedBoxItems = useMemo(() => {
+    if (activeBoxTab === "all") return allBoxItems;
+    return allBoxItems.filter((it) => it.sectionType === activeBoxTab);
+  }, [allBoxItems, activeBoxTab]);
 
   if (loading) {
     return (
@@ -414,14 +435,6 @@ export default function ProductPage() {
             Need 25 or more? Get bulk pricing <Icon name="arrow" />
           </Link>
 
-          {!!product.highlights?.length && (
-            <motion.div className="hl" variants={FADE_IN}>
-              {product.highlights.map((h) => (
-                <div key={h.title}><b>{h.title}</b><span>{h.text}</span></div>
-              ))}
-            </motion.div>
-          )}
-
           <motion.div className="assure" variants={FADE_IN}>
             {ASSURE_BULLETS.map((a) => (
               <div key={a.title}><Icon name="check" /><span><b>{a.title}</b> — {a.text}</span></div>
@@ -430,54 +443,32 @@ export default function ProductPage() {
         </motion.div>
       </div>
 
-      {/* Inside The Box Section */}
-      {product.insideTheBox ? (
-        <section className="box-inside-sec" style={{ background: "#FAF7F0" }}>
-          <div className="wrap">
-            <div className="box-inside-header">
-              <div className="eyebrow center">📦 Complete 21-Piece Kit</div>
-              <h2 className="box-inside-title">{product.insideTheBox.title}</h2>
-              {product.insideTheBox.tagline && (
-                <p className="box-inside-tagline">“{product.insideTheBox.tagline}”</p>
-              )}
-            </div>
-
-            {/* Badges Bar */}
-            {!!product.insideTheBox.badges?.length && (
-              <div className="box-badges-row">
-                {product.insideTheBox.badges.map((b, idx) => (
-                  <span key={idx} className="box-badge-pill">
-                    <span>{b.icon}</span> {b.label}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {/* Two Column Categories Grid */}
-            <div className="box-categories-grid">
-              {product.insideTheBox.sections?.map((sec, sIdx) => (
-                <div key={sec.title || sIdx} className="box-category-card">
-                  <div className={`box-category-head ${sIdx === 0 ? "box-category-head-orange" : "box-category-head-gold"}`}>
-                    <h3 className="box-category-title">
-                      <span>{sec.icon}</span> {sec.title}
-                    </h3>
-                    <span className="box-category-badge">{sec.badge || `${sec.items?.length || 0} Items`}</span>
-                  </div>
-                  <ul className="box-items-list">
-                    {sec.items?.map((item, iIdx) => (
-                      <li key={iIdx} className="box-item-row">
-                        <span className="box-item-num">{item.num || iIdx + 1}</span>
-                        <span className="box-item-icon">{item.icon || "✨"}</span>
-                        <span className="box-item-name">{item.name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+      {/* 21 items below the image in full width */}
+      {allBoxItems.length > 0 && (
+        <div className="wrap pdp-full-box-section">
+          <div className="pdp-full-box-header">
+            <div className="eyebrow">🌸 What's Included Inside The Box ({allBoxItems.length} Items)</div>
           </div>
-        </section>
-      ) : !!product.contents?.length ? (
+
+          <div className="pdp-flower-grid">
+            {allBoxItems.map((item) => (
+              <div key={item.globalNum || item.name} className="pdp-flower-card">
+                <div className="pdp-flower-card-top">
+                  <span className="pdp-flower-card-icon" role="img" aria-label={item.name}>
+                    {item.icon || getItemIcon(item.name) || "🌸"}
+                  </span>
+                  <span className="pdp-flower-card-tag">Item #{item.globalNum}</span>
+                </div>
+                <b className="pdp-flower-card-title">{item.name}</b>
+                <span className="pdp-flower-card-desc">{item.text || item.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Fallback contents section for products without 21 items */}
+      {!allBoxItems.length && !!product.contents?.length ? (
         <section className="pd-sec" style={{ background: "#FAF7F0", borderBottom: "1px solid var(--line)" }}>
           <div className="wrap">
             <div className="sec-head">

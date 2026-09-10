@@ -168,17 +168,17 @@ export const FALLBACK_PRODUCTS = [
           badge: "Craft & Puja Setup",
           icon: "🛠️",
           items: [
-            { num: 1, name: "Bal Ganesh Clay Idol (2.5 - 3 inch natural Clay)", icon: "🕉️" },
-            { num: 2, name: "Mandap Backdrop", icon: "🏛️" },
-            { num: 3, name: "Mandap Base", icon: "🪑" },
-            { num: 4, name: "Mini Rangoli Sticker", icon: "🌸" },
-            { num: 5, name: "DIY Paper Toran", icon: "🏮" },
-            { num: 6, name: "Kungumam", icon: "🔴" },
-            { num: 7, name: "Turmeric", icon: "🟡" },
-            { num: 8, name: "Thread", icon: "🧵" },
-            { num: 9, name: "Needle", icon: "🪡" },
-            { num: 10, name: "Agarbathi", icon: "🪔" },
-            { num: 11, name: "21 Names Of Ganesha Card", icon: "📜" }
+            { num: 1, name: "Bal Ganesh Clay Idol", text: "2.5–3 inch eco-friendly natural clay, visarjan safe", icon: "🕉️" },
+            { num: 2, name: "Mandap Backdrop", text: "Colorful festive altar backdrop", icon: "🏛️" },
+            { num: 3, name: "Mandap Base", text: "Sturdy wooden-finish platform for Bappa", icon: "🪑" },
+            { num: 4, name: "Mini Rangoli Sticker", text: "Traditional festive floor art sticker", icon: "🌸" },
+            { num: 5, name: "DIY Paper Toran", text: "Handmade festive entrance garland", icon: "🏮" },
+            { num: 6, name: "Kungumam", text: "Sacred red kumkum powder for tilak", icon: "🔴" },
+            { num: 7, name: "Turmeric", text: "Auspicious natural pasupu / haldi powder", icon: "🟡" },
+            { num: 8, name: "Thread", text: "Sacred ritual cotton thread for puja", icon: "🧵" },
+            { num: 9, name: "Needle", text: "Safe craft needle for toran & flowers", icon: "🪡" },
+            { num: 10, name: "Agarbathi", text: "Fragrant herbal incense sticks pack", icon: "🪔" },
+            { num: 11, name: "21 Names Of Ganesha Card", text: "Printed sacred Sanskrit stotram card", icon: "📜" }
           ]
         },
         {
@@ -186,16 +186,16 @@ export const FALLBACK_PRODUCTS = [
           badge: "Story & Creative Journey",
           icon: "🎨",
           items: [
-            { num: 1, name: "Bal Ganesh Story Book", icon: "📖" },
-            { num: 2, name: "My Little Puja Guide", icon: "🪔" },
-            { num: 3, name: "Colouring & Activity Book", icon: "🎨" },
-            { num: 4, name: "Colour Sketch Pen", icon: "🖍️" },
-            { num: 5, name: "Colour Paint with brush", icon: "🖌️" },
-            { num: 6, name: "Ganesh Sticker Sheet (No 1)", icon: "✨" },
-            { num: 7, name: "Ganesh Sticker Sheet (No 2)", icon: "✨" },
-            { num: 8, name: "Labels For Book & Notes", icon: "🏷️" },
-            { num: 9, name: "Family Sankalp Card", icon: "🙏" },
-            { num: 10, name: "Little Ganesha Certificate", icon: "🏅" }
+            { num: 1, name: "Bal Ganesh Story Book", text: "Illustrated story bringing tales to life", icon: "📖" },
+            { num: 2, name: "My Little Puja Guide", text: "Child-friendly step-by-step puja rituals", icon: "🪔" },
+            { num: 3, name: "Colouring & Activity Book", text: "Fun festive puzzles & colouring sheets", icon: "🎨" },
+            { num: 4, name: "Colour Sketch Pen", text: "Vibrant sketch pen set for drawing", icon: "🖍️" },
+            { num: 5, name: "Colour Paint with brush", text: "Child-safe paints & painting brush", icon: "🖌️" },
+            { num: 6, name: "Ganesh Sticker Sheet (No 1)", text: "Festive decorative Ganesha stickers", icon: "✨" },
+            { num: 7, name: "Ganesh Sticker Sheet (No 2)", text: "Bal Ganesh character stickers", icon: "✨" },
+            { num: 8, name: "Labels For Book & Notes", text: "School name & notebook labels", icon: "🏷️" },
+            { num: 9, name: "Family Sankalp Card", text: "Dedicated family prayer & blessing card", icon: "🙏" },
+            { num: 10, name: "Little Ganesha Certificate", text: "Personalized award celebrating child's puja", icon: "🏅" }
           ]
         }
       ]
