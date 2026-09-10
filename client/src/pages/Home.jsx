@@ -14,7 +14,7 @@ import HowSection from "./home/HowSection.jsx";
 import FaqSection from "./home/FaqSection.jsx";
 import ContactCta from "./home/ContactCta.jsx";
 
-const BASE_URL = import.meta.env.VITE_SITE_URL || "https://sonicprints.shop";
+const BASE_URL = import.meta.env.VITE_SITE_URL || "https://www.sonicprints.in";
 const LOGO_URL = assetUrl("/assets/img/hero-banner.jpg").startsWith("http")
   ? assetUrl("/assets/img/hero-banner.jpg")
   : `${BASE_URL}/assets/img/hero-banner.jpg`;

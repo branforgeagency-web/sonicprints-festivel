@@ -97,32 +97,32 @@ export default function CelebrationIdeasBlog() {
     "headline": "Planning Ganesh Chaturthi 2026? Don't Miss These Celebration Ideas",
     "alternativeHeadline": "Planning Ganesh Chaturthi 2026? Here Are 6 Ideas to Try",
     "image": [
-      "https://sonicprints.shop/assets/img/blog/blog_1.jpeg",
-      "https://sonicprints.shop/assets/img/blog/blog_2.jpeg",
-      "https://sonicprints.shop/assets/img/blog/blog_3.jpeg",
-      "https://sonicprints.shop/assets/img/blog/blog_4.jpeg",
-      "https://sonicprints.shop/assets/img/blog/blog_5.jpeg",
-      "https://sonicprints.shop/assets/img/blog/blog_6.jpeg",
-      "https://sonicprints.shop/assets/img/blog/blog_7.jpeg"
+      "https://storage.googleapis.com/sonicprints-assets/assets/img/blog/blog_1.jpeg",
+      "https://storage.googleapis.com/sonicprints-assets/assets/img/blog/blog_2.jpeg",
+      "https://storage.googleapis.com/sonicprints-assets/assets/img/blog/blog_3.jpeg",
+      "https://storage.googleapis.com/sonicprints-assets/assets/img/blog/blog_4.jpeg",
+      "https://storage.googleapis.com/sonicprints-assets/assets/img/blog/blog_5.jpeg",
+      "https://storage.googleapis.com/sonicprints-assets/assets/img/blog/blog_6.jpeg",
+      "https://storage.googleapis.com/sonicprints-assets/assets/img/blog/blog_7.jpeg"
     ],
     "datePublished": "2026-08-01T08:00:00+05:30",
     "dateModified": "2026-09-05T09:00:00+05:30",
     "author": {
       "@type": "Organization",
       "name": "Sonic Prints",
-      "url": "https://sonicprints.shop"
+      "url": "https://www.sonicprints.in"
     },
     "publisher": {
       "@type": "Organization",
       "name": "Sonic Prints",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://sonicprints.shop/assets/img/hero-banner.jpg"
+        "url": "https://storage.googleapis.com/sonicprints-assets/assets/img/hero-banner.jpg"
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://sonicprints.shop/ganesh-chaturthi-2026-celebration-ideas"
+      "@id": "https://www.sonicprints.in/ganesh-chaturthi-2026-celebration-ideas"
     },
     "description": "From festive home setups and kids' activities to décor, gifting and office celebrations, find ideas to make Ganesh Chaturthi 2026 memorable. Explore more."
   };
